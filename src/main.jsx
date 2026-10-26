@@ -17,8 +17,10 @@ import { BrowserRouter } from "react-router-dom"; // Provides routing functional
 
 // Importing local components and styles
 import App from "./App"; // Main application component
+import { LanguageProvider } from "./context/LanguageContext"; // SCRUM-6: Selected Language
 import "./index.css"; // Global CSS styles for the application
 import 'leaflet/dist/leaflet.css';
+
 
 
 /**
@@ -39,9 +41,11 @@ import 'leaflet/dist/leaflet.css';
   const domNode = document.getElementById("root");
   const root = createRoot(domNode);
   root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-  )
+    <BrowserRouter>
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
+    </BrowserRouter>
+    )
  // Targeting the HTML element with id "root" as the mounting point
   
