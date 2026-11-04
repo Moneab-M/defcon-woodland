@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useResolvedPath, useMatch } from "react-router-dom";
 import { FaMoon, FaSun, FaFacebook, FaYoutube } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
+import LanguageSelector from "./LanguageSelector"; // SCRUM-7: EN / FR / Mi'kmaq
 
 // ---- Navbar ----
 export default function Navbar() {
@@ -29,7 +30,9 @@ export default function Navbar() {
           Woodland
         </Link>
 
-        <ul className="hidden md:flex items-center gap-6 text-sm">
+        {/* SCRUM-7: no gap-6 here; index.css "nav a" margins already space the links,
+            and the freed width lets the Language Selector fit on laptop screens */}
+        <ul className="hidden md:flex items-center text-sm">
           <NavItem to="/">Home</NavItem>
           <NavItem to="/about">About</NavItem>
           <NavItem to="/ecosystem">Ecosystem</NavItem>
@@ -39,15 +42,19 @@ export default function Navbar() {
           <NavItem to="/contacts">Contact</NavItem>
         </ul>
 
-        <button
-          onClick={toggleTheme}
-          aria-label="Toggle light and dark mode"
-          className="ml-4 inline-flex items-center gap-2 rounded-md border border-black/10 dark:border-white/20 px-3 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 transition"
-          title="Light/Dark"
-        >
-          {theme === "dark" ? <FaSun /> : <FaMoon />}
-          <span className="hidden sm:inline">{theme === "dark" ? "Light" : "Dark"}</span>
-        </button>
+        {/* SCRUM-7: Language Selector and Light/Dark button share one right-hand group */}
+        <div className="ml-4 flex items-center">
+          <LanguageSelector />
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle light and dark mode"
+            className="ml-4 inline-flex items-center gap-2 rounded-md border border-black/10 dark:border-white/20 px-3 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 transition"
+            title="Light/Dark"
+          >
+            {theme === "dark" ? <FaSun /> : <FaMoon />}
+            <span className="hidden sm:inline">{theme === "dark" ? "Light" : "Dark"}</span>
+          </button>
+        </div>
       </nav>
     </header>
   );
