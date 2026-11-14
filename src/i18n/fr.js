@@ -411,21 +411,21 @@ const fr = {
   // NEEDS REVIEW BY A FLUENT SPEAKER
   // Page Carte
   map: {
-    youAreHere: "JE SUIS ICI",
+    youAreHere: "Montrer où je suis",
     returnToSiteMap: "Revenir à la carte du site",
     north: "Nord",
     attribution: "&copy; les contributeurs d'OpenStreetMap",
     userMarker: "Tu es ici",
     playAudio: "Écouter l'audio \u2014 {name} ({distance} m)",
-    footnote: "Les limites de la carte, les sentiers et les arbres parlants sont approximatifs. Ils servent à t'aider à te déplacer sur place et à apprendre.",
+    footnote: "La carte, les sentiers et les arbres parlants ne sont pas exacts. Ils sont là pour t'aider à trouver ton chemin et à apprendre.",
     status: {
-      initial: "Le GPS sert seulement à placer un repère sur la carte, et ta position reste sur ton appareil. Les coordonnées ne sont jamais affichées.",
-      unsupported: "Cet appareil ne peut pas partager où il se trouve.",
-      denied: "Ta position n'est pas partagée.",
-      unavailable: "Nous ne trouvons pas ta position pour le moment.",
-      locating: "Recherche de ta position\u2026",
-      found: "Position trouvée. Ton repère est sur la carte, mais les coordonnées ne sont pas affichées.",
-      failed: "Impossible d'obtenir ta position GPS. Vérifie les autorisations, s'il te plaît.",
+      initial: "Ta position sert seulement à placer un repère sur la carte. Elle reste sur ton appareil, et nous ne l'affichons jamais.",
+      unsupported: "Cet appareil ne peut pas partager où tu es. La carte fonctionne quand même.",
+      denied: "Ce n'est pas grave. Ta position n'est pas partagée.",
+      unavailable: "Nous ne te trouvons pas pour le moment. Tu peux essayer encore dans un instant.",
+      locating: "Nous cherchons où tu es\u2026",
+      found: "Voilà ta position. Ton repère est sur la carte.",
+      failed: "Nous n'avons pas trouvé où tu es. Tu peux vérifier les réglages de ton appareil et essayer encore.",
       noSpeech: "Ce navigateur ne peut pas lire les mots de l'arbre à voix haute. Tu peux quand même regarder le panneau.",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
@@ -460,7 +460,7 @@ const fr = {
     // NEEDS REVIEW BY A FLUENT SPEAKER
     audio: {
       play: "Écouter cet arbre",
-      stop: "Arrêter",
+      stop: "Arrêter l'histoire",
       unavailable: "Cet arbre n'a pas encore trouvé sa voix. Tu peux lire son histoire plus bas.",
       captionsLabel: "Ce que dit l'arbre",
       transcript: "Lire ce que dit l'arbre",
@@ -474,7 +474,7 @@ const fr = {
       notNow: "Pas maintenant",
       videoLabel: "Vue de la caméra. Tiens l'affiche de l'arbre devant la caméra.",
       looking: "Je cherche l'affiche de l'arbre. Tiens-la bien droite devant la caméra.",
-      notTree: "Ce code n'est pas l'un de nos arbres. Essaie l'affiche sur l'arbre.",
+      notTree: "Ce n'est pas l'une de nos affiches d'arbres. Essaie une affiche sur l'un de nos arbres.",
       denied: "Ce n'est pas grave. Tu peux quand même rencontrer les arbres. Choisis-en un dans la liste.",
       pickFromList: "Choisir un arbre dans la liste",
       close: "Fermer",
