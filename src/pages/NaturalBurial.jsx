@@ -17,7 +17,7 @@ import { useText } from '../i18n/useText.js';
 import useDialogFocus from '../Components/useDialogFocus.js';
 
 // Keeps the image button looking exactly like the bare image, with a visible focus ring
-const CARD_IMAGE_BUTTON = "block p-0 border-0 bg-transparent cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400/60";
+const CARD_IMAGE_BUTTON = "card-image-button block p-0 border-0 bg-transparent cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400/60";
 
 const NaturalBurial = () => {
   const t = useText();

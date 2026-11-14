@@ -265,3 +265,29 @@ body {
   }
   
 }
+/* SCRUM-67: the card image wrapper button must not pick up the sound button styles above. */
+.info-card button.card-image-button,
+.info-card button.card-image-button:hover,
+.info-card button.card-image-button:active,
+.dark .info-card button.card-image-button,
+.dark .info-card button.card-image-button:hover,
+.dark .info-card button.card-image-button:active {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+  font: inherit;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.info-card button.card-image-button:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}

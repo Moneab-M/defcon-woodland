@@ -63,4 +63,24 @@ describe("Pop-up dialogs and keyboard cards", () => {
     cy.get("body").type("{esc}");
     cy.get("[data-cy=burial-dialog]").should("not.exist");
   });
+
+  [false, true].forEach((dark) => {
+    it(`Natural Burial: image buttons keep no card button styling (${dark ? "dark" : "light"})`, () => {
+      document.documentElement.classList.toggle("dark", dark);
+      mount(<LanguageProvider><NaturalBurial /></LanguageProvider>);
+      cy.get("[data-cy=card-image-button]").should("have.length", 3).each(($btn) => {
+        const btn = $btn[0];
+        const cs = window.getComputedStyle(btn);
+        expect(cs.backgroundColor).to.eq("rgba(0, 0, 0, 0)");
+        expect(cs.padding).to.eq("0px");
+        expect(cs.boxShadow).to.eq("none");
+        const img = btn.querySelector("img");
+        const imgWidth = img.getBoundingClientRect().width;
+        expect(imgWidth).to.be.greaterThan(100);
+        expect(Math.abs(btn.getBoundingClientRect().width - imgWidth)).to.be.at.most(1);
+      }).then(() => {
+        document.documentElement.classList.remove("dark");
+      });
+    });
+  });
 });
