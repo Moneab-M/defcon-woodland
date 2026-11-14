@@ -40,6 +40,7 @@ const fr = {
     imageAudio: {
       play: "Écouter la description de l'image",
       stop: "Arrêter la description de l'image",
+      unavailable: "La description audio de cette image n'est pas encore prête.",
     },
     theme: {
       toggleLabel: "Passer du mode clair au mode sombre",
@@ -180,7 +181,6 @@ const fr = {
       soundPlay: "Écouter les sons de la forêt",
       soundStop: "Arrêter les sons de la forêt",
     },
-    imageAudio: "Audio de l'image",
     readAloud: "Lire à voix haute",
     sections: {
       about: {

@@ -5,7 +5,7 @@
  * during playback stops it.
  *
  * Author: Moneab Milad (DEFCON)
- * Jira: SCRUM-9 | SRS: [ID 103], [ID 307], [ID 317]
+ * Jira: SCRUM-9, SCRUM-10 | SRS: [ID 103], [ID 305], [ID 307], [ID 317]
  *
  * COTS (Commercial Off-The-Shelf Software):
  * - React Icons: https://react-icons.github.io/react-icons/
@@ -14,6 +14,8 @@
  * - Show exactly one of these per Image that has an Image Audio Description.
  * - Playback goes through the shared player in PrerecordedAudioContext, so starting
  *   one recording stops any other.
+ * - If the recording is missing or fails, a short notice replaces any sound (no
+ *   text-to-speech); it stays until the visitor activates a button again.
  * - Look comes from BUTTON_CLASSES so every control matches ([ID 317]).
  */
 
@@ -32,20 +34,28 @@ import { useText } from "../i18n/useText";
  */
 export default function ImageAudioButton({ imageId, src, onUnavailable }) {
   const t = useText();
-  const { playingId, toggle } = usePrerecordedAudio();
+  const { playingId, unavailableId, toggle } = usePrerecordedAudio();
   const id = `image:${imageId}`;
   const playing = playingId === id;
+  const unavailable = unavailableId === id;
 
   return (
-    <button
-      type="button"
-      className={BUTTON_CLASSES}
-      aria-pressed={playing}
-      data-cy={`image-audio-button-${imageId}`}
-      onClick={() => toggle(id, src, { onUnavailable })}
-    >
-      {playing ? <FiSquare aria-hidden="true" /> : <FiVolume2 aria-hidden="true" />}
-      {playing ? t("common.imageAudio.stop") : t("common.imageAudio.play")}
-    </button>
+    <>
+      <button
+        type="button"
+        className={BUTTON_CLASSES}
+        aria-pressed={playing}
+        data-cy={`image-audio-button-${imageId}`}
+        onClick={() => toggle(id, src, { onUnavailable })}
+      >
+        {playing ? <FiSquare aria-hidden="true" /> : <FiVolume2 aria-hidden="true" />}
+        {playing ? t("common.imageAudio.stop") : t("common.imageAudio.play")}
+      </button>
+      {unavailable && (
+        <p role="status" className="text-lg leading-[1.2]" data-cy={`image-audio-unavailable-${imageId}`}>
+          {t("common.imageAudio.unavailable")}
+        </p>
+      )}
+    </>
   );
 }
