@@ -18,6 +18,11 @@ const en = {
   // Text shared by every page (header, footer, language controls)
   common: {
     skipToContent: "Skip to the main content",
+    message: {
+      good: "All good:",
+      careful: "One more step:",
+      dismiss: "Close this message",
+    },
     nav: {
       home: "Home",
       about: "About",
@@ -384,9 +389,9 @@ const en = {
       formInvalid: "Please fill in all required fields correctly before submitting the form.",
     },
     alerts: {
-      sendOtpFailed: "Failed to send OTP.",
-      incorrectOtp: "Incorrect OTP.",
-      submitFailed: "Failed to submit form.",
+      sendOtpFailed: "We could not send the code just now. Please check the email address and try again.",
+      incorrectOtp: "That code did not match. Please check the code in your email and try again, or ask for a new one.",
+      submitFailed: "We could not send your form just now. Your answers are still here, so please try again in a moment.",
     },
   },
   // Map page
@@ -406,6 +411,7 @@ const en = {
       locating: "Locating\u2026",
       found: "Location found. Your marker is placed on the map, but coordinates are not shown.",
       failed: "Unable to get GPS position. Please check permissions.",
+      noSpeech: "This browser cannot read the tree's words aloud. You can still look at the sign.",
     },
     locationFallback: {
       denied: "That's okay. You can explore without sharing where you are.",
