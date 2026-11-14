@@ -33,6 +33,7 @@ import { useText } from "../i18n/useText";
 import usePrefersReducedMotion from "../Components/usePrefersReducedMotion";
 import TreeNearbyPrompt from "../Components/TreeNearbyPrompt";
 import LocationFallback from "../Components/LocationFallback";
+import ForestWaiting from "../Components/ForestWaiting";
 import { getTreeByMapPoiId } from "../talkingTrees/trees";
 
 const COORDS = {
@@ -319,14 +320,27 @@ export default function MapView() {
         </button>
       </div>
 
-      <p
-        role="status"
-        aria-live="polite"
-        data-cy="map-status"
-        className="text-center text-sm mb-2 px-4"
-      >
-        {t(statusKey)}
-      </p>
+      {/* SCRUM-73: while locating, the waiting block is the one live region (no second announcement). */}
+      {statusKey === "map.status.locating" ? (
+        <div data-cy="map-status" className="mb-2 px-4">
+          <ForestWaiting message={t("common.waiting.locating")} />
+        </div>
+      ) : (
+        <p
+          role="status"
+          aria-live="polite"
+          data-cy="map-status"
+          className="text-center text-sm mb-2 px-4"
+        >
+          {t(statusKey)}
+        </p>
+      )}
+
+      {userLocation && !nearestPoi && statusKey !== "map.status.locating" && !FALLBACK_REASONS[statusKey] && (
+        <div className="mb-2 px-4" data-cy="map-no-tree-nearby">
+          <ForestWaiting message={t("common.waiting.noTreeNearby")} />
+        </div>
+      )}
 
       {FALLBACK_REASONS[statusKey] && <LocationFallback reason={FALLBACK_REASONS[statusKey]} />}
 

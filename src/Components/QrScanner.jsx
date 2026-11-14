@@ -22,6 +22,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useText } from "../i18n/useText";
 import { BUTTON_CLASSES } from "./controlStyles";
+import ForestWaiting from "./ForestWaiting";
 import { scanDeps } from "../talkingTrees/cameraScan";
 import { parseTreeQrPayload } from "../talkingTrees/qrPayload";
 
@@ -228,7 +229,9 @@ function ScannerPanel({ onClose, onFound, onPickFromList }) {
               </button>
             </div>
             {waiting && (
-              <p role="status" className="text-lg leading-[1.2] mt-4" data-cy="scanner-waiting">{t("trees.scanner.waiting")}</p>
+              <div className="mt-4" data-cy="scanner-waiting">
+                <ForestWaiting message={t("trees.scanner.waiting")} className="justify-start" />
+              </div>
             )}
           </>
         )}
@@ -244,9 +247,13 @@ function ScannerPanel({ onClose, onFound, onPickFromList }) {
               className="w-full rounded-md bg-black/10 mb-3"
               data-cy="scanner-video"
             />
-            <p role="status" className="text-lg leading-[1.2] mb-4" data-cy="scanner-status">
-              {notTree ? t("trees.scanner.notTree") : t("trees.scanner.looking")}
-            </p>
+            <div className="mb-4" data-cy="scanner-status">
+              {notTree ? (
+                <p role="status" className="text-lg leading-[1.2]">{t("trees.scanner.notTree")}</p>
+              ) : (
+                <ForestWaiting message={t("common.waiting.scanning")} className="justify-start" />
+              )}
+            </div>
             <button type="button" className={BUTTON_CLASSES} onClick={onClose} data-cy="scanner-close">
               {t("trees.scanner.close")}
             </button>

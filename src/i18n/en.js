@@ -23,6 +23,12 @@ const en = {
       careful: "One more step:",
       dismiss: "Close this message",
     },
+    // SCRUM-73: waiting moments
+    waiting: {
+      locating: "The forest is listening for where you are\u2026",
+      scanning: "The forest is looking at the sign\u2026",
+      noTreeNearby: "No talking tree is close by yet. Keep walking, the forest will tell you.",
+    },
     nav: {
       home: "Home",
       about: "About",
