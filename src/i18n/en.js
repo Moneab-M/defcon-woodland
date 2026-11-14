@@ -367,6 +367,32 @@ const en = {
       submitFailed: "Failed to submit form.",
     },
   },
+  // Map page
+  map: {
+    youAreHere: "YOU ARE HERE",
+    returnToSiteMap: "Return to Site Map",
+    north: "North",
+    attribution: "&copy; OpenStreetMap contributors",
+    userMarker: "You are here",
+    playAudio: "Play Audio \u2014 {name} ({distance} m)",
+    footnote: "Map bounds, paths, and Talking Trees are approximations to support on-site navigation and education.",
+    status: {
+      initial: "GPS is used only to place a marker on the map; coordinates are never shown.",
+      unsupported: "GPS is not supported in this browser.",
+      locating: "Locating\u2026",
+      found: "Location found. Your marker is placed on the map, but coordinates are not shown.",
+      failed: "Unable to get GPS position. Please check permissions.",
+    },
+    places: {
+      dock: { name: "Dock" },
+      trailhead: { name: "Trailhead", description: "Main entrance to the woodland trails." },
+      farmhouse: { name: "Farmhouse Foundation", description: "The remains of an early farmhouse." },
+      well: { name: "Well", description: "This old well supplied water to the area." },
+      sittingArea: { name: "Sitting Area", description: "A quiet place to rest and observe nature." },
+      yellowBirch: { name: "Coastal Yellow Birch", description: "An important tree species for biodiversity." },
+      labyrinth: { name: "Labyrinth Entrance", description: "Entrance to the small woodland labyrinth." },
+    },
+  },
 };
 
 export default en;
