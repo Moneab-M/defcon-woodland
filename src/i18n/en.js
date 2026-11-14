@@ -256,6 +256,37 @@ const en = {
     backToTop: "Back to Top",
     accessibilityStrip: "Accessibility: WCAG AA • Keyboard navigation • TTS buttons • Text zoom • Dyslexia & contrast options",
   },
+  // Ecosystem page
+  ecosystem: {
+    heading: "Ecosystem",
+    readAloud: "Read out loud",
+    lakeAlt: "Lake",
+    intro: "This woodland conservation site is home to a diverse and vibrant ecosystem, teeming with life and natural beauty. Our woodlands are characterized by a rich variety of flora and fauna, each playing a crucial role in maintaining the ecological balance.",
+    heron: "Herons are wading birds known for their long legs and necks, often found near water bodies.",
+    deer: "Deer are graceful herbivores, commonly found in forests and grasslands.",
+    coyote: "The coyote is a highly adaptable, opportunistic predator, playing a key role in maintaining the balance of local ecosystems by controlling populations of small mammals.",
+    keyFeatures: {
+      intro: "Key features of our ecosystem:",
+      birch: {
+        title: "Yellow Birch Trees:",
+        text: "These majestic trees are a hallmark of our woodland, providing habitat and food for numerous species. Their distinctive yellow bark and graceful form make them a standout feature.",
+      },
+      wetlands: {
+        title: "Wetlands:",
+        text: "Our wetlands are vital for water purification, flood control, and providing a habitat for a wide range of wildlife. They are a haven for birds, amphibians, and aquatic plants.",
+      },
+      artifacts: {
+        title: "Historical Artifacts:",
+        text: "Scattered throughout the woodland are remnants of the past, providing insight into how people lived in a time long forgotten.",
+      },
+    },
+    floraHeading: "Flora",
+    floraText: "Our woodlands are adorned with a variety of plant species, including towering Yellow Birch Trees, delicate wildflowers, and lush ferns.",
+    faunaHeading: "Fauna",
+    faunaText: "Among the fauna, you can find graceful deer, playful foxes, and a myriad of bird species, each contributing to the vibrant ecosystem.",
+    fungiHeading: "Fungi",
+    fungiText: "Woodland fungi play a vital role in the ecosystem, breaking down organic matter and forming symbiotic relationships with trees and plants.",
+  },
 };
 
 export default en;
