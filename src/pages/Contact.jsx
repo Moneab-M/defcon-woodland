@@ -99,6 +99,7 @@ const InquiryForm = () => {
 
     try {
       setOtpMessage(null);
+      setVerifyMessage(null);
       setSendingOtp(true);
       const res = await axios.post("/api/send-otp", { email: formData.email });
       setOtpSent(true);
@@ -211,6 +212,7 @@ const InquiryForm = () => {
         otpVerified: false,
       });
       setOtpSent(false);
+      setVerifyMessage(null);
       setErrors({});
       setFormError("");
     } catch (err) {
@@ -235,6 +237,8 @@ const InquiryForm = () => {
     setErrors({});
     setSubmitted(false);
     setOtpSent(false);
+    setOtpMessage(null);
+    setVerifyMessage(null);
     setFormError("");
   };
 
@@ -411,7 +415,7 @@ const InquiryForm = () => {
                 disabled={verifyingOtp}
                 className="mt-2 px-3 py-1 bg-green-600 hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-md"
               >
-                  {verifyingOtp ? t("contact.verifying") : t("contact.verifyOtp")}
+                {verifyingOtp ? t("contact.verifying") : t("contact.verifyOtp")}
               </button>
               {verifyMessage && (
                 <div className="mt-2" data-cy="verify-message">

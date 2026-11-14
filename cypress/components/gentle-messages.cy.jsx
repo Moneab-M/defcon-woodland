@@ -62,8 +62,27 @@ describe("Gentle messages on the Contact page (SCRUM-71)", () => {
     cy.get('input[name="email"]').type("visitor@example.com");
     cy.contains("button", "Envoyer le code").click();
     cy.get('[data-cy="otp-message"] [role="alert"]')
-      .should("contain.text", "Encore une étape :")
+      .should("contain.text", "Encore une étape\u00a0:")
       .and("contain.text", "Nous n'avons pas pu envoyer le code");
     cy.get("@alert").should("not.have.been.called");
+  });
+
+  it("does not show old code messages after Clear and a new code", () => {
+    cy.intercept("POST", "/api/send-otp", { statusCode: 200, body: { message: "Code sent to your inbox." } });
+    cy.intercept("POST", "/api/verify-otp", { statusCode: 200, body: { message: "The code is correct." } });
+    mountPage();
+    cy.get('input[name="email"]').type("visitor@example.com");
+    cy.contains("button", "Send OTP").click();
+    cy.get('input[name="otp"]').type("123456");
+    cy.contains("button", "Verify OTP").click();
+    cy.get('[data-cy="verify-message"]').should("contain.text", "The code is correct.");
+    cy.contains("button", "Clear").click();
+    cy.get('[data-cy="otp-message"]').should("not.exist");
+    cy.get('[data-cy="verify-message"]').should("not.exist");
+    cy.get('input[name="email"]').type("visitor@example.com");
+    cy.contains("button", "Send OTP").click();
+    cy.get('[data-cy="otp-message"]').should("contain.text", "Code sent to your inbox.");
+    cy.get('[data-cy="verify-message"]').should("not.exist");
+    cy.contains("The code is correct.").should("not.exist");
   });
 });
