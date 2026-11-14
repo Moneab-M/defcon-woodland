@@ -148,6 +148,114 @@ const en = {
       imageAlt: "Uploaded {index}",
     },
   },
+  // About page
+  about: {
+    title: "About St. Margaret’s Bay Woodland Conservation",
+    nav: {
+      about: "About",
+      mission: "Mission",
+      vision: "Vision",
+    },
+    tools: {
+      dyslexia: "Dyslexia Font",
+      dyslexiaTitle: "Toggle Dyslexia-Friendly Font",
+      contrast: "High Contrast",
+      contrastTitle: "Toggle High Contrast",
+      spacing: "Line Spacing",
+      spacingTitle: "Toggle Line Spacing",
+      share: "Share",
+      soundPlay: "Play Forest Sound",
+      soundStop: "Stop Forest Sound",
+    },
+    imageAudio: "Image Audio",
+    readAloud: "Read Aloud",
+    sections: {
+      about: {
+        title: "About Us",
+        text: "We care for the woodlands around St. Margaret’s Bay. We work with neighbours to protect trees, clean water, and wildlife. We share simple steps that anyone can take to help nature.",
+        imgAlt: "Green ferns in a woodland",
+        caption: "Ferns along a shaded woodland trail",
+      },
+      mission: {
+        title: "Mission",
+        text: "Our mission is to protect local habitats and support a healthy forest. We plant trees, remove waste, and invite people to join events. Small actions add up when we work together.",
+        imgAlt: "Volunteers planting trees",
+        caption: "Volunteers planting small trees along a trail",
+      },
+      vision: {
+        title: "Vision",
+        text: "We see a future where our woodlands thrive. Trails are safe, streams run clean, and animals have space to live. Families can learn and enjoy nature for many years.",
+        imgAlt: "Red maple leaves",
+        caption: "Red maple leaves lit by autumn sunlight",
+      },
+    },
+    stats: {
+      heading: "Impact Stats",
+      trees: "Trees Planted: 4,200+",
+      hectares: "Hectares Restored: 75+",
+      species: "Species Monitored: 18",
+    },
+    species: {
+      heading: "Species Spotlight",
+      redMaple: {
+        name: "Red Maple",
+        type: "Tree",
+        note: "A hardy tree known for bright red leaves in autumn.",
+      },
+      chickadee: {
+        name: "Black-Capped Chickadee",
+        type: "Bird",
+        note: "A small songbird often found in mixed woodlands.",
+      },
+      deer: {
+        name: "White-Tailed Deer",
+        type: "Mammal",
+        note: "Common in forest edges where they browse on plants.",
+      },
+      fern: {
+        name: "Bracken Fern",
+        type: "Plant",
+        note: "A fern that grows in sunny clearings and paths.",
+      },
+    },
+    timeline: {
+      heading: "Woodland Timeline",
+      early2000s: {
+        year: "Early 2000s",
+        text: "Local residents begin organizing clean-ups and informal trail care.",
+      },
+      tens: {
+        year: "2010s",
+        text: "Formal volunteer groups form to support woodland stewardship and education.",
+      },
+      today: {
+        year: "Today",
+        text: "The area is used for walking, learning, and small conservation projects.",
+      },
+    },
+    faq: {
+      heading: "Questions & Answers",
+      help: {
+        question: "How can I help protect woodlands?",
+        answer: "Small actions like staying on marked trails, taking litter home, joining clean-ups, and planting native species all make a difference.",
+      },
+      purpose: {
+        question: "What is the purpose of this website?",
+        answer: "The site shares simple information about the woodland, highlights key features, and shows ways people can support conservation.",
+      },
+      readAloud: {
+        question: "How does the Read Aloud feature work?",
+        answer: "The Read Aloud button uses the browser’s Text-to-Speech engine to speak the text out loud. You can pause or resume using the spacebar.",
+      },
+      phone: {
+        question: "Can I use this site on my phone?",
+        answer: "Yes. The layout is responsive, so the cards, buttons, and text all adjust to smaller screens.",
+      },
+    },
+    learnMore: "Learn More",
+    backToTop: "Back to Top",
+    accessibilityStrip: "Accessibility: WCAG AA • Keyboard navigation • TTS buttons • Text zoom • Dyslexia & contrast options",
+  },
 };
 
 export default en;
