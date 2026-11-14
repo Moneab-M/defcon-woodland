@@ -23,8 +23,8 @@ const fr = {
     skipToContent: "Passer au contenu principal",
     // NEEDS REVIEW BY A FLUENT SPEAKER
     message: {
-      good: "Tout va bien :",
-      careful: "Encore une étape :",
+      good: "Tout va bien :",
+      careful: "Encore une étape :",
       dismiss: "Fermer ce message",
     },
     nav: {
