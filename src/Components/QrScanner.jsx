@@ -49,37 +49,63 @@ function ScannerPanel({ onClose, onFound, onPickFromList }) {
   const streamRef = useRef(null);
   const timerRef = useRef(null);
   const aliveRef = useRef(true);
+  const runRef = useRef(0); // changes on every start and every stop, so late results can be told apart
+  const startingRef = useRef(false);
+  const [waiting, setWaiting] = useState(false);
 
-  /** Purpose: Stop checking and switch the camera off. */
+  /** Purpose: Stop checking and switch the camera off. Also cancels any request still pending. */
   const stopCamera = useCallback(() => {
+    runRef.current += 1;
+    startingRef.current = false;
     clearInterval(timerRef.current);
     timerRef.current = null;
     stopStream(streamRef.current);
     streamRef.current = null;
     if (videoRef.current) videoRef.current.srcObject = null;
+    if (aliveRef.current) setWaiting(false);
   }, []);
 
   /** Purpose: Ask for the camera (after the visitor's tap) and start looking for a code. */
   const startCamera = useCallback(async () => {
+    if (startingRef.current) return; // a request is already waiting
+    stopCamera(); // never keep an older stream or timer
+    startingRef.current = true;
+    const run = ++runRef.current;
+    setWaiting(true);
     setNotTree(false);
+
+    /** Purpose: True when this run was cancelled or the page is hidden; stops the new stream if so. */
+    const abandoned = (stream) => {
+      const cancelled = runRef.current !== run;
+      if (!cancelled && !document.hidden) return false;
+      stopStream(stream);
+      if (!cancelled) {
+        stopCamera();
+        if (aliveRef.current) setPhase((p) => (p === "scanning" ? "explain" : p));
+      }
+      return true;
+    };
+
     try {
       const stream = await scanDeps.getStream();
-      if (!aliveRef.current) {
-        stopStream(stream);
-        return;
-      }
+      if (abandoned(stream)) return;
       streamRef.current = stream;
+      startingRef.current = false;
+      setWaiting(false);
       setPhase("scanning");
       const detector = await scanDeps.createDetector();
-      if (!aliveRef.current) return;
+      if (abandoned(null)) return;
       let busy = false;
+      let failures = 0;
+      clearInterval(timerRef.current);
       timerRef.current = setInterval(async () => {
         const video = videoRef.current;
-        if (busy || !video || !streamRef.current) return;
+        if (busy || !video || !streamRef.current || runRef.current !== run) return;
         busy = true;
         try {
           const codes = await detector.detect(video);
-          if (!aliveRef.current || !streamRef.current) return;
+          failures = 0;
+          if (!aliveRef.current || !streamRef.current || runRef.current !== run) return;
           let treeId = null;
           let sawOther = false;
           for (const code of codes || []) {
@@ -97,12 +123,18 @@ function ScannerPanel({ onClose, onFound, onPickFromList }) {
             setNotTree(sawOther);
           }
         } catch {
-          // A frame that cannot be read is skipped; keep looking.
+          // A frame that cannot be read is skipped; after 5 in a row, show the kind fallback.
+          failures += 1;
+          if (failures >= 5 && runRef.current === run) {
+            stopCamera();
+            if (aliveRef.current) setPhase("denied");
+          }
         } finally {
           busy = false;
         }
       }, SCAN_INTERVAL_MS);
     } catch {
+      if (runRef.current !== run) return;
       stopCamera();
       if (aliveRef.current) setPhase("denied");
     }
@@ -182,13 +214,22 @@ function ScannerPanel({ onClose, onFound, onPickFromList }) {
           <>
             <p className="text-lg leading-[1.2] mb-4" data-cy="scanner-explain">{t("trees.scanner.explain")}</p>
             <div className="flex flex-wrap gap-3">
-              <button type="button" className={BUTTON_CLASSES} onClick={startCamera} data-cy="scanner-turn-on">
+              <button
+                type="button"
+                className={BUTTON_CLASSES + (waiting ? " opacity-60" : "")}
+                onClick={startCamera}
+                aria-disabled={waiting}
+                data-cy="scanner-turn-on"
+              >
                 {t("trees.scanner.turnOn")}
               </button>
               <button type="button" className={BUTTON_CLASSES} onClick={onClose} data-cy="scanner-not-now">
                 {t("trees.scanner.notNow")}
               </button>
             </div>
+            {waiting && (
+              <p role="status" className="text-lg leading-[1.2] mt-4" data-cy="scanner-waiting">{t("trees.scanner.waiting")}</p>
+            )}
           </>
         )}
 

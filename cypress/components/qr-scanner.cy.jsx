@@ -141,6 +141,124 @@ describe("QR scanner (SCRUM-55)", () => {
     cy.wrap(null).then(() => tracks.forEach((track) => expect(track.stop).to.have.been.called));
   });
 
+  /** Purpose: A getStream that stays pending until the test resolves it. Returns the resolver. */
+  function pendingStream() {
+    let resolve;
+    scanDeps.getStream = cy.stub().callsFake(() => new Promise((r) => { resolve = r; }));
+    return () => {
+      const stream = fakeStream();
+      resolve(stream);
+      return stream;
+    };
+  }
+
+  /** Purpose: Mount the scanner in a host that a test can unmount. */
+  function mountUnmountable() {
+    function Host() {
+      const [shown, setShown] = React.useState(true);
+      return (
+        <>
+          <button data-cy="unmount" onClick={() => setShown(false)}>x</button>
+          {shown && <QrScanner open onClose={() => {}} onFound={() => {}} onPickFromList={() => {}} />}
+        </>
+      );
+    }
+    mount(
+      <MemoryRouter>
+        <LanguageProvider>
+          <Host />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+  }
+
+  /** Purpose: Pretend the page was hidden or shown again. */
+  function setHidden(hidden) {
+    Object.defineProperty(document, "hidden", { configurable: true, get: () => hidden });
+    document.dispatchEvent(new Event("visibilitychange"));
+  }
+
+  afterEach(() => {
+    delete document.hidden;
+  });
+
+  it("ignores a second tap while the camera request is pending", () => {
+    const finish = pendingStream();
+    mountScanner(cy.stub());
+    cy.get("[data-cy=opener]").click();
+    cy.get("[data-cy=scanner-turn-on]").click().click();
+    cy.get("[data-cy=scanner-turn-on]").should("have.attr", "aria-disabled", "true");
+    cy.get("[data-cy=scanner-waiting]").should("contain.text", en.trees.scanner.waiting);
+    cy.wrap(null).then(() => {
+      expect(scanDeps.getStream).to.have.been.calledOnce;
+      finish();
+    });
+    cy.get("[data-cy=scanner-video]").should("exist");
+  });
+
+  it("stops a camera that arrives after the dialog was closed", () => {
+    const finish = pendingStream();
+    mountScanner(cy.stub());
+    cy.get("[data-cy=opener]").click();
+    cy.get("[data-cy=scanner-turn-on]").click();
+    cy.get("[data-cy=scanner-not-now]").click();
+    cy.get("[data-cy=scanner-dialog]").should("not.exist");
+    cy.wrap(null).then(() => { finish(); });
+    cy.wrap(null).should(() => tracks.forEach((track) => expect(track.stop).to.have.been.called));
+    cy.get("[data-cy=scanner-video]").should("not.exist");
+  });
+
+  it("stops a camera that arrives after the component was removed", () => {
+    const finish = pendingStream();
+    mountUnmountable();
+    cy.get("[data-cy=scanner-turn-on]").click();
+    cy.get("[data-cy=unmount]").click({ force: true });
+    cy.wrap(null).then(() => { finish(); });
+    cy.wrap(null).should(() => tracks.forEach((track) => expect(track.stop).to.have.been.called));
+    cy.get("[data-cy=scanner-video]").should("not.exist");
+  });
+
+  it("stops the camera when the page is hidden while scanning", () => {
+    detections = [[]];
+    mountScanner(cy.stub());
+    cy.get("[data-cy=opener]").click();
+    cy.get("[data-cy=scanner-turn-on]").click();
+    cy.get("[data-cy=scanner-video]").should("exist");
+    cy.wrap(null).then(() => setHidden(true));
+    cy.get("[data-cy=scanner-explain]").should("exist");
+    cy.wrap(null).then(() => tracks.forEach((track) => expect(track.stop).to.have.been.called));
+  });
+
+  it("stops a camera that arrives while the page is hidden", () => {
+    const finish = pendingStream();
+    mountScanner(cy.stub());
+    cy.get("[data-cy=opener]").click();
+    cy.get("[data-cy=scanner-turn-on]").click();
+    cy.wrap(null).then(() => setHidden(true));
+    cy.wrap(null).then(() => { finish(); });
+    cy.wrap(null).should(() => tracks.forEach((track) => expect(track.stop).to.have.been.called));
+    cy.get("[data-cy=scanner-video]").should("not.exist");
+    cy.get("[data-cy=scanner-explain]").should("exist");
+  });
+
+  it("stops the camera and shows the kind message when the detector cannot start", () => {
+    scanDeps.createDetector = cy.stub().callsFake(() => Promise.reject(new Error("no detector")));
+    mountScanner(cy.stub());
+    cy.get("[data-cy=opener]").click();
+    cy.get("[data-cy=scanner-turn-on]").click();
+    cy.get("[data-cy=scanner-denied]").should("contain.text", en.trees.scanner.denied);
+    cy.wrap(null).then(() => tracks.forEach((track) => expect(track.stop).to.have.been.called));
+  });
+
+  it("stops the camera and shows the kind message when reading keeps failing", () => {
+    scanDeps.createDetector = cy.stub().callsFake(() => Promise.resolve({ detect: () => Promise.reject(new Error("x")) }));
+    mountScanner(cy.stub());
+    cy.get("[data-cy=opener]").click();
+    cy.get("[data-cy=scanner-turn-on]").click();
+    cy.get("[data-cy=scanner-denied]", { timeout: 5000 }).should("exist");
+    cy.wrap(null).then(() => tracks.forEach((track) => expect(track.stop).to.have.been.called));
+  });
+
   it("moves focus into the dialog and keeps controls at least 44 px", () => {
     mountScanner(cy.stub());
     cy.get("[data-cy=opener]").click();

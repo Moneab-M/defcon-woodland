@@ -424,6 +424,7 @@ const en = {
       denied: "That's okay. You can still meet the trees. Pick one from the list.",
       pickFromList: "Pick a tree from the list",
       close: "Close",
+      waiting: "Waiting for your camera. If your device asks, tap Allow.",
     },
     species: {
       yellowBirch: {
