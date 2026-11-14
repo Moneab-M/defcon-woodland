@@ -13,7 +13,7 @@
 import React from "react";
 import { mount } from "cypress/react";
 import { LanguageProvider, useLanguage } from "../../src/context/LanguageContext.jsx";
-import { useText } from "../../src/i18n/useText.js";
+import { useText, lookupText } from "../../src/i18n/useText.js";
 import { LANGUAGE_STATUS } from "../../src/i18n/languageStatus.js";
 import LanguageNotice from "../../src/Components/LanguageNotice.jsx";
 import fr from "../../src/i18n/fr.js";
@@ -107,7 +107,54 @@ describe("useText lookup (SCRUM-8)", () => {
       .should("have.text", "Mi'kmaq text is not available yet.")
       .and("have.attr", "lang", "en");
 
+    cy.document().its("documentElement").should("have.attr", "lang", "mic");
+
     cy.get("[data-cy=set-en]").click();
     cy.get("[data-cy=language-notice]").should("not.exist");
+    cy.document().its("documentElement").should("have.attr", "lang", "en");
+  });
+
+  describe("placeholders", () => {
+    const original = fr.common.nav.home;
+    afterEach(() => {
+      fr.common.nav.home = original;
+    });
+
+    it("fills {name} in strings", () => {
+      fr.common.nav.home = "Bonjour {name}, {name}!";
+      expect(lookupText("fr", TEST_KEY, { name: "Ana" })).to.equal("Bonjour Ana, Ana!");
+    });
+
+    it("leaves a placeholder with no matching value as written", () => {
+      fr.common.nav.home = "Bonjour {name} {other}";
+      expect(lookupText("fr", TEST_KEY, { name: "Ana" })).to.equal("Bonjour Ana {other}");
+      expect(lookupText("fr", TEST_KEY)).to.equal("Bonjour {name} {other}");
+    });
+
+    it("returns arrays and objects unchanged", () => {
+      const list = ["{name}"];
+      fr.common.nav.home = list;
+      expect(lookupText("fr", TEST_KEY, { name: "Ana" })).to.equal(list);
+      const obj = { a: "{name}" };
+      fr.common.nav.home = obj;
+      expect(lookupText("fr", TEST_KEY, { name: "Ana" })).to.equal(obj);
+    });
+
+    it("t(key, values) works through the hook", () => {
+      fr.common.nav.home = "Salut {name}";
+      function Probe() {
+        const t = useText();
+        const { setLanguage } = useLanguage();
+        return (
+          <div>
+            <p data-cy="p">{t(TEST_KEY, { name: "Ana" })}</p>
+            <button type="button" data-cy="go" onClick={() => setLanguage("fr")}>fr</button>
+          </div>
+        );
+      }
+      mount(<LanguageProvider><Probe /></LanguageProvider>);
+      cy.get("[data-cy=go]").click();
+      cy.get("[data-cy=p]").should("have.text", "Salut Ana");
+    });
   });
 });

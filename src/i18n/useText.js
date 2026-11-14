@@ -49,6 +49,23 @@ function getByPath(dictionary, key) {
 }
 
 /**
+ * Purpose: Replace every {name} in a text with values.name.
+ *
+ * Parameters:
+ * - text: the looked-up value (only strings are changed)
+ * - values: optional object, e.g. { name: "Ana" }
+ *
+ * Returns: the text with placeholders filled in. Non-strings are returned
+ * unchanged, and a placeholder with no matching value stays as written.
+ */
+function fillPlaceholders(text, values) {
+  if (typeof text !== "string" || !values) return text;
+  return text.replace(/\{(\w+)\}/g, (match, name) =>
+    Object.prototype.hasOwnProperty.call(values, name) ? String(values[name]) : match
+  );
+}
+
+/**
  * Purpose: Choose which language's text to show for the Selected Language.
  *
  * Parameters:
@@ -69,6 +86,7 @@ export function getDisplayLanguage(language) {
  * Parameters:
  * - language: the Selected Language code
  * - key: dotted path, e.g. "common.nav.home"
+ * - values: optional object for {name} placeholders
  *
  * Returns: the text (or list) for that key
  *
@@ -79,19 +97,19 @@ export function getDisplayLanguage(language) {
  * 3. Return the English text, or the key itself if English is missing too,
  *    so the gap is visible while testing.
  */
-export function lookupText(language, key) {
+export function lookupText(language, key, values) {
   const displayLanguage = getDisplayLanguage(language);
 
   if (displayLanguage !== FALLBACK_LANGUAGE) {
     const value = getByPath(DICTIONARIES[displayLanguage], key);
-    if (value !== undefined) return value;
+    if (value !== undefined) return fillPlaceholders(value, values);
     if (IS_DEV) {
       console.warn(`[useText] Missing "${displayLanguage}" text for "${key}"; showing English.`);
     }
   }
 
   const englishValue = getByPath(DICTIONARIES[FALLBACK_LANGUAGE], key);
-  if (englishValue !== undefined) return englishValue;
+  if (englishValue !== undefined) return fillPlaceholders(englishValue, values);
 
   if (IS_DEV) console.warn(`[useText] Missing English text for "${key}".`);
   return key;
@@ -103,9 +121,10 @@ export function lookupText(language, key) {
  * Parameters:
  * - None (reads the Selected Language through useLanguage())
  *
- * Returns: t(key), which returns the Page Text for key in the Selected Language
+ * Returns: t(key, values), which returns the Page Text for key in the Selected
+ * Language; values is an optional object that fills {name} placeholders
  */
 export function useText() {
   const { language } = useLanguage();
-  return useCallback((key) => lookupText(language, key), [language]);
+  return useCallback((key, values) => lookupText(language, key, values), [language]);
 }
