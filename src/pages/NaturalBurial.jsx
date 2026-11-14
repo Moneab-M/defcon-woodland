@@ -14,6 +14,10 @@ import gpsImage from '../assets/Gps.png';
 import React, { useState, useEffect } from 'react'; 
 import { FaVolumeUp, FaPause } from 'react-icons/fa'
 import { useText } from '../i18n/useText.js';
+import useDialogFocus from '../Components/useDialogFocus.js';
+
+// Keeps the image button looking exactly like the bare image, with a visible focus ring
+const CARD_IMAGE_BUTTON = "block p-0 border-0 bg-transparent cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400/60";
 
 const NaturalBurial = () => {
   const t = useText();
@@ -39,6 +43,9 @@ const NaturalBurial = () => {
     titleKey: "naturalBurial.locations.title",
     descriptionKey: "naturalBurial.locations.modalText"
   };
+
+  const closeModal = () => setShowModal(false);
+  const dialogRef = useDialogFocus(showModal, closeModal);
 
   const openModal = (info) => {
     setModalContent(info);
@@ -145,12 +152,19 @@ const NaturalBurial = () => {
 
           <section className="info-sections">
             <div className="info-card">
-              <img 
-                src={coffinImage} 
-                className="card-image"
+              <button
+                type="button"
+                className={CARD_IMAGE_BUTTON}
+                aria-label={t("naturalBurial.moreAbout", { title: t("naturalBurial.types.title") })}
+                data-cy="card-image-button"
                 onClick={() => openModal(burialTypesInfo)}
-              style={{ cursor: 'pointer' }}
-          />
+              >
+                <img
+                  src={coffinImage}
+                  alt={t("naturalBurial.types.alt")}
+                  className="card-image"
+                />
+              </button>
       
               <button 
                 onClick={() => handleSpeakText("Kinds of burial include biodegradable coffins made from natural materials like wood or bamboo, burial shrouds made from natural fibers, and direct earth burial where the body is placed directly in contact with the soil.")}
@@ -168,13 +182,19 @@ const NaturalBurial = () => {
             </div>
             
             <div className="info-card">
-              <img 
-                src={markerImage} 
-                alt={t("naturalBurial.markers.alt")} 
-                className="card-image" 
+              <button
+                type="button"
+                className={CARD_IMAGE_BUTTON}
+                aria-label={t("naturalBurial.moreAbout", { title: t("naturalBurial.markers.title") })}
+                data-cy="card-image-button"
                 onClick={() => openModal(burialMarkersInfo)}
-                  style={{ cursor: 'pointer' }}
-              />
+              >
+                <img
+                  src={markerImage}
+                  alt={t("naturalBurial.markers.alt")}
+                  className="card-image"
+                />
+              </button>
               <button 
                 onClick={() => handleSpeakText("Burial markers in natural burials use environmentally friendly options like native trees, shrubs, natural stones, wooden posts, or GPS coordinates instead of traditional headstones made from non-biodegradable materials.")}
                 className="sound-button small"
@@ -192,13 +212,19 @@ const NaturalBurial = () => {
             </div>
             
             <div className="info-card">
-              <img 
-                src={gpsImage} 
-                alt={t("naturalBurial.locations.alt")} 
-                className="card-image" 
+              <button
+                type="button"
+                className={CARD_IMAGE_BUTTON}
+                aria-label={t("naturalBurial.moreAbout", { title: t("naturalBurial.locations.title") })}
+                data-cy="card-image-button"
                 onClick={() => openModal(burialLocationsInfo)}
-                style={{ cursor: 'pointer' }}
-              />
+              >
+                <img
+                  src={gpsImage}
+                  alt={t("naturalBurial.locations.alt")}
+                  className="card-image"
+                />
+              </button>
               <button 
                 onClick={() => handleSpeakText("Natural burials take place in designated natural burial grounds, conservation areas, woodlands, meadows, or green cemeteries that are specifically dedicated to environmentally friendly burial practices and habitat preservation.")}
                 className="sound-button small"
@@ -220,14 +246,23 @@ const NaturalBurial = () => {
 
       {/* Modal */}
   {showModal && (
-    <div className="modal-overlay" onClick={() => setShowModal(false)}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-overlay" onClick={closeModal}>
+      <div
+        className="modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="natural-burial-dialog-title"
+        tabIndex={-1}
+        ref={dialogRef}
+        data-cy="burial-dialog"
+        onClick={(e) => e.stopPropagation()}
+      >
         <img src={modalContent.img} alt={t(modalContent.titleKey)} className="modal-image" />
-        <h2>{t(modalContent.titleKey)}</h2>
+        <h2 id="natural-burial-dialog-title">{t(modalContent.titleKey)}</h2>
         <p style={{ whiteSpace: "pre-wrap" }}>
           {t(modalContent.descriptionKey)}
         </p>
-        <button className="close-button" onClick={() => setShowModal(false)}>{t("naturalBurial.close")}</button>
+        <button className="close-button" onClick={closeModal}>{t("naturalBurial.close")}</button>
       </div>
     </div>
   )}
