@@ -58,10 +58,16 @@ const fr = {
     footer: {
       address: "Head Of St Margarets Bay, N.-É. B3Z 2C9",
       copyright: "© 2024 SMU, CSCI 3428 Group25G",
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      facebook: "St. Margaret's Bay Stewardship Association sur Facebook",
+      instagram: "St. Margaret's Bay Stewardship Association sur Instagram",
+      youtube: "St. Margaret's Bay Stewardship Association sur YouTube",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
     accessibility: {
       title: "Paramètres d'accessibilité",
+      openSettings: "Ouvrir les paramètres d'affichage",
+      closeSettings: "Fermer les paramètres d'affichage",
       textSize: "Taille du texte :",
       sizeSmall: "Petite",
       sizeMedium: "Moyenne",
