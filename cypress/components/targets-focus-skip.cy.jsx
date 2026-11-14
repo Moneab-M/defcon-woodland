@@ -84,3 +84,41 @@ describe("Skip link (SCRUM-69)", () => {
     cy.get("[data-cy=skip-link]").should("have.text", "Passer au contenu principal");
   });
 });
+
+describe("Focus outline (SCRUM-69)", () => {
+  const FOCUS_TARGETS = [
+    "[data-cy=language-option-fr]",
+    "button[title='Light/Dark']",
+    "[data-cy=skip-link]",
+  ];
+
+  // Purpose: focus an element as a keyboard user would, so :focus-visible matches.
+  function focusByKeyboard(selector) {
+    cy.document().then((doc) => {
+      doc.body.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab", bubbles: true }));
+    });
+    cy.get(selector).focus();
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage();
+  });
+
+  FOCUS_TARGETS.forEach((selector) => {
+    it(`${selector} shows a solid 3 px outline when focused`, () => {
+      mountApp();
+      cy.document().then((doc) => doc.documentElement.classList.remove("dark"));
+      focusByKeyboard(selector);
+      cy.get(selector).should("have.css", "outline-style", "solid");
+      cy.get(selector).should("have.css", "outline-width", "3px");
+      cy.get(selector).should("have.css", "outline-color", "rgb(37, 99, 235)");
+    });
+  });
+
+  it("uses the pale blue outline in dark mode", () => {
+    mountApp();
+    cy.document().then((doc) => doc.documentElement.classList.add("dark"));
+    focusByKeyboard("[data-cy=language-option-fr]");
+    cy.get("[data-cy=language-option-fr]").should("have.css", "outline-color", "rgb(147, 197, 253)");
+  });
+});
