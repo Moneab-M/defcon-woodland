@@ -48,8 +48,7 @@ const FAQ_IDS = ["help", "purpose", "readAloud", "phone"];
 const btnBase =
   "relative overflow-hidden inline-flex items-center gap-2 rounded-lg px-3 py-2 font-semibold border transition-colors " +
   "bg-neutral-200 text-neutral-900 border-neutral-500 hover:bg-neutral-300 hover:border-neutral-700 " +
-  "dark:bg-neutral-700 dark:text-white dark:border-neutral-300 dark:hover:bg-neutral-600 dark:hover:border-white " +
-  "focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400/60 dark:focus-visible:ring-blue-300/60";
+  "dark:bg-neutral-700 dark:text-white dark:border-neutral-300 dark:hover:bg-neutral-600 dark:hover:border-white";
 
 export default function About() {
   const t = useText();

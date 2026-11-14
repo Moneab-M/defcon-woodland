@@ -69,6 +69,7 @@ export default function Navbar() {
           </button>
           <LanguageSelector />
           <button
+            type="button"
             onClick={toggleTheme}
             aria-label={text("common.theme.toggleLabel")}
             className={BUTTON_CLASSES}
