@@ -41,6 +41,47 @@ const en = {
       // Shown in English while Mi'kmaq text waits for client verification ([ID 410])
       micNotAvailable: "Mi'kmaq text is not available yet.",
     },
+    footer: {
+      address: "Head Of St Margarets Bay, NS B3Z 2C9",
+      copyright: "© 2024 SMU, CSCI 3428 Group25G",
+    },
+    accessibility: {
+      title: "Accessibility Settings",
+      textSize: "Text Size:",
+      sizeSmall: "Small",
+      sizeMedium: "Medium",
+      sizeLarge: "Large",
+      sizeMassive: "Massive",
+      contrast: "Contrast:",
+      contrastDefault: "Default",
+      contrastDark: "Dark Mode",
+      contrastGreyscale: "Grey Scale Mode",
+      contrastInverted: "Inverted",
+      lineSpacing: "Line Spacing:",
+      spacingDefault: "Default",
+      spacing2: "2",
+      spacing3: "3",
+      spacing4: "4",
+    },
+    weather: {
+      loading: "Loading...",
+      iconAlt: "Weather Icon",
+    },
+  },
+  // Gallery page
+  gallery: {
+    title: "Gallery",
+    addImage: {
+      heading: "Add Your Own Image",
+      note: "Uploaded images are stored on the backend.",
+      choose: "Choose Image(s)",
+      uploading: "Uploading…",
+    },
+    grid: {
+      heading: "Uploaded Images",
+      empty: "No images found.",
+      imageAlt: "Uploaded {index}",
+    },
   },
 };
 

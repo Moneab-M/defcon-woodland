@@ -6,6 +6,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useText } from "../i18n/useText";
 
 /**
  * Weather Component
@@ -18,6 +19,7 @@ import axios from "axios";
 
 
 const Weather = ({ lat, lon }) => {
+  const t = useText();
   /**
    * State to store weather data fetched from the API.
    * @type {[Object|null, Function]}
@@ -49,7 +51,7 @@ const Weather = ({ lat, lon }) => {
 
   // Show loading message while data is being fetched
   if (!weatherData) {
-    return <p>Loading...</p>;
+    return <p>{t("common.weather.loading")}</p>;
   }
 
   // Extract temperature and icon URL from weather data
@@ -59,7 +61,7 @@ const Weather = ({ lat, lon }) => {
   return (
     <div className="flex flex-col items-center space-y-1">
       {/* Weather Display */}
-      <img src={iconUrl} alt="Weather Icon" className="w-8 h-8" />
+      <img src={iconUrl} alt={t("common.weather.iconAlt")} className="w-8 h-8" />
       <span className="text-sm font-medium">{temp}°C</span>
     </div>
   );

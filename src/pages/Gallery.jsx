@@ -8,6 +8,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useText } from '../i18n/useText';
 import './Gallery.css'; // Custom CSS since no tailwind support for Parallax
 
 // Parallax header images
@@ -17,6 +18,7 @@ import image3 from '../assets/image3.jpg';
 import image4 from '../assets/image4.jpg';
 
 function Gallery() {
+  const t = useText();
   const [images, setImages] = useState([]);
   const [uploading, setUploading] = useState(false);
 
@@ -64,7 +66,7 @@ function Gallery() {
       <div className="parallax-container" style={{ backgroundImage: `url(${image1})` }}>
         <div className="parallax-content">
           <h1 className="parallax-heading text-5xl font-bold text-white text-shadow-lg">
-            Gallery
+            {t("gallery.title")}
           </h1>
         </div>
       </div>
@@ -86,13 +88,13 @@ function Gallery() {
 
       {/* ADD IMAGE SECTION */}
       <section className="bg-gray-900 text-white p-8 text-center">
-        <h2 className="text-3xl font-semibold mb-4">Add Your Own Image</h2>
+        <h2 className="text-3xl font-semibold mb-4">{t("gallery.addImage.heading")}</h2>
         <p className="mb-3 text-sm text-gray-300">
-          Uploaded images are stored on the backend.
+          {t("gallery.addImage.note")}
         </p>
 
         <label className="inline-block bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded cursor-pointer">
-          {uploading ? 'Uploading…' : 'Choose Image(s)'}
+          {uploading ? t("gallery.addImage.uploading") : t("gallery.addImage.choose")}
           <input
             type="file"
             accept="image/*"
@@ -105,10 +107,10 @@ function Gallery() {
 
       {/* GALLERY GRID */}
       <section className="bg-gray-100 p-8">
-        <h2 className="text-3xl font-semibold mb-4 text-center">Uploaded Images</h2>
+        <h2 className="text-3xl font-semibold mb-4 text-center">{t("gallery.grid.heading")}</h2>
 
         {images.length === 0 ? (
-          <p className="text-center text-gray-500">No images found.</p>
+          <p className="text-center text-gray-500">{t("gallery.grid.empty")}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {images.map((image, index) => (
@@ -118,7 +120,7 @@ function Gallery() {
               >
                 <img
                   src={`http://127.0.0.1:8001${image.meta.download_url}`}
-                  alt={`Uploaded ${index}`}
+                  alt={t("gallery.grid.imageAlt", { index })}
                   className="w-full h-auto rounded-lg transition-all duration-300 transform hover:scale-105"
                 />
               </div>

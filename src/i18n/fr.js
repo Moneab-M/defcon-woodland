@@ -41,6 +41,50 @@ const fr = {
       label: "Langue",
     },
     // languageNotice is not needed: it is only shown in English (see en.js)
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    footer: {
+      address: "Head Of St Margarets Bay, N.-É. B3Z 2C9",
+      copyright: "© 2024 SMU, CSCI 3428 Group25G",
+    },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    accessibility: {
+      title: "Paramètres d'accessibilité",
+      textSize: "Taille du texte :",
+      sizeSmall: "Petite",
+      sizeMedium: "Moyenne",
+      sizeLarge: "Grande",
+      sizeMassive: "Très grande",
+      contrast: "Contraste :",
+      contrastDefault: "Par défaut",
+      contrastDark: "Mode sombre",
+      contrastGreyscale: "Mode niveaux de gris",
+      contrastInverted: "Inversé",
+      lineSpacing: "Interligne :",
+      spacingDefault: "Par défaut",
+      spacing2: "2",
+      spacing3: "3",
+      spacing4: "4",
+    },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    weather: {
+      loading: "Chargement...",
+      iconAlt: "Icône météo",
+    },
+  },
+  // NEEDS REVIEW BY A FLUENT SPEAKER
+  gallery: {
+    title: "Galerie",
+    addImage: {
+      heading: "Ajoute ta propre image",
+      note: "Les images envoyées sont gardées sur le serveur.",
+      choose: "Choisir une ou des images",
+      uploading: "Envoi en cours…",
+    },
+    grid: {
+      heading: "Images envoyées",
+      empty: "Aucune image trouvée.",
+      imageAlt: "Image envoyée {index}",
+    },
   },
 };
 
