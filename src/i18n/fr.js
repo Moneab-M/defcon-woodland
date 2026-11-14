@@ -26,6 +26,8 @@ const fr = {
       gallery: "Galerie",
       naturalBurial: "Inhumation naturelle", // UNSURE: or "Enterrement naturel"
       map: "Carte",
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      trees: "Arbres parlants",
       contact: "Contact", // UNSURE: Canadian sites often use "Nous joindre"
       // NEEDS REVIEW BY A FLUENT SPEAKER
       menu: "Menu",
@@ -413,6 +415,14 @@ const fr = {
   // NEEDS REVIEW BY A FLUENT SPEAKER
   // Arbres parlants
   trees: {
+    page: {
+      title: "Arbres parlants",
+      intro: "Certains arbres de notre boisé ont une affiche. Lis l'affiche, ou choisis un arbre ci-dessous, pour entendre son histoire. Tu n'as pas besoin de partager ta position ni ta caméra.",
+      listLabel: "Nos arbres parlants",
+      backToList: "Retour à tous les arbres parlants",
+      unknown: "Nous n'avons pas trouvé cet arbre. Retournons vers les arbres que nous connaissons.",
+      factsLabel: "Ce que j'aimerais que tu saches",
+    },
     species: {
       // NEEDS REVIEW BY A FLUENT SPEAKER
       yellowBirch: {

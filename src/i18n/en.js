@@ -24,6 +24,7 @@ const en = {
       gallery: "Gallery",
       naturalBurial: "Natural Burial",
       map: "Map",
+      trees: "Talking Trees",
       contact: "Contact",
       menu: "Menu",
       closeMenu: "Close menu",
@@ -403,6 +404,14 @@ const en = {
   },
   // Talking Trees
   trees: {
+    page: {
+      title: "Talking Trees",
+      intro: "Some trees in our woodland have a sign. Scan the sign, or pick a tree below, to hear its story. You do not need to share your location or your camera.",
+      listLabel: "Our Talking Trees",
+      backToList: "Back to all Talking Trees",
+      unknown: "We could not find that tree. Let's go back to the trees we know.",
+      factsLabel: "Things I would like you to know",
+    },
     species: {
       yellowBirch: {
         name: "Yellow birch",

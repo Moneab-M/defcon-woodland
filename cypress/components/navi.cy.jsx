@@ -19,8 +19,8 @@ import { LanguageProvider } from "../../src/context/LanguageContext.jsx";
 
 // ---------- Global constants ----------
 const MAX_SWITCH_MS = 200; // [ID 201]
-const FRENCH_NAV = ["Accueil", "À propos", "Écosystème", "Galerie", "Inhumation naturelle", "Carte", "Contact"];
-const ENGLISH_NAV = ["Home", "About", "Ecosystem", "Gallery", "Natural Burial", "Map", "Contact"];
+const FRENCH_NAV = ["Accueil", "À propos", "Écosystème", "Galerie", "Inhumation naturelle", "Carte", "Arbres parlants", "Contact"];
+const ENGLISH_NAV = ["Home", "About", "Ecosystem", "Gallery", "Natural Burial", "Map", "Talking Trees", "Contact"];
 
 /**
  * Purpose: Mount the header inside the providers it needs.

@@ -66,6 +66,20 @@ describe("Page titles (SCRUM-52)", () => {
     expect(titles.size).to.equal(7);
   });
 
+  it("titles the trees list and a tree page (SCRUM-54)", () => {
+    mountAt("/trees");
+    cy.document().its("title").should("eq", `Talking Trees | ${SITE}`);
+    cy.get("[data-cy=to-fr]").click();
+    cy.document().its("title").should("eq", `Arbres parlants | ${SITE}`);
+  });
+
+  it("titles a tree page with the species name (SCRUM-54)", () => {
+    mountAt("/trees/yellow-birch-1");
+    cy.document().its("title").should("eq", `Yellow birch | ${SITE}`);
+    cy.get("[data-cy=to-fr]").click();
+    cy.document().its("title").should("eq", `Bouleau jaune | ${SITE}`);
+  });
+
   it("uses the not-found title for an unknown path", () => {
     mountAt("/nope");
     cy.document().its("title").should("eq", `Page not found | ${SITE}`);

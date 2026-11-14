@@ -18,6 +18,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useText } from "../i18n/useText";
+import { getTreeById } from "../talkingTrees/trees"; // SCRUM-54: tree page title
 
 // ---------- Global constants ----------
 const TITLE_KEYS = {
@@ -28,6 +29,7 @@ const TITLE_KEYS = {
   "/naturalburial": "common.nav.naturalBurial",
   "/contacts": "common.nav.contact",
   "/map": "common.nav.map",
+  "/trees": "common.nav.trees",
 };
 const NOT_FOUND_KEY = "common.pageTitle.notFound";
 
@@ -42,8 +44,13 @@ function PageTitle() {
 
   useEffect(() => {
     const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
-    const key = TITLE_KEYS[path.toLowerCase()] || NOT_FOUND_KEY;
-    document.title = `${t(key)} | ${t("common.siteName")}`;
+    // SCRUM-54: /trees/<id> is titled with the species name (list title if the id is unknown)
+    const treeMatch = path.match(/^\/trees\/([^/]+)$/i);
+    const tree = treeMatch ? getTreeById(decodeURIComponent(treeMatch[1])) : null;
+    const pageName = tree
+      ? t(`trees.species.${tree.species}.name`)
+      : t(TITLE_KEYS[path.toLowerCase()] || (treeMatch ? "common.nav.trees" : NOT_FOUND_KEY));
+    document.title = `${pageName} | ${t("common.siteName")}`;
   }, [pathname, t]);
 
   return null;

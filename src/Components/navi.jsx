@@ -51,6 +51,7 @@ export default function Navbar() {
           <NavItem to="/gallery">{text("common.nav.gallery")}</NavItem>
           <NavItem to="/naturalburial">{text("common.nav.naturalBurial")}</NavItem>
           <NavItem to="/map">{text("common.nav.map")}</NavItem>
+          <NavItem to="/trees">{text("common.nav.trees")}</NavItem>
           <NavItem to="/contacts">{text("common.nav.contact")}</NavItem>
         </ul>
 
