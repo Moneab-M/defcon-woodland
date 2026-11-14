@@ -17,7 +17,7 @@
  * - The line being spoken is marked with aria-current and an underline (not colour).
  */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiVolume2, FiSquare } from "react-icons/fi";
 import { BUTTON_CLASSES } from "./controlStyles";
 import { usePrerecordedAudio } from "../context/PrerecordedAudioContext";
@@ -41,6 +41,9 @@ export default function TreeAudio({ tree, audioOverride, onSpeakingChange }) {
   const playing = playingId === id;
   const audio = audioOverride || getTreeAudio(tree.id, language);
   const showNotice = !audio || unavailableId === id;
+  // Set once the visitor activates the button with no recording, so the notice is announced
+  const [nudged, setNudged] = useState(false);
+  const noticeId = `tree-audio-notice-${tree.id}`;
 
   // Greeting then facts, in the Selected Language (line 0 is the greeting)
   const facts = t(`trees.species.${tree.species}.facts`);
@@ -65,7 +68,12 @@ export default function TreeAudio({ tree, audioOverride, onSpeakingChange }) {
 
   // Play or stop; with no recording only the notice shows (nothing plays)
   const handleClick = () => {
-    toggle(id, audio ? audio.src : null);
+    if (!audio) {
+      // Keep the button focusable but do not try to play; announce the notice instead
+      setNudged(true);
+      return;
+    }
+    toggle(id, audio.src);
   };
 
   // Which line is being spoken now (index into lines), or -1
@@ -79,6 +87,8 @@ export default function TreeAudio({ tree, audioOverride, onSpeakingChange }) {
         type="button"
         className={BUTTON_CLASSES}
         aria-pressed={playing}
+        aria-disabled={!audio ? "true" : undefined}
+        aria-describedby={showNotice ? noticeId : undefined}
         data-cy="tree-audio-button"
         onClick={handleClick}
       >
@@ -86,12 +96,16 @@ export default function TreeAudio({ tree, audioOverride, onSpeakingChange }) {
         {playing ? t("trees.audio.stop") : t("trees.audio.play")}
       </button>
       {showNotice && (
-        <p role="status" className="text-lg leading-[1.2]" data-cy="tree-audio-unavailable">
+        <p id={noticeId} className="text-lg leading-[1.2]" data-cy="tree-audio-unavailable">
           {t("trees.audio.unavailable")}
         </p>
       )}
+      {/* Live region: empty until the visitor activates the button, then announces the notice */}
+      <p role="status" className="sr-only" data-cy="tree-audio-status">
+        {showNotice && (nudged || unavailableId === id) ? t("trees.audio.unavailable") : ""}
+      </p>
       {playing && (
-        <div aria-label={t("trees.audio.captionsLabel")} className="text-lg leading-[1.2]" data-cy="tree-captions">
+        <div role="group" aria-label={t("trees.audio.captionsLabel")} className="text-lg leading-[1.2]" data-cy="tree-captions">
           {cues
             ? currentLine >= 0 && lines[currentLine] !== undefined && (
                 <p aria-current="true" className="underline underline-offset-4" data-cy="tree-caption-line">

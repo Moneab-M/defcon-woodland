@@ -83,9 +83,7 @@ describe("Tree audio (SCRUM-57)", () => {
 
   it("shows the notice and never plays when there is no recording", () => {
     mountTree();
-    cy.get("[data-cy=tree-audio-unavailable]")
-      .should("have.attr", "role", "status")
-      .and("contain.text", en.trees.audio.unavailable);
+    cy.get("[data-cy=tree-audio-unavailable]").should("contain.text", en.trees.audio.unavailable);
     cy.get("[data-cy=tree-audio-button]").should("have.attr", "aria-pressed", "false").click();
     cy.get("[data-cy=tree-audio-button]").should("have.attr", "aria-pressed", "false");
     cy.window().then((win) => {
@@ -93,6 +91,23 @@ describe("Tree audio (SCRUM-57)", () => {
     });
     cy.get("@speak").then((speak) => {
       if (speak) expect(speak).to.not.have.been.called;
+    });
+  });
+
+  it("no recording: button is aria-disabled, focusable, described by the notice and announces it on activation", () => {
+    mountTree();
+    cy.get("[data-cy=tree-audio-unavailable]").invoke("attr", "id").then((noticeId) => {
+      cy.get("[data-cy=tree-audio-button]").should("have.attr", "aria-disabled", "true");
+      cy.get("[data-cy=tree-audio-button]").should("not.have.attr", "disabled");
+      cy.get("[data-cy=tree-audio-button]").should("have.attr", "aria-describedby", noticeId);
+    });
+    cy.get("[data-cy=tree-audio-status]").should("have.attr", "role", "status").and("have.text", "");
+    cy.get("[data-cy=tree-audio-button]").focus().should("have.focus");
+    cy.get("[data-cy=tree-audio-button]").click();
+    cy.get("[data-cy=tree-audio-status]").should("contain.text", en.trees.audio.unavailable);
+    cy.get("[data-cy=tree-audio-button]").should("have.focus");
+    cy.window().then((win) => {
+      expect(win.__played).to.have.length(0);
     });
   });
 
@@ -136,6 +151,9 @@ describe("Tree audio (SCRUM-57)", () => {
     cy.window().then((win) => win.__fakeAudio.dispatchEvent(new win.Event("ended")));
     cy.get("[data-cy=tree-audio-button]").should("have.attr", "aria-pressed", "false");
     cy.get("@speaking").should("have.been.calledWith", false);
+    cy.get("@speak").then((speak) => {
+      if (speak) expect(speak).to.not.have.been.called;
+    });
   });
 
   it("shows the notice when play() is rejected", () => {
