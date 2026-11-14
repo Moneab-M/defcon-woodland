@@ -14,8 +14,9 @@
  * Notes:
  * - The Selected Language itself is stored by LanguageContext (SCRUM-6).
  *   This file only displays the control and calls setLanguage().
- * - Translating the Page Text is SCRUM-8; choosing a language here does not
- *   change the page wording yet.
+ * - Page Text is translated by useText() (SCRUM-8). The language names stay in
+ *   each language's own name and are not translated.
+ * - SCRUM-8: group label moved to src/i18n (Moneab Milad)
  * - Button styling copies the Light/Dark button in navi.jsx so controls of the
  *   same type look the same ([ID 317]). Colours are neutral black/white
  *   tints only: no Red, Green or Neon Colours ([ID 316]).
@@ -26,6 +27,7 @@
  */
 
 import { useLanguage, SUPPORTED_LANGUAGES } from "../context/LanguageContext";
+import { useText } from "../i18n/useText"; // SCRUM-8: Page Text lookup
 
 // ---------- Global constants ----------
 // Each language is written in its own name, so visitors who do not read
@@ -69,11 +71,12 @@ const SELECTED_BUTTON_CLASSES =
  */
 export default function LanguageSelector() {
   const { language, setLanguage } = useLanguage();
+  const t = useText();
 
   return (
     <div
       role="group"
-      aria-label="Language"
+      aria-label={t("common.languageSelector.label")}
       className="flex items-center gap-1"
       data-cy="language-selector"
     >

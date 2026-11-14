@@ -1,9 +1,12 @@
 // src/components/Navbar.jsx
+// SCRUM-8: text moved to src/i18n (Moneab Milad)
 import { useEffect, useState } from "react";
 import { Link, useResolvedPath, useMatch } from "react-router-dom";
 import { FaMoon, FaSun, FaFacebook, FaYoutube } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
 import LanguageSelector from "./LanguageSelector"; // SCRUM-7: EN / FR / Mi'kmaq
+import LanguageNotice from "./LanguageNotice"; // SCRUM-8: Mi'kmaq not available yet
+import { useText } from "../i18n/useText"; // SCRUM-8: Page Text lookup
 
 // ---- Navbar ----
 export default function Navbar() {
@@ -22,6 +25,7 @@ export default function Navbar() {
   }, [theme]);
 
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const text = useText(); // SCRUM-8
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-black/10 dark:border-white/10">
@@ -33,13 +37,13 @@ export default function Navbar() {
         {/* SCRUM-7: no gap-6 here; index.css "nav a" margins already space the links,
             and the freed width lets the Language Selector fit on laptop screens */}
         <ul className="hidden md:flex items-center text-sm">
-          <NavItem to="/">Home</NavItem>
-          <NavItem to="/about">About</NavItem>
-          <NavItem to="/ecosystem">Ecosystem</NavItem>
-          <NavItem to="/gallery">Gallery</NavItem>
-          <NavItem to="/naturalburial">Natural Burial</NavItem>
-          <NavItem to="/map">Map</NavItem>
-          <NavItem to="/contacts">Contact</NavItem>
+          <NavItem to="/">{text("common.nav.home")}</NavItem>
+          <NavItem to="/about">{text("common.nav.about")}</NavItem>
+          <NavItem to="/ecosystem">{text("common.nav.ecosystem")}</NavItem>
+          <NavItem to="/gallery">{text("common.nav.gallery")}</NavItem>
+          <NavItem to="/naturalburial">{text("common.nav.naturalBurial")}</NavItem>
+          <NavItem to="/map">{text("common.nav.map")}</NavItem>
+          <NavItem to="/contacts">{text("common.nav.contact")}</NavItem>
         </ul>
 
         {/* SCRUM-7: Language Selector and Light/Dark button share one right-hand group */}
@@ -47,15 +51,16 @@ export default function Navbar() {
           <LanguageSelector />
           <button
             onClick={toggleTheme}
-            aria-label="Toggle light and dark mode"
+            aria-label={text("common.theme.toggleLabel")}
             className="ml-4 inline-flex items-center gap-2 rounded-md border border-black/10 dark:border-white/20 px-3 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 transition"
-            title="Light/Dark"
+            title={text("common.theme.title")}
           >
             {theme === "dark" ? <FaSun /> : <FaMoon />}
-            <span className="hidden sm:inline">{theme === "dark" ? "Light" : "Dark"}</span>
+            <span className="hidden sm:inline">{theme === "dark" ? text("common.theme.light") : text("common.theme.dark")}</span>
           </button>
         </div>
       </nav>
+      <LanguageNotice />
     </header>
   );
 }
