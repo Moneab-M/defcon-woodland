@@ -436,6 +436,7 @@ const fr = {
       denied: "Ce n'est pas grave. Tu peux quand même rencontrer les arbres. Choisis-en un dans la liste.",
       pickFromList: "Choisir un arbre dans la liste",
       close: "Fermer",
+      waiting: "J'attends ta caméra. Si ton appareil le demande, touche Autoriser.",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
     nearby: {
