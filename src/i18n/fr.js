@@ -434,6 +434,14 @@ const fr = {
       factsLabel: "Ce que j'aimerais que tu saches",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
+    audio: {
+      play: "Écouter cet arbre",
+      stop: "Arrêter",
+      unavailable: "Cet arbre n'a pas encore trouvé sa voix. Tu peux lire son histoire plus bas.",
+      captionsLabel: "Ce que dit l'arbre",
+      transcript: "Lire ce que dit l'arbre",
+    },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
     scanner: {
       open: "Lire l'affiche d'un arbre",
       title: "Lire l'affiche d'un arbre",

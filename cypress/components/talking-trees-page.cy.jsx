@@ -12,6 +12,7 @@ import { MemoryRouter, Routes, Route } from "react-router-dom";
 import TalkingTrees from "../../src/pages/TalkingTrees.jsx";
 import TreePage from "../../src/pages/TreePage.jsx";
 import { LanguageProvider, useLanguage } from "../../src/context/LanguageContext.jsx";
+import { PrerecordedAudioProvider } from "../../src/context/PrerecordedAudioContext.jsx";
 import { TALKING_TREES } from "../../src/talkingTrees/trees.js";
 import en from "../../src/i18n/en.js";
 import fr from "../../src/i18n/fr.js";
@@ -27,11 +28,13 @@ function mountAt(path) {
   return mount(
     <MemoryRouter initialEntries={[path]}>
       <LanguageProvider>
+        <PrerecordedAudioProvider>
         <FrenchButton />
         <Routes>
           <Route path="/trees" element={<TalkingTrees />} />
           <Route path="/trees/:treeId" element={<TreePage />} />
         </Routes>
+        </PrerecordedAudioProvider>
       </LanguageProvider>
     </MemoryRouter>
   );

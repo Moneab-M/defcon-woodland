@@ -421,6 +421,13 @@ const en = {
       unknown: "We could not find that tree. Let's go back to the trees we know.",
       factsLabel: "Things I would like you to know",
     },
+    audio: {
+      play: "Hear this tree",
+      stop: "Stop",
+      unavailable: "This tree has not found its voice yet. You can read its story below.",
+      captionsLabel: "What the tree is saying",
+      transcript: "Read what the tree says",
+    },
     scanner: {
       open: "Scan a tree's sign",
       title: "Scan a tree's sign",
