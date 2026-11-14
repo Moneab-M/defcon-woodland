@@ -426,7 +426,7 @@ const fr = {
       locating: "Nous cherchons où tu es\u2026",
       found: "Voilà ta position. Ton repère est sur la carte.",
       failed: "Nous n'avons pas trouvé où tu es. Tu peux vérifier les réglages de ton appareil et essayer encore.",
-      noSpeech: "Ce navigateur ne peut pas lire les mots de l'arbre à voix haute. Tu peux quand même regarder le panneau.",
+      noSpeech: "Cet appareil ne peut pas lire les mots de l'arbre à voix haute. Tu peux quand même regarder le panneau.",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
     locationFallback: {

@@ -411,7 +411,7 @@ const en = {
       locating: "Looking for where you are\u2026",
       found: "Here you are. Your marker is on the map.",
       failed: "We could not find where you are. You can check your device settings and try again.",
-      noSpeech: "This browser cannot read the tree's words aloud. You can still look at the sign.",
+      noSpeech: "This device cannot read the tree's words aloud. You can still look at the sign.",
     },
     locationFallback: {
       denied: "That's okay. You can explore without sharing where you are.",
