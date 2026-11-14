@@ -18,6 +18,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useText } from "../i18n/useText";
+import ImageAudioButton from "../Components/ImageAudioButton"; // SCRUM-9: Image Audio Button
 
 // Text for these lists lives in the translation files under about.*; only ids, images and audio stay here.
 const SECTIONS = [
@@ -284,15 +285,6 @@ export default function About() {
     speak(sectionId, text);
   };
 
-  const playImageAudio = async (sec) => {
-    if (sec.audioDescSrc) {
-      const audio = new Audio(sec.audioDescSrc);
-      audio.play().catch(() => speak(`${sec.id}-image`, sec.ttsFallback));
-      return;
-    }
-    speak(`${sec.id}-image`, sec.ttsFallback);
-  };
-
   const toggleFaq = (index) => {
     setFaqOpenIndex((prev) => (prev === index ? null : index));
   };
@@ -416,12 +408,11 @@ export default function About() {
                   className="w-full md:w-[200px] h-[150px] object-cover rounded-lg border border-neutral-300 dark:border-neutral-600"
                 />
                 <p className="text-xs italic opacity-80">{sec.caption}</p>
-                <button
-                  className={btnBase}
-                  onClick={handleButtonClick(() => playImageAudio(sec))}
-                >
-                  🔊 {t("about.imageAudio")}
-                </button>
+                <ImageAudioButton
+                  imageId={sec.id}
+                  src={sec.audioDescSrc}
+                  onUnavailable={() => speak(`${sec.id}-image`, sec.ttsFallback)}
+                />
               </div>
 
               {/* TEXT */}

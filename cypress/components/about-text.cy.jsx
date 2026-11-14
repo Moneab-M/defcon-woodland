@@ -13,6 +13,7 @@ import React from "react";
 import { mount } from "cypress/react";
 import About from "../../src/pages/About.jsx";
 import { LanguageProvider } from "../../src/context/LanguageContext.jsx";
+import { PrerecordedAudioProvider } from "../../src/context/PrerecordedAudioContext.jsx";
 
 /**
  * Purpose: Mount the About page inside the language provider.
@@ -25,7 +26,9 @@ import { LanguageProvider } from "../../src/context/LanguageContext.jsx";
 function mountAbout() {
   return mount(
     <LanguageProvider>
-      <About />
+      <PrerecordedAudioProvider>
+        <About />
+      </PrerecordedAudioProvider>
     </LanguageProvider>
   );
 }
