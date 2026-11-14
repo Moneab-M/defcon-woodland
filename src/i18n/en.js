@@ -404,10 +404,66 @@ const en = {
   // Talking Trees
   trees: {
     species: {
-      yellowBirch: { name: "Yellow birch" },
-      redSpruce: { name: "Red spruce" },
-      redMaple: { name: "Red maple" },
-      whitePine: { name: "Eastern white pine" },
+      yellowBirch: {
+        name: "Yellow birch",
+        greeting: "Hello! I am a yellow birch.",
+        facts: [
+          // NEEDS VERIFICATION
+          "My bark is shiny and yellowish bronze, and it peels in thin, curly strips.",
+          // NEEDS VERIFICATION
+          "If you scratch a young twig, it smells like wintergreen.",
+          // NEEDS VERIFICATION
+          "My leaves turn yellow in the fall.",
+          // NEEDS VERIFICATION
+          "My small seeds give birds food in the winter.",
+          // NEEDS VERIFICATION
+          "I can live for well over a hundred years.",
+        ],
+      },
+      redSpruce: {
+        name: "Red spruce",
+        greeting: "Hello! I am a red spruce.",
+        facts: [
+          // NEEDS VERIFICATION
+          "I am the provincial tree of Nova Scotia.",
+          // NEEDS VERIFICATION
+          "My needles are short, sharp and four-sided.",
+          // NEEDS VERIFICATION
+          "My cones hang down from my branches.",
+          // NEEDS VERIFICATION
+          "I can live for several hundred years.",
+          // NEEDS VERIFICATION
+          "I like the cool, damp air near the coast.",
+        ],
+      },
+      redMaple: {
+        name: "Red maple",
+        greeting: "Hello! I am a red maple.",
+        facts: [
+          // NEEDS VERIFICATION
+          "In early spring I grow red buds and red flowers.",
+          // NEEDS VERIFICATION
+          "My leaves have three to five points, and they turn bright colours in the fall.",
+          // NEEDS VERIFICATION
+          "My seeds have wings, so they spin as they fall.",
+          // NEEDS VERIFICATION
+          "I can grow in wet ground and in dry ground.",
+        ],
+      },
+      whitePine: {
+        name: "Eastern white pine",
+        greeting: "Hello! I am an eastern white pine.",
+        facts: [
+          // NEEDS VERIFICATION
+          "My needles are long and soft, and they grow in bundles of five.",
+          // NEEDS VERIFICATION
+          "My cones are long and thin.",
+          // NEEDS VERIFICATION
+          "I am one of the tallest trees in eastern Canada.",
+          // NEEDS VERIFICATION
+          "My branches grow in flat layers.",
+        ],
+      },
     },
   },
 };
