@@ -72,6 +72,71 @@ const fr = {
     },
   },
   // NEEDS REVIEW BY A FLUENT SPEAKER
+  home: {
+    readAloud: "Lire à haute voix",
+    hero: {
+      welcome: "Bienvenue sur le",
+      siteName: "Site de conservation Woodland",
+      intro: "Découvre le calme de la nature et aide à protéger l'équilibre fragile de notre écosystème.",
+      imageAlt: "Woodland Conservation",
+    },
+    whatWeDo: {
+      heading: "Ce que nous faisons",
+      conservation: {
+        title: "Projets de conservation",
+        text: "Nous protégeons les habitats naturels et la faune pour garder un écosystème en santé pour les générations futures.",
+      },
+      sustainable: {
+        title: "Pratiques durables",
+        text: "Apprends des gestes écologiques qui réduisent notre empreinte carbone et aident à bâtir une planète plus verte.",
+      },
+      wildlife: {
+        title: "Protection de la faune",
+        text: "Nous nous engageons à protéger les espèces en voie de disparition et à rendre la biodiversité à notre milieu naturel.",
+      },
+    },
+    articles: {
+      heading: "Articles à lire",
+      readMore: "Lire la suite",
+      article1: {
+        title: "Aire de conservation proposée",
+        text: "Découvre comment l'aire de conservation proposée nous rapprochera de nos buts écologiques.",
+      },
+      article2: {
+        title: "Une dernière empreinte",
+        text: "Apprends-en plus sur l'empreinte finale des efforts de conservation dans notre région.",
+      },
+      article3: {
+        title: "St. Paul's, Nouvelle-Écosse",
+        text: "Cet article parle des efforts de conservation et de restauration à St. Paul's, en Nouvelle-Écosse.",
+      },
+    },
+    weather: {
+      title: "Météo",
+      localWoodland: "Forêt de la région",
+      yourLocation: "Ta position",
+      useMyLocation: "Utiliser ma position",
+      loading: "Chargement des conditions actuelles…",
+      unavailable: "Météo non disponible. Affichage d'un lieu par défaut.",
+      notSupported: "La géolocalisation n'est pas prise en charge. Affichage d'un lieu par défaut.",
+      permissionDenied: "Permission refusée. Affichage d'un lieu par défaut.",
+      temperature: "Température",
+      wind: "Vent",
+      windUnit: "km/h",
+      timezone: "Fuseau horaire",
+    },
+    featured: {
+      heading: "Espèce en vedette",
+      name: "Bouleau jaune",
+      shortDescription: "Le bouleau jaune est une espèce importante de la région, connue pour son écorce jaune bien particulière.",
+      longDescription: "Le bouleau jaune est une espèce importante de la région, connue pour son écorce jaune bien particulière et son rôle dans la biodiversité locale. Il pousse dans les forêts et sert d'abri à toutes sortes d'animaux.",
+      learnMore: "En savoir plus",
+    },
+    modal: {
+      close: "Fermer",
+    },
+  },
+  // NEEDS REVIEW BY A FLUENT SPEAKER
   gallery: {
     title: "Galerie",
     addImage: {

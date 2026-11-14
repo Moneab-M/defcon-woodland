@@ -68,6 +68,71 @@ const en = {
       iconAlt: "Weather Icon",
     },
   },
+  // Home page
+  home: {
+    readAloud: "Read out loud",
+    hero: {
+      welcome: "Welcome to the",
+      siteName: "Woodland Conservation Site",
+      intro: "Explore the serenity of nature and contribute to preserving the delicate balance of our ecosystem.",
+      imageAlt: "Woodland Conservation",
+    },
+    whatWeDo: {
+      heading: "What We Do",
+      conservation: {
+        title: "Conservation Projects",
+        text: "We focus on preserving natural habitats and wildlife to ensure a healthy ecosystem for future generations.",
+      },
+      sustainable: {
+        title: "Sustainable Practices",
+        text: "Learn about eco-friendly practices that help reduce our carbon footprint and contribute to a greener planet.",
+      },
+      wildlife: {
+        title: "Wildlife Protection",
+        text: "We are committed to protecting endangered species and restoring biodiversity to our natural surroundings.",
+      },
+    },
+    articles: {
+      heading: "Relevant Articles",
+      readMore: "Read More",
+      article1: {
+        title: "Proposed Conservation Area",
+        text: "Discover how the proposed conservation area will bring us closer to achieving our ecological goals.",
+      },
+      article2: {
+        title: "A Final Footprint",
+        text: "Learn more about the final footprint of conservation efforts in our local area.",
+      },
+      article3: {
+        title: "St. Paul's Nova Scotia",
+        text: "This article explores the ongoing conservation and restoration efforts at St. Paul's, Nova Scotia.",
+      },
+    },
+    weather: {
+      title: "Weather",
+      localWoodland: "Local woodland",
+      yourLocation: "Your location",
+      useMyLocation: "Use my location",
+      loading: "Loading current conditions…",
+      unavailable: "Weather unavailable. Showing fallback.",
+      notSupported: "Geolocation not supported; using fallback.",
+      permissionDenied: "Permission denied; using fallback.",
+      temperature: "Temperature",
+      wind: "Wind",
+      windUnit: "km/h",
+      timezone: "Timezone",
+    },
+    featured: {
+      heading: "Featured Species",
+      name: "Yellow Birch",
+      shortDescription: "The Yellow Birch is an important species in the area, known for its distinctive yellow bark.",
+      longDescription: "The Yellow Birch is an important species in the area, known for its distinctive yellow bark and role in local biodiversity. It thrives in woodland areas, providing shelter for various wildlife.",
+      learnMore: "Learn More",
+    },
+    modal: {
+      close: "Close",
+    },
+  },
   // Gallery page
   gallery: {
     title: "Gallery",
