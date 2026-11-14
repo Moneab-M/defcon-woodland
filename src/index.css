@@ -159,3 +159,38 @@ html.linespace-3 body{
 html.linespace-4 body{
   line-height: 4;
 }
+
+/* Talking Tree characters (SCRUM-56): slow, gentle motion; all off for reduced motion */
+.tree-character-crown,
+.tree-character-mouth,
+.tree-character-eye {
+  transform-box: fill-box;
+}
+.tree-character-crown { transform-origin: 50% 100%; }
+.tree-character-mouth { transform-origin: 50% 0%; }
+.tree-character-eye { transform-origin: 50% 50%; animation: tree-character-blink 5s ease-in-out infinite; }
+.tree-character-speaking .tree-character-crown { animation: tree-character-sway 4s ease-in-out infinite; }
+.tree-character-speaking .tree-character-mouth { animation: tree-character-talk 1.6s ease-in-out infinite; }
+
+@keyframes tree-character-sway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+@keyframes tree-character-talk {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.9); }
+}
+@keyframes tree-character-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-character-crown,
+  .tree-character-mouth,
+  .tree-character-eye,
+  .tree-character-speaking .tree-character-crown,
+  .tree-character-speaking .tree-character-mouth {
+    animation: none;
+  }
+}

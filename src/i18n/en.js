@@ -441,6 +441,9 @@ const en = {
       meet: "Meet this tree without scanning",
       dismiss: "Not now",
     },
+    character: {
+      alt: "A friendly drawing of a tree: {name}",
+    },
     species: {
       yellowBirch: {
         name: "Yellow birch",
