@@ -17,6 +17,7 @@
  */
 
 const fr = {
+  // NEEDS REVIEW BY A FLUENT SPEAKER
   common: {
     nav: {
       home: "Accueil",

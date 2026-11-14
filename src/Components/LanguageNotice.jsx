@@ -10,7 +10,7 @@
  * Notes:
  * - The notice is written in English on purpose (see en.js), so it carries
  *   lang="en" even though <html lang> is "mic".
- * - Neutral grey text only: no Red, Green or Neon Colours ([ID 316]).
+ * - Text colour is inherited (black in Light Mode, pale yellow in Dark Mode): no Red, Green or Neon Colours ([ID 316]).
  */
 
 import { useLanguage } from "../context/LanguageContext";
@@ -35,7 +35,7 @@ export default function LanguageNotice() {
     <p
       role="status"
       lang="en"
-      className="mx-auto max-w-7xl px-4 sm:px-6 pb-2 text-sm text-gray-700 dark:text-gray-200"
+      className="mx-auto max-w-7xl px-4 sm:px-6 pb-2 text-lg leading-[1.2]"
       data-cy="language-notice"
     >
       {t("common.languageNotice.micNotAvailable")}
