@@ -410,6 +410,16 @@ const fr = {
       labyrinth: { name: "Entrée du labyrinthe", description: "L'entrée du petit labyrinthe du boisé." },
     },
   },
+  // NEEDS REVIEW BY A FLUENT SPEAKER
+  // Arbres parlants
+  trees: {
+    species: {
+      yellowBirch: { name: "Bouleau jaune" },
+      redSpruce: { name: "Épinette rouge" },
+      redMaple: { name: "Érable rouge" },
+      whitePine: { name: "Pin blanc" },
+    },
+  },
 };
 
 export default fr;

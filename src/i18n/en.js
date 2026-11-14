@@ -401,6 +401,15 @@ const en = {
       labyrinth: { name: "Labyrinth Entrance", description: "Entrance to the small woodland labyrinth." },
     },
   },
+  // Talking Trees
+  trees: {
+    species: {
+      yellowBirch: { name: "Yellow birch" },
+      redSpruce: { name: "Red spruce" },
+      redMaple: { name: "Red maple" },
+      whitePine: { name: "Eastern white pine" },
+    },
+  },
 };
 
 export default en;
