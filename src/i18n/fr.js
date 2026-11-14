@@ -31,6 +31,11 @@ const fr = {
       menu: "Menu",
       closeMenu: "Fermer le menu",
     },
+    siteName: "Woodland Conservation Area",
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    pageTitle: {
+      notFound: "Page introuvable",
+    },
     theme: {
       toggleLabel: "Passer du mode clair au mode sombre",
       title: "Clair/Sombre",
