@@ -17,6 +17,7 @@
 const en = {
   // Text shared by every page (header, footer, language controls)
   common: {
+    skipToContent: "Skip to the main content",
     nav: {
       home: "Home",
       about: "About",
