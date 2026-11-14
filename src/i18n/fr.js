@@ -99,6 +99,11 @@ const fr = {
       intro: "Découvre le calme de la nature et aide à protéger l'équilibre fragile de notre écosystème.",
       imageAlt: "Woodland Conservation",
     },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    slideshow: {
+      pause: "Mettre les images en pause",
+      play: "Relancer les images",
+    },
     whatWeDo: {
       heading: "Ce que nous faisons",
       conservation: {
