@@ -61,7 +61,7 @@
 
 /* Navigation Links */
 nav a {
-  margin: 0 1rem;
+  margin: 0 0.5rem; /* SCRUM-22: was 1rem, made the header wider than the screen at 1025-1067 px */
   text-decoration: none;
   font-size: 1.25rem;
   transition: color 0.2s ease;
@@ -88,25 +88,7 @@ nav a.active {
 
 /* Mobile and Tablet Responsive Navigation */
 @media only screen and (max-width: 1024px) {
-  header .nav-btn {
-    visibility: visible;
-    opacity: 1;
-  }
-
-  header nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    transform: translateY(-100vh);
-    transition: transform 1s ease;
-    z-index: 50;
-  }
+  /* SCRUM-22: old fixed/off-screen "header nav" rules removed; the header is now laid out in navi.jsx */
   .map-label {
   background: white;
   border: 1px solid #888;
@@ -116,21 +98,6 @@ nav a.active {
 }
 .sightings-label { border-color: #2f7ed8; }
 .locations-label { border-color: #2ecc71; }
-
-  /* Responsive Navbar for Dark Mode */
-  .dark header nav {
-    background-color: var(--navbarColor-dark); /* Dark mode navbar */
-  }
-
-  header .responsive_nav {
-    transform: translateY(0);
-  }
-
-  nav .nav-close-btn {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-  }
 
   body {
     margin: 0;

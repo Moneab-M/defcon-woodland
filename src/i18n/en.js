@@ -25,6 +25,8 @@ const en = {
       naturalBurial: "Natural Burial",
       map: "Map",
       contact: "Contact",
+      menu: "Menu",
+      closeMenu: "Close menu",
     },
     theme: {
       toggleLabel: "Toggle light and dark mode",
