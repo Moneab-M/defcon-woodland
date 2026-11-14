@@ -30,6 +30,8 @@ import {
 import L from "leaflet";
 import { defaultIcon } from "../leaflet-icon";
 import { useText } from "../i18n/useText";
+import TreeNearbyPrompt from "../Components/TreeNearbyPrompt";
+import { getTreeByMapPoiId } from "../talkingTrees/trees";
 
 const COORDS = {
   dock: [44.620807, -63.914325],
@@ -149,6 +151,9 @@ export default function MapView() {
   const [statusKey, setStatusKey] = useState("map.status.initial");
   const [nearestPoi, setNearestPoi] = useState(null);
   const [speechActiveId, setSpeechActiveId] = useState(null);
+  // SCRUM-59: tree whose "a tree is near" prompt the visitor dismissed.
+  const [dismissedTreeId, setDismissedTreeId] = useState(null);
+  const nearbyTree = nearestPoi ? getTreeByMapPoiId(nearestPoi.poi.id) : null;
   const gpsIntervalRef = useRef(null);
   const gpsStartedRef = useRef(false);
   const siteBoundsRef = useRef(null);
@@ -286,6 +291,10 @@ export default function MapView() {
       </div>
 
       <p className="text-center text-sm mb-2 px-4">{t(statusKey)}</p>
+
+      {nearbyTree && nearbyTree.id !== dismissedTreeId && (
+        <TreeNearbyPrompt tree={nearbyTree} onDismiss={() => setDismissedTreeId(nearbyTree.id)} />
+      )}
 
       <div className="mx-auto max-w-6xl border border-neutral-300 rounded-xl overflow-hidden">
         <MapContainer

@@ -425,6 +425,12 @@ const en = {
       pickFromList: "Pick a tree from the list",
       close: "Close",
     },
+    nearby: {
+      message: "A talking tree is close by: the {name}. Can you find its sign?",
+      scan: "Scan the tree's sign",
+      meet: "Meet this tree without scanning",
+      dismiss: "Not now",
+    },
     species: {
       yellowBirch: {
         name: "Yellow birch",
