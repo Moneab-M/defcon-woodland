@@ -13,42 +13,31 @@ import markerImage from '../assets/Marker.png';
 import gpsImage from '../assets/Gps.png';      
 import React, { useState, useEffect } from 'react'; 
 import { FaVolumeUp, FaPause } from 'react-icons/fa'
+import { useText } from '../i18n/useText.js';
 
 const NaturalBurial = () => {
+  const t = useText();
   const [speakingText, setSpeakingText] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState({ img: '', title: '', description: '' });
+  const [modalContent, setModalContent] = useState({ img: '', titleKey: '', descriptionKey: '' });
   
-  // Function to open modal with specific content
+  // Modal content: images plus translation keys (text is looked up with t when shown)
   const burialTypesInfo = {
     img: coffinImage,
-    title: "Types of Natural Burial",
-    description: `Natural burial (or green burial) focuses on environmentally sustainable ways of returning a body to the earth.
-
-I. Traditional Natural Burial Sites
-1. Conservation Burial Grounds - Highest standard, land is protected forever.
-2. Natural Burial Grounds - Managed woodland/meadow habitats.
-3. Hybrid Cemeteries - Conventional cemeteries with natural burial sections.
-
-II. Alternative Eco-Friendly Methods
-1. Natural Organic Reduction (Human Composting)
-2. Alkaline Hydrolysis (Water Cremation)
-3. Tree Pod Burial (Concept concept)`
+    titleKey: "naturalBurial.types.modalTitle",
+    descriptionKey: "naturalBurial.types.modalText"
   };
 
   const burialMarkersInfo = {
     img: markerImage,
-    title: "Burial Markers",
-    description:
-      'Traditional and Natural Burial Markers Physical markers range from the traditional to the environmentally sensitive. Upright Headstones are common in conventional cemeteries but are generally avoided in natural settings. Flat Markers (plaques set flush with the ground) are often used in hybrid cemeteries for simple identification. In strict natural burial grounds, the preferred markers are a Natural Stone/Fieldstone or a Living Marker, such as a native tree or shrub, ensuring the memorial blends into and supports the natural landscape.'
-      
+    titleKey: "naturalBurial.markers.title",
+    descriptionKey: "naturalBurial.markers.modalText"
   };
 
   const burialLocationsInfo = {
     img: gpsImage,
-    title: "Burial Locations",
-    description:
-      "Natural burials take place in natural burial grounds, conservation areas, woodlands, meadows, or green cemeteries."
+    titleKey: "naturalBurial.locations.title",
+    descriptionKey: "naturalBurial.locations.modalText"
   };
 
   const openModal = (info) => {
@@ -121,7 +110,7 @@ II. Alternative Eco-Friendly Methods
     <div className="natural-burial">
       <img 
         src={burialImage} 
-        alt="A burial mound covered in wildflowers and moss in a forest clearing"
+        alt={t("naturalBurial.headerAlt")}
         className="header-image" 
       />
 
@@ -130,7 +119,7 @@ II. Alternative Eco-Friendly Methods
         <div className="container">
           <section className="description-section">
             <div className="description-header"> 
-              <h2>Description of Natural burial</h2>
+              <h2>{t("naturalBurial.descriptionHeading")}</h2>
               {/* Sound icon button */}
               <button
                 onClick={() =>
@@ -139,8 +128,8 @@ II. Alternative Eco-Friendly Methods
                   )
                 }
                 className="sound-button"
-                aria-label="Read description out loud"
-                title="Listen to description"
+                aria-label={t("naturalBurial.readDescriptionLabel")}
+                title={t("naturalBurial.listenToDescription")}
               >
                 {speakingText === "Natural burial is an eco-friendly alternative to conventional burial methods that emphasizes the conservation of natural resources and the reduction of environmental impact. This practice involves the interment of the body in a biodegradable coffin, shroud, or directly in the soil, without the use of embalming fluids or non-biodegradable materials." ? (
                   <FaPause className="icon" />
@@ -150,11 +139,7 @@ II. Alternative Eco-Friendly Methods
               </button>
             </div>
             <p> 
-              Natural burial is an eco-friendly alternative to conventional burial methods
-              that emphasizes the conservation of natural resources and the reduction
-              of environmental impact. This practice involves the interment of the
-              body in a biodegradable coffin, shroud, or directly in the soil, without a use
-              of embalming fluids or non-biodegradable materials.
+              {t("naturalBurial.descriptionText")}
             </p>
           </section>
 
@@ -177,15 +162,15 @@ II. Alternative Eco-Friendly Methods
                   <FaVolumeUp className="icon" />
                 )}
               </button>
-              <h3>Types of Burial</h3>
-              <p>Biodegradable coffins, shrouds, and natural burial options</p>
-              <button onClick={() => openModal(burialTypesInfo)}>Learn more</button>
+              <h3>{t("naturalBurial.types.title")}</h3>
+              <p>{t("naturalBurial.types.summary")}</p>
+              <button onClick={() => openModal(burialTypesInfo)}>{t("naturalBurial.learnMore")}</button>
             </div>
             
             <div className="info-card">
               <img 
                 src={markerImage} 
-                alt="A wooden heart-shaped grave marker" 
+                alt={t("naturalBurial.markers.alt")} 
                 className="card-image" 
                 onClick={() => openModal(burialMarkersInfo)}
                   style={{ cursor: 'pointer' }}
@@ -200,16 +185,16 @@ II. Alternative Eco-Friendly Methods
                   <FaVolumeUp className="icon" />
                 )}
               </button>
-              <h3>🌿 Burial Markers</h3>
-              <p>Natural markers like trees, stones, or plants</p>
+              <h3>🌿 {t("naturalBurial.markers.title")}</h3>
+              <p>{t("naturalBurial.markers.summary")}</p>
               
-              <button onClick={() => openModal(burialMarkersInfo)}> Learn more </button>
+              <button onClick={() => openModal(burialMarkersInfo)}> {t("naturalBurial.learnMore")} </button>
             </div>
             
             <div className="info-card">
               <img 
                 src={gpsImage} 
-                alt="A handheld GPS device marking a burial location" 
+                alt={t("naturalBurial.locations.alt")} 
                 className="card-image" 
                 onClick={() => openModal(burialLocationsInfo)}
                 style={{ cursor: 'pointer' }}
@@ -224,9 +209,9 @@ II. Alternative Eco-Friendly Methods
                   <FaVolumeUp className="icon" />
                 )}
               </button>
-              <h3>📍 Burial Locations</h3>
-              <p>Natural burial grounds and conservation areas</p>
-              <button onClick={() => openModal(burialLocationsInfo)}>Learn more</button>
+              <h3>📍 {t("naturalBurial.locations.title")}</h3>
+              <p>{t("naturalBurial.locations.summary")}</p>
+              <button onClick={() => openModal(burialLocationsInfo)}>{t("naturalBurial.learnMore")}</button>
             </div>
             
           </section>
@@ -237,12 +222,12 @@ II. Alternative Eco-Friendly Methods
   {showModal && (
     <div className="modal-overlay" onClick={() => setShowModal(false)}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <img src={modalContent.img} alt={modalContent.title} className="modal-image" />
-        <h2>{modalContent.title}</h2>
+        <img src={modalContent.img} alt={t(modalContent.titleKey)} className="modal-image" />
+        <h2>{t(modalContent.titleKey)}</h2>
         <p style={{ whiteSpace: "pre-wrap" }}>
-          {modalContent.description}
+          {t(modalContent.descriptionKey)}
         </p>
-        <button className="close-button" onClick={() => setShowModal(false)}>Close</button>
+        <button className="close-button" onClick={() => setShowModal(false)}>{t("naturalBurial.close")}</button>
       </div>
     </div>
   )}
@@ -251,7 +236,7 @@ II. Alternative Eco-Friendly Methods
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 Woodland Conservation. All rights reserved.</p>
+          <p>{t("naturalBurial.footer")}</p>
         </div>
       </footer>
     </div>

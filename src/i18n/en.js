@@ -287,6 +287,35 @@ const en = {
     fungiHeading: "Fungi",
     fungiText: "Woodland fungi play a vital role in the ecosystem, breaking down organic matter and forming symbiotic relationships with trees and plants.",
   },
+  // Natural Burial page
+  naturalBurial: {
+    headerAlt: "A burial mound covered in wildflowers and moss in a forest clearing",
+    descriptionHeading: "Description of Natural burial",
+    readDescriptionLabel: "Read description out loud",
+    listenToDescription: "Listen to description",
+    descriptionText: "Natural burial is an eco-friendly alternative to conventional burial methods that emphasizes the conservation of natural resources and the reduction of environmental impact. This practice involves the interment of the body in a biodegradable coffin, shroud, or directly in the soil, without a use of embalming fluids or non-biodegradable materials.",
+    types: {
+      title: "Types of Burial",
+      summary: "Biodegradable coffins, shrouds, and natural burial options",
+      modalTitle: "Types of Natural Burial",
+      modalText: "Natural burial (or green burial) focuses on environmentally sustainable ways of returning a body to the earth.\n\nI. Traditional Natural Burial Sites\n1. Conservation Burial Grounds - Highest standard, land is protected forever.\n2. Natural Burial Grounds - Managed woodland/meadow habitats.\n3. Hybrid Cemeteries - Conventional cemeteries with natural burial sections.\n\nII. Alternative Eco-Friendly Methods\n1. Natural Organic Reduction (Human Composting)\n2. Alkaline Hydrolysis (Water Cremation)\n3. Tree Pod Burial (Concept concept)",
+    },
+    markers: {
+      alt: "A wooden heart-shaped grave marker",
+      title: "Burial Markers",
+      summary: "Natural markers like trees, stones, or plants",
+      modalText: "Traditional and Natural Burial Markers Physical markers range from the traditional to the environmentally sensitive. Upright Headstones are common in conventional cemeteries but are generally avoided in natural settings. Flat Markers (plaques set flush with the ground) are often used in hybrid cemeteries for simple identification. In strict natural burial grounds, the preferred markers are a Natural Stone/Fieldstone or a Living Marker, such as a native tree or shrub, ensuring the memorial blends into and supports the natural landscape.",
+    },
+    locations: {
+      alt: "A handheld GPS device marking a burial location",
+      title: "Burial Locations",
+      summary: "Natural burial grounds and conservation areas",
+      modalText: "Natural burials take place in natural burial grounds, conservation areas, woodlands, meadows, or green cemeteries.",
+    },
+    learnMore: "Learn more",
+    close: "Close",
+    footer: "\u00a9 2025 Woodland Conservation. All rights reserved.",
+  },
 };
 
 export default en;
