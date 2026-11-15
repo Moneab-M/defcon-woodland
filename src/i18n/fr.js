@@ -27,6 +27,9 @@ const fr = {
       naturalBurial: "Inhumation naturelle", // UNSURE: or "Enterrement naturel"
       map: "Carte",
       contact: "Contact", // UNSURE: Canadian sites often use "Nous joindre"
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      menu: "Menu",
+      closeMenu: "Fermer le menu",
     },
     theme: {
       toggleLabel: "Passer du mode clair au mode sombre",
