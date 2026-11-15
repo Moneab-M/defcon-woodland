@@ -488,6 +488,12 @@ const en = {
     character: {
       alt: "A friendly drawing of a tree: {name}",
     },
+    // SCRUM-78: a small surprise in the trunk
+    // NEEDS VERIFICATION: black-capped chickadee chosen as a bird found in the St. Margaret's Bay woods; confirm with the client
+    easterEgg: {
+      button: "Look inside the knot-hole",
+      line: "Chick-a-dee-dee-dee. A chickadee was resting in here.",
+    },
     species: {
       yellowBirch: {
         name: "Yellow birch",

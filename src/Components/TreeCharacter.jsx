@@ -6,7 +6,7 @@
  * and closes gently. The eyes blink every few seconds.
  *
  * Author: Moneab Milad (DEFCON)
- * Jira: SCRUM-56 | SRS: [ID 318], [ID 411], [ID 316]
+ * Jira: SCRUM-56, SCRUM-78 | SRS: [ID 318], [ID 411], [ID 316]
  *
  * NEEDS CLIENT APPROVAL before release: new illustrations ([ID 318], [ID 411]); tracked in SCRUM-63.
  *
@@ -57,6 +57,17 @@ const SPRUCE_DEEP = "#3E5566";
 const CREAM = "#EADFA8";
 const OUTLINE = "currentColor";
 const LINE = 2.5;
+// SCRUM-78: where the small knot-hole sits on each trunk (drawing units, viewBox 200 x 240)
+export const KNOT_POSITIONS = {
+  yellowBirch: [84, 218],
+  redSpruce: [100, 225],
+  redMaple: [80, 216],
+  whitePine: [100, 225],
+};
+// Black, white and grey-cream for the chickadee (low saturation, so not Red, Green or Neon)
+const CHICKADEE_BLACK = "#000000";
+const CHICKADEE_WHITE = "#FFFFFF";
+const CHICKADEE_BODY = "#D9D4C7";
 
 /** Purpose: Round to one decimal so the drawing stays small and stable. */
 const r1 = (n) => Math.round(n * 10) / 10;
@@ -218,6 +229,32 @@ function WhitePine() {
   );
 }
 
+/**
+ * Purpose: A small dark oval knot-hole on the trunk, and (when open) a black-capped
+ * chickadee peeking out of it (SCRUM-78). Decorative only: the real button is in TreeKnotHole.
+ *
+ * Parameters:
+ * - species: picks the position on the trunk
+ * - open: true to show the bird
+ */
+function KnotHole({ species, open }) {
+  const [kx, ky] = KNOT_POSITIONS[species];
+  return (
+    <g data-cy="tree-knot-drawing">
+      <ellipse cx={kx} cy={ky} rx="6" ry="4.5" fill={BARK_DARK} />
+      {open && (
+        <g className="tree-egg-bird" data-cy="tree-egg-bird">
+          <ellipse cx={kx} cy={ky - 4} rx="9" ry="8" fill={CHICKADEE_BODY} />
+          <path d={`M${kx - 8} ${ky - 6} A8 8 0 0 1 ${kx + 8} ${ky - 6} Z`} fill={CHICKADEE_BLACK} />
+          <ellipse cx={kx} cy={ky - 2} rx="6.5" ry="3.5" fill={CHICKADEE_WHITE} />
+          <circle cx={kx - 3} cy={ky - 4} r="1.3" fill={CHICKADEE_BLACK} />
+          <path d={`M${kx - 6} ${ky - 3} l-4 1.5 l4 1 Z`} fill={CHICKADEE_BLACK} />
+        </g>
+      )}
+    </g>
+  );
+}
+
 const DRAWINGS = { yellowBirch: YellowBirch, redSpruce: RedSpruce, redMaple: RedMaple, whitePine: WhitePine };
 
 /**
@@ -227,10 +264,11 @@ const DRAWINGS = { yellowBirch: YellowBirch, redSpruce: RedSpruce, redMaple: Red
  * - species: yellowBirch, redSpruce, redMaple or whitePine (anything else draws nothing)
  * - speaking: true while the tree talks (crown sways, mouth moves)
  * - className: extra classes for sizing
+ * - knotOpen: undefined draws no knot-hole; false draws it closed; true shows the bird (SCRUM-78)
  *
  * Returns: an inline svg, or null for an unknown species
  */
-export default function TreeCharacter({ species, speaking = false, className = "" }) {
+export default function TreeCharacter({ species, speaking = false, className = "", knotOpen }) {
   const t = useText();
   if (!SPECIES.includes(species)) return null;
   const Drawing = DRAWINGS[species];
@@ -246,6 +284,7 @@ export default function TreeCharacter({ species, speaking = false, className = "
     >
       <g aria-hidden="true">
         <Drawing />
+        {knotOpen !== undefined && <KnotHole species={species} open={knotOpen} />}
       </g>
     </svg>
   );

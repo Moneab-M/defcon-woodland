@@ -195,6 +195,19 @@ html.linespace-4 body{
   }
 }
 
+/* SCRUM-78: the chickadee in the knot-hole slides up gently; reduced motion just shows it */
+.tree-egg-bird {
+  transform-box: fill-box;
+  animation: tree-egg-peek 0.4s ease-out both;
+}
+@keyframes tree-egg-peek {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tree-egg-bird { animation: none; }
+}
+
 /* SCRUM-68: respect the visitor's reduced-motion setting site-wide (WCAG 2.2.2) */
 @media (prefers-reduced-motion: reduce) {
   *,
