@@ -59,7 +59,7 @@ const OUTLINE = "currentColor";
 const LINE = 2.5;
 // SCRUM-78: where the small knot-hole sits on each trunk (drawing units, viewBox 200 x 240)
 export const KNOT_POSITIONS = {
-  yellowBirch: [84, 218],
+  yellowBirch: [90, 218],
   redSpruce: [100, 225],
   redMaple: [80, 216],
   whitePine: [100, 225],
@@ -241,10 +241,10 @@ function KnotHole({ species, open }) {
   const [kx, ky] = KNOT_POSITIONS[species];
   return (
     <g data-cy="tree-knot-drawing">
-      <ellipse cx={kx} cy={ky} rx="6" ry="4.5" fill={BARK_DARK} />
+      <ellipse cx={kx} cy={ky} rx="6" ry="4.5" fill={SPRUCE_DEEP} stroke={OUTLINE} strokeWidth="1.2" />
       {open && (
         <g className="tree-egg-bird" data-cy="tree-egg-bird">
-          <ellipse cx={kx} cy={ky - 4} rx="9" ry="8" fill={CHICKADEE_BODY} />
+          <ellipse cx={kx} cy={ky - 4} rx="9" ry="8" fill={CHICKADEE_BODY} stroke={OUTLINE} strokeWidth="1" />
           <path d={`M${kx - 8} ${ky - 6} A8 8 0 0 1 ${kx + 8} ${ky - 6} Z`} fill={CHICKADEE_BLACK} />
           <ellipse cx={kx} cy={ky - 2} rx="6.5" ry="3.5" fill={CHICKADEE_WHITE} />
           <circle cx={kx - 3} cy={ky - 4} r="1.3" fill={CHICKADEE_BLACK} />

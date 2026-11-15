@@ -17,7 +17,9 @@ import { PrerecordedAudioProvider } from "../../src/context/PrerecordedAudioCont
 import "../../src/index.css";
 
 // ---------- Global constants ----------
-const ALLOWED = ["#6b4f3a", "#8a6a4f", "#e8dcc8", "#c9b79c", "#c9a227", "#b9772e", "#5f7a8a", "#3e5566", "#eadfa8", "#000000", "#ffffff", "#d9d4c7"];
+const ALLOWED = ["#6b4f3a", "#8a6a4f", "#e8dcc8", "#c9b79c", "#c9a227", "#b9772e", "#5f7a8a", "#3e5566", "#eadfa8", "#000000", "#ffffff", "#d9d4c7", "currentcolor", "none"];
+// Fill of the trunk shape the knot-hole sits on, per species (must differ from the knot-hole fill)
+const TRUNK_FILL = { "yellow-birch-1": "#e8dcc8", "red-spruce-1": "#6b4f3a", "red-maple-1": "#8a6a4f", "white-pine-1": "#8a6a4f" };
 
 /** Purpose: Mount the real App at a tree page. */
 function mountTree(id = "yellow-birch-1") {
@@ -129,6 +131,20 @@ describe("Knot-hole easter egg (SCRUM-78)", () => {
     cy.get('[data-cy="tree-knot-drawing"] [fill]').each(($el) => {
       const v = toHex(getComputedStyle($el[0]).fill);
       expect(ALLOWED, `fill ${v}`).to.include(v);
+    });
+    cy.get('[data-cy="tree-knot-drawing"] [stroke]').each(($el) => {
+      const v = $el.attr("stroke").toLowerCase();
+      expect(ALLOWED, `stroke ${v}`).to.include(v);
+    });
+  });
+
+  Object.keys(TRUNK_FILL).forEach((id) => {
+    it(`knot-hole fill differs from the trunk fill and has a ring (${id})`, () => {
+      mountTree(id);
+      cy.get('[data-cy="tree-knot-drawing"] ellipse').first().then(($k) => {
+        expect(toHex(getComputedStyle($k[0]).fill)).to.not.equal(TRUNK_FILL[id]);
+        expect($k.attr("stroke")).to.equal("currentColor");
+      });
     });
   });
 });
