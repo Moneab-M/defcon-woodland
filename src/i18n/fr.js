@@ -51,7 +51,7 @@ const fr = {
     siteName: "Woodland Conservation Area",
     // NEEDS REVIEW BY A FLUENT SPEAKER
     pageTitle: {
-      notFound: "Page introuvable",
+      notFound: "Hors du sentier",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
     imageAudio: {
@@ -546,6 +546,15 @@ const fr = {
         ],
       },
     },
+  },
+  // SCRUM-74: friendly page for addresses that match no page
+  // NEEDS REVIEW BY A FLUENT SPEAKER
+  notFound: {
+    heading: "Ce chemin sort du sentier",
+    text: "Nous ne trouvons pas cette page. Ce n'est pas grave. Retournons vers un endroit que nous connaissons.",
+    home: "Aller à la page d'accueil",
+    map: "Voir la carte",
+    trees: "Rencontrer les arbres parlants",
   },
 };
 

@@ -18,6 +18,7 @@ import TalkingTrees from "./pages/TalkingTrees"; // SCRUM-54: list of Talking Tr
 import TreePage from "./pages/TreePage"; // SCRUM-54: one Talking Tree
 import { Route, Routes } from "react-router-dom"; // Routing utilities from react-router-dom.
 import AccessibilityButton from "./Components/AccessibilityButton";
+import NotFound from "./pages/NotFound"; // SCRUM-74: friendly page for unknown addresses
 import PageTitle from "./Components/PageTitle"; // Sets the translated browser tab title per route.
 import { BUTTON_CLASSES } from "./Components/controlStyles"; // SCRUM-69: shared button look
 import { useText } from "./i18n/useText"; // SCRUM-69: skip link text
@@ -70,6 +71,8 @@ function App() {
           <Route path="/trees" element={<TalkingTrees />} />
           <Route path="/trees/:treeId" element={<TreePage />} />
           {/* SCRUM-54: Talking Trees list and one page per tree */}
+          <Route path="*" element={<NotFound />} />
+          {/* SCRUM-74: any other address */}
         </Routes>
       </main>
       <AccessibilityButton/>

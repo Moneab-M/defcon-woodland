@@ -43,7 +43,7 @@ const en = {
     },
     siteName: "Woodland Conservation Area",
     pageTitle: {
-      notFound: "Page not found",
+      notFound: "Off the trail",
     },
     imageAudio: {
       play: "Play image description",
@@ -538,6 +538,14 @@ const en = {
         ],
       },
     },
+  },
+  // SCRUM-74: friendly page for addresses that match no page
+  notFound: {
+    heading: "This path leads off the trail",
+    text: "We cannot find that page. That's okay. Let's walk back to a place we know.",
+    home: "Go to the Home page",
+    map: "Show the Map",
+    trees: "Meet the Talking Trees",
   },
 };
 
