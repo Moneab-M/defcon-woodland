@@ -468,7 +468,7 @@ const fr = {
       first: "Ton premier arbre parlant. Bien trouvé.",
       all: "Tu as rencontré tous les arbres parlants du sentier.",
       found: "Trouvé",
-      count: "Tu as rencontré {count} arbres sur {total}.",
+      count: "Tu as rencontré {count} sur {total} arbres.",
       reset: "Recommencer",
     },
     page: {
