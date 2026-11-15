@@ -28,6 +28,9 @@ const fr = {
       dismiss: "Fermer ce message",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
+    // SCRUM-75 : après un changement de langue
+    languageChanged: "Les bois parlent maintenant français.",
+    // NEEDS REVIEW BY A FLUENT SPEAKER
     // SCRUM-73 : moments d'attente
     waiting: {
       locating: "La forêt écoute pour savoir où tu es\u2026",
@@ -456,6 +459,9 @@ const fr = {
   // NEEDS REVIEW BY A FLUENT SPEAKER
   // Arbres parlants
   trees: {
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    // SCRUM-75 : après la lecture d'une affiche
+    found: "Tu as trouvé cet arbre : {name}.",
     page: {
       title: "Arbres parlants",
       intro: "Certains arbres de notre boisé ont une affiche. Lis l'affiche, ou choisis un arbre ci-dessous, pour entendre son histoire. Tu n'as pas besoin de partager ta position ni ta caméra.",
