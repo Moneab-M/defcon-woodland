@@ -79,7 +79,7 @@ describe("Found trees", () => {
     cy.get('[data-cy="found-count"]').should("have.text", "You have met 1 of 4 trees.");
     cy.get('[data-cy="language-option-fr"]').click();
     cy.get('[data-cy="tree-found-red-spruce-1"]').should("contain.text", "Trouvé");
-    cy.get('[data-cy="found-count"]').should("have.text", "Tu as rencontré 1 arbres sur 4.");
+    cy.get('[data-cy="found-count"]').should("have.text", "Tu as rencontré 1 sur 4 arbres.");
   });
 
   it("shows no count or reset button before any tree is found", () => {
