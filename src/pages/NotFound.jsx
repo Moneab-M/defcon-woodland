@@ -17,6 +17,7 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useText } from "../i18n/useText";
 import { BUTTON_CLASSES } from "../Components/controlStyles";
+import WoodlandGuide from "../Components/WoodlandGuide";
 
 /**
  * Purpose: Show the friendly page for an unknown address.
@@ -34,14 +35,17 @@ function NotFound() {
 
   return (
     <section data-cy="not-found" className="mx-auto max-w-2xl px-4 py-12 text-lg leading-[1.2]">
-      <h1
-        ref={headingRef}
-        tabIndex={-1}
-        data-cy="not-found-heading"
-        className="text-3xl leading-[1.2] mb-4 focus:outline-none"
-      >
-        {t("notFound.heading")}
-      </h1>
+      <div className="flex items-center gap-3 mb-4">
+        <WoodlandGuide size={72} />
+        <h1
+          ref={headingRef}
+          tabIndex={-1}
+          data-cy="not-found-heading"
+          className="text-3xl leading-[1.2] focus:outline-none"
+        >
+          {t("notFound.heading")}
+        </h1>
+      </div>
       <p className="mb-6">{t("notFound.text")}</p>
       <div className="flex flex-wrap gap-3">
         <Link to="/" data-cy="not-found-home" className={BUTTON_CLASSES}>
