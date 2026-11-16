@@ -17,107 +17,41 @@
 
 
 import { useEffect, useRef, useState } from "react";
+import { useText } from "../i18n/useText";
 
+// Text for these lists lives in the translation files under about.*; only ids, images and audio stay here.
 const SECTIONS = [
   {
     id: "about",
-    title: "About Us",
-    text:
-      "We care for the woodlands around St. Margaret’s Bay. We work with neighbours to protect trees, clean water, and wildlife. We share simple steps that anyone can take to help nature.",
     imgSrc: "fern-leaves.jpg",
-    imgAlt: "Green ferns in a woodland",
-    caption: "Ferns along a shaded woodland trail",
     audioDescSrc: "/audio/about-desc.mp3",
     ttsFallback:
       "A photo showing green ferns along a shaded woodland trail near St. Margaret’s Bay."
   },
   {
     id: "mission",
-    title: "Mission",
-    text:
-      "Our mission is to protect local habitats and support a healthy forest. We plant trees, remove waste, and invite people to join events. Small actions add up when we work together.",
     imgSrc: "ferns.jpg",
-    imgAlt: "Volunteers planting trees",
-    caption: "Volunteers planting small trees along a trail",
     audioDescSrc: "/audio/mission-desc.mp3",
     ttsFallback:
       "A photo of volunteers planting small trees along a forest trail."
   },
   {
     id: "vision",
-    title: "Vision",
-    text:
-      "We see a future where our woodlands thrive. Trails are safe, streams run clean, and animals have space to live. Families can learn and enjoy nature for many years.",
     imgSrc: "red-maple.jpg",
-    imgAlt: "Red maple leaves",
-    caption: "Red maple leaves lit by autumn sunlight",
     audioDescSrc: "/audio/vision-desc.mp3",
     ttsFallback:
       "A photo showing red maple leaves lit by autumn sunlight."
   }
 ];
 
-// General nature info for species spotlight
-const SPECIES = [
-  {
-    name: "Red Maple",
-    type: "Tree",
-    note: "A hardy tree known for bright red leaves in autumn.",
-  },
-  {
-    name: "Black-Capped Chickadee",
-    type: "Bird",
-    note: "A small songbird often found in mixed woodlands.",
-  },
-  {
-    name: "White-Tailed Deer",
-    type: "Mammal",
-    note: "Common in forest edges where they browse on plants.",
-  },
-  {
-    name: "Bracken Fern",
-    type: "Plant",
-    note: "A fern that grows in sunny clearings and paths.",
-  },
-];
+// General nature info for species spotlight (ids for about.species.<id>.*)
+const SPECIES_IDS = ["redMaple", "chickadee", "deer", "fern"];
 
-const TIMELINE = [
-  {
-    year: "Early 2000s",
-    text: "Local residents begin organizing clean-ups and informal trail care.",
-  },
-  {
-    year: "2010s",
-    text: "Formal volunteer groups form to support woodland stewardship and education.",
-  },
-  {
-    year: "Today",
-    text: "The area is used for walking, learning, and small conservation projects.",
-  },
-];
+// ids for about.timeline.<id>.*
+const TIMELINE_IDS = ["early2000s", "tens", "today"];
 
-const FAQ_ITEMS = [
-  {
-    question: "How can I help protect woodlands?",
-    answer:
-      "Small actions like staying on marked trails, taking litter home, joining clean-ups, and planting native species all make a difference.",
-  },
-  {
-    question: "What is the purpose of this website?",
-    answer:
-      "The site shares simple information about the woodland, highlights key features, and shows ways people can support conservation.",
-  },
-  {
-    question: "How does the Read Aloud feature work?",
-    answer:
-      "The Read Aloud button uses the browser’s Text-to-Speech engine to speak the text out loud. You can pause or resume using the spacebar.",
-  },
-  {
-    question: "Can I use this site on my phone?",
-    answer:
-      "Yes. The layout is responsive, so the cards, buttons, and text all adjust to smaller screens.",
-  },
-];
+// ids for about.faq.<id>.*
+const FAQ_IDS = ["help", "purpose", "readAloud", "phone"];
 
 const btnBase =
   "relative overflow-hidden inline-flex items-center gap-2 rounded-lg px-3 py-2 font-semibold border transition-colors " +
@@ -126,6 +60,33 @@ const btnBase =
   "focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400/60 dark:focus-visible:ring-blue-300/60";
 
 export default function About() {
+  const t = useText();
+
+  // Build the translated lists for the Selected Language
+  const sections = SECTIONS.map((sec) => ({
+    ...sec,
+    title: t(`about.sections.${sec.id}.title`),
+    text: t(`about.sections.${sec.id}.text`),
+    imgAlt: t(`about.sections.${sec.id}.imgAlt`),
+    caption: t(`about.sections.${sec.id}.caption`),
+  }));
+  const species = SPECIES_IDS.map((id) => ({
+    id,
+    name: t(`about.species.${id}.name`),
+    type: t(`about.species.${id}.type`),
+    note: t(`about.species.${id}.note`),
+  }));
+  const timeline = TIMELINE_IDS.map((id) => ({
+    id,
+    year: t(`about.timeline.${id}.year`),
+    text: t(`about.timeline.${id}.text`),
+  }));
+  const faqItems = FAQ_IDS.map((id) => ({
+    id,
+    question: t(`about.faq.${id}.question`),
+    answer: t(`about.faq.${id}.answer`),
+  }));
+
   const [activeId, setActiveId] = useState(null);
   const speechRef = useRef({ utter: null, speakingFor: null });
 
@@ -356,7 +317,7 @@ export default function About() {
       {/* HEADER */}
       <header className="border-b border-neutral-300 dark:border-neutral-700 mb-6 pb-3 text-center">
         <h1 className="text-2xl sm:text-3xl font-bold">
-          About St. Margaret’s Bay Woodland Conservation
+          {t("about.title")}
         </h1>
       </header>
 
@@ -366,19 +327,19 @@ export default function About() {
           onClick={handleButtonClick(() => smoothScroll("about"))}
           className={btnBase}
         >
-          About
+          {t("about.nav.about")}
         </button>
         <button
           onClick={handleButtonClick(() => smoothScroll("mission"))}
           className={btnBase}
         >
-          Mission
+          {t("about.nav.mission")}
         </button>
         <button
           onClick={handleButtonClick(() => smoothScroll("vision"))}
           className={btnBase}
         >
-          Vision
+          {t("about.nav.vision")}
         </button>
         <button
           onClick={handleButtonClick(increaseText)}
@@ -395,23 +356,23 @@ export default function About() {
         <button
           onClick={handleButtonClick(() => setDyslexic((d) => !d))}
           className={btnBase}
-          title="Toggle Dyslexia-Friendly Font"
+          title={t("about.tools.dyslexiaTitle")}
         >
-          Dyslexia Font
+          {t("about.tools.dyslexia")}
         </button>
         <button
           onClick={handleButtonClick(() => setHighContrast((c) => !c))}
           className={btnBase}
-          title="Toggle High Contrast"
+          title={t("about.tools.contrastTitle")}
         >
-          High Contrast
+          {t("about.tools.contrast")}
         </button>
         <button
           onClick={handleButtonClick(() => setRelaxedLines((r) => !r))}
           className={btnBase}
-          title="Toggle Line Spacing"
+          title={t("about.tools.spacingTitle")}
         >
-          Line Spacing
+          {t("about.tools.spacing")}
         </button>
         <button
           onClick={handleButtonClick(() => {
@@ -421,19 +382,19 @@ export default function About() {
           })}
           className={btnBase}
         >
-          Share
+          {t("about.tools.share")}
         </button>
         <button
           onClick={handleButtonClick(toggleAmbient)}
           className={btnBase}
         >
-          {ambientOn ? "Stop Forest Sound" : "Play Forest Sound"}
+          {ambientOn ? t("about.tools.soundStop") : t("about.tools.soundPlay")}
         </button>
       </div>
 
       {/* MAIN CONTENT */}
       <section className="mx-auto max-w-5xl space-y-8">
-        {SECTIONS.map((sec, index) => (
+        {sections.map((sec, index) => (
           <div key={sec.id}>
             <article
               id={sec.id}
@@ -459,7 +420,7 @@ export default function About() {
                   className={btnBase}
                   onClick={handleButtonClick(() => playImageAudio(sec))}
                 >
-                  🔊 Image Audio
+                  🔊 {t("about.imageAudio")}
                 </button>
               </div>
 
@@ -485,12 +446,12 @@ export default function About() {
                     handleRead(sec.id, sec.text)
                   )}
                 >
-                  🗣️ Read Aloud
+                  🗣️ {t("about.readAloud")}
                 </button>
               </div>
             </article>
 
-            {index < SECTIONS.length - 1 && (
+            {index < sections.length - 1 && (
               <div className="w-full h-[1px] bg-neutral-300 dark:bg-neutral-700 my-4 opacity-60" />
             )}
           </div>
@@ -499,19 +460,19 @@ export default function About() {
 
       {/* IMPACT STATS */}
       <div className="mt-10 text-center text-sm opacity-90 space-y-1">
-        <h3 className="font-bold text-lg">Impact Stats</h3>
-        <p>Trees Planted: 4,200+</p>
-        <p>Hectares Restored: 75+</p>
-        <p>Species Monitored: 18</p>
+        <h3 className="font-bold text-lg">{t("about.stats.heading")}</h3>
+        <p>{t("about.stats.trees")}</p>
+        <p>{t("about.stats.hectares")}</p>
+        <p>{t("about.stats.species")}</p>
       </div>
 
       {/* SPECIES SPOTLIGHT */}
       <section className="mt-10 mx-auto max-w-5xl">
-        <h3 className="text-xl font-bold mb-3 text-center">Species Spotlight</h3>
+        <h3 className="text-xl font-bold mb-3 text-center">{t("about.species.heading")}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {SPECIES.map((sp) => (
+          {species.map((sp) => (
             <div
-              key={sp.name}
+              key={sp.id}
               className="border border-neutral-300 dark:border-neutral-700 rounded-lg p-4 text-sm hover:shadow-md transition-shadow"
             >
               <div className="font-semibold">{sp.name}</div>
@@ -524,11 +485,11 @@ export default function About() {
 
       {/* WOODLAND TIMELINE */}
       <section className="mt-10 mx-auto max-w-5xl">
-        <h3 className="text-xl font-bold mb-3 text-center">Woodland Timeline</h3>
+        <h3 className="text-xl font-bold mb-3 text-center">{t("about.timeline.heading")}</h3>
         <div className="space-y-3 text-sm">
-          {TIMELINE.map((item) => (
+          {timeline.map((item) => (
             <div
-              key={item.year}
+              key={item.id}
               className="border-l-4 border-green-700/70 dark:border-green-400/80 pl-3 py-1"
             >
               <div className="font-semibold">{item.year}</div>
@@ -540,13 +501,13 @@ export default function About() {
 
       {/* FAQ ACCORDION */}
       <section className="mt-10 mx-auto max-w-5xl">
-        <h3 className="text-xl font-bold mb-3 text-center">Questions & Answers</h3>
+        <h3 className="text-xl font-bold mb-3 text-center">{t("about.faq.heading")}</h3>
         <div className="space-y-2">
-          {FAQ_ITEMS.map((faq, index) => {
+          {faqItems.map((faq, index) => {
             const open = faqOpenIndex === index;
             return (
               <div
-                key={faq.question}
+                key={faq.id}
                 className="border border-neutral-300 dark:border-neutral-700 rounded-lg"
               >
                 <button
@@ -578,7 +539,7 @@ export default function About() {
           href="/learn-more"
           className="px-6 py-3 rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-700 shadow"
         >
-          Learn More
+          {t("about.learnMore")}
         </a>
       </div>
 
@@ -588,13 +549,13 @@ export default function About() {
           onClick={handleButtonClick(scrollTop)}
           className="px-4 py-2 rounded-lg bg-neutral-300 dark:bg-neutral-700 text-black dark:text-white border border-neutral-500 hover:bg-neutral-400 dark:hover:bg-neutral-600"
         >
-          ↑ Back to Top
+          ↑ {t("about.backToTop")}
         </button>
       </div>
 
       {/* ACCESSIBILITY STRIP */}
       <div className="mt-6 text-center text-sm opacity-80">
-        Accessibility: WCAG AA • Keyboard navigation • TTS buttons • Text zoom • Dyslexia & contrast options
+        {t("about.accessibilityStrip")}
       </div>
     </main>
   );

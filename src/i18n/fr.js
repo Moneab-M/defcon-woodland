@@ -151,6 +151,114 @@ const fr = {
       imageAlt: "Image envoyée {index}",
     },
   },
+  // NEEDS REVIEW BY A FLUENT SPEAKER
+  about: {
+    title: "À propos de la conservation des boisés de St. Margaret’s Bay",
+    nav: {
+      about: "À propos",
+      mission: "Mission",
+      vision: "Vision",
+    },
+    tools: {
+      dyslexia: "Police pour la dyslexie",
+      dyslexiaTitle: "Activer ou désactiver la police pour la dyslexie",
+      contrast: "Contraste élevé",
+      contrastTitle: "Activer ou désactiver le contraste élevé",
+      spacing: "Interligne",
+      spacingTitle: "Activer ou désactiver l'interligne",
+      share: "Partager",
+      soundPlay: "Écouter les sons de la forêt",
+      soundStop: "Arrêter les sons de la forêt",
+    },
+    imageAudio: "Audio de l'image",
+    readAloud: "Lire à voix haute",
+    sections: {
+      about: {
+        title: "À propos de nous",
+        text: "Nous prenons soin des boisés autour de St. Margaret’s Bay. Nous travaillons avec nos voisins pour protéger les arbres, l'eau propre et la faune. Nous partageons des gestes simples que tout le monde peut faire pour aider la nature.",
+        imgAlt: "Des fougères vertes dans un boisé",
+        caption: "Des fougères le long d'un sentier ombragé du boisé",
+      },
+      mission: {
+        title: "Mission",
+        text: "Notre mission est de protéger les habitats d'ici et de garder la forêt en santé. Nous plantons des arbres, nous ramassons les déchets et nous invitons les gens à se joindre à nos activités. Les petits gestes comptent quand on travaille ensemble.",
+        imgAlt: "Des bénévoles qui plantent des arbres",
+        caption: "Des bénévoles qui plantent de jeunes arbres le long d'un sentier",
+      },
+      vision: {
+        title: "Vision",
+        text: "Nous voyons un avenir où nos boisés sont en pleine santé. Les sentiers sont sécuritaires, les ruisseaux sont propres et les animaux ont de la place pour vivre. Les familles peuvent apprendre et profiter de la nature pendant de nombreuses années.",
+        imgAlt: "Des feuilles d'érable rouge",
+        caption: "Des feuilles d'érable rouge éclairées par le soleil d'automne",
+      },
+    },
+    stats: {
+      heading: "Nos résultats",
+      trees: "Arbres plantés : 4 200+",
+      hectares: "Hectares restaurés : 75+",
+      species: "Espèces suivies : 18",
+    },
+    species: {
+      heading: "Espèces à découvrir",
+      redMaple: {
+        name: "Érable rouge",
+        type: "Arbre",
+        note: "Un arbre robuste connu pour ses feuilles d'un rouge éclatant à l'automne.",
+      },
+      chickadee: {
+        name: "Mésange à tête noire",
+        type: "Oiseau",
+        note: "Un petit oiseau chanteur qu'on trouve souvent dans les boisés mixtes.",
+      },
+      deer: {
+        name: "Cerf de Virginie",
+        type: "Mammifère",
+        note: "Fréquent en bordure de forêt, où il broute les plantes.",
+      },
+      fern: {
+        name: "Fougère aigle",
+        type: "Plante",
+        note: "Une fougère qui pousse dans les clairières ensoleillées et le long des sentiers.",
+      },
+    },
+    timeline: {
+      heading: "L'histoire du boisé",
+      early2000s: {
+        year: "Début des années 2000",
+        text: "Des résidents commencent à organiser des nettoyages et à entretenir les sentiers de façon informelle.",
+      },
+      tens: {
+        year: "Années 2010",
+        text: "Des groupes de bénévoles se forment pour prendre soin du boisé et pour sensibiliser les gens.",
+      },
+      today: {
+        year: "Aujourd'hui",
+        text: "L'endroit sert à la marche, à l'apprentissage et à de petits projets de conservation.",
+      },
+    },
+    faq: {
+      heading: "Questions et réponses",
+      help: {
+        question: "Comment puis-je aider à protéger les boisés?",
+        answer: "De petits gestes font une différence : rester sur les sentiers balisés, rapporter ses déchets, participer aux nettoyages et planter des espèces indigènes.",
+      },
+      purpose: {
+        question: "À quoi sert ce site Web?",
+        answer: "Le site présente des renseignements simples sur le boisé, met en valeur ses particularités et montre comment soutenir la conservation.",
+      },
+      readAloud: {
+        question: "Comment fonctionne la lecture à voix haute?",
+        answer: "Le bouton de lecture à voix haute utilise la synthèse vocale du navigateur pour dire le texte à voix haute. Tu peux mettre en pause ou reprendre avec la barre d'espace.",
+      },
+      phone: {
+        question: "Puis-je utiliser ce site sur mon téléphone?",
+        answer: "Oui. La mise en page s'adapte, alors les cartes, les boutons et le texte s'ajustent aux petits écrans.",
+      },
+    },
+    learnMore: "En savoir plus",
+    backToTop: "Retour en haut",
+    accessibilityStrip: "Accessibilité : WCAG AA • Navigation au clavier • Boutons de lecture vocale • Zoom du texte • Options pour la dyslexie et le contraste",
+  },
 };
 
 export default fr;
