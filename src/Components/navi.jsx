@@ -104,6 +104,7 @@ function NavItem({ to, children }) {
 
 /* ---- (Optional) Footer kept here so existing imports don't break ---- */
 export function Footer() {
+  const text = useText();
   return (
     <footer className="bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 transition-colors duration-300 border-t border-black/10 dark:border-white/10 w-screen">
       <div className="flex items-center justify-between pl-4 sm:px-6 py-4">
@@ -127,8 +128,8 @@ export function Footer() {
         </div>
         {/* Address / copyright */}
         <div className="flex flex-col sm:flex-row sm:justify-between gap-4 pr-[15px] w-[170px] sm:w-[900px]">
-          <p className="text-[12px] sm:text-sm">Head Of St Margarets Bay, NS B3Z 2C9</p>
-          <p className="text-[10px] sm:text-xs">&copy; 2024 SMU, CSCI 3428 Group25G</p>
+          <p className="text-[12px] sm:text-sm">{text("common.footer.address")}</p>
+          <p className="text-[10px] sm:text-xs">{text("common.footer.copyright")}</p>
         </div>
       </div>
     </footer>
