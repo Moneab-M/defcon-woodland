@@ -259,6 +259,38 @@ const fr = {
     backToTop: "Retour en haut",
     accessibilityStrip: "Accessibilité : WCAG AA • Navigation au clavier • Boutons de lecture vocale • Zoom du texte • Options pour la dyslexie et le contraste",
   },
+  // Ecosystem page
+  // NEEDS REVIEW BY A FLUENT SPEAKER
+  ecosystem: {
+    heading: "Écosystème",
+    readAloud: "Lire à haute voix",
+    lakeAlt: "Lac",
+    intro: "Ce site de conservation du boisé abrite un écosystème riche et vivant, rempli de vie et de beauté naturelle. Nos boisés comptent une grande variété de plantes et d'animaux, et chacun joue un rôle important pour garder l'équilibre de la nature.",
+    heron: "Les hérons sont des oiseaux échassiers qui ont de longues pattes et un long cou. On les voit souvent près de l'eau.",
+    deer: "Les cerfs sont des herbivores gracieux. On les trouve souvent dans les forêts et les prairies.",
+    coyote: "Le coyote est un prédateur très adaptable. Il aide à garder l'équilibre des écosystèmes de la région en contrôlant le nombre de petits mammifères.",
+    keyFeatures: {
+      intro: "Les points forts de notre écosystème :",
+      birch: {
+        title: "Bouleaux jaunes :",
+        text: "Ces arbres majestueux sont un symbole de notre boisé. Ils offrent un abri et de la nourriture à de nombreuses espèces. Leur écorce jaune et leur belle forme les font remarquer.",
+      },
+      wetlands: {
+        title: "Milieux humides :",
+        text: "Nos milieux humides sont importants pour nettoyer l'eau, limiter les inondations et abriter toutes sortes d'animaux. Ce sont des refuges pour les oiseaux, les amphibiens et les plantes aquatiques.",
+      },
+      artifacts: {
+        title: "Objets historiques :",
+        text: "Dans le boisé, on trouve des traces du passé. Elles nous montrent comment les gens vivaient il y a très longtemps.",
+      },
+    },
+    floraHeading: "Flore",
+    floraText: "Nos boisés sont ornés de nombreuses espèces de plantes, dont de grands bouleaux jaunes, de délicates fleurs sauvages et de belles fougères.",
+    faunaHeading: "Faune",
+    faunaText: "Parmi les animaux, on peut voir des cerfs gracieux, des renards joueurs et une foule d'espèces d'oiseaux. Tous contribuent à la vie de l'écosystème.",
+    fungiHeading: "Champignons",
+    fungiText: "Les champignons du boisé sont très utiles. Ils transforment la matière morte et s'associent aux arbres et aux plantes pour s'entraider.",
+  },
 };
 
 export default fr;

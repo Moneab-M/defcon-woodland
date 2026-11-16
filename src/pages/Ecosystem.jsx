@@ -7,6 +7,7 @@
 
 
 import { useState } from "react";
+import { useText } from "../i18n/useText";
 import { IoPaw } from "react-icons/io5";
 import { PiPlantFill } from "react-icons/pi";
 import { TbMushroomFilled } from "react-icons/tb";
@@ -23,6 +24,18 @@ import coyote from "../assets/coyote.jpg";
  * @returns {JSX.Element} Component rendering the ecosystem information.
  */
 const Ecosystem = () => {
+  const t = useText();
+  // Displayed text for the Selected Language; the same strings go to the read-aloud button.
+  const ecosystemText = {
+    intro: t("ecosystem.intro"),
+    heron: t("ecosystem.heron"),
+    deer: t("ecosystem.deer"),
+    coyote: t("ecosystem.coyote"),
+    floraText: t("ecosystem.floraText"),
+    faunaText: t("ecosystem.faunaText"),
+    fungiText: t("ecosystem.fungiText"),
+  };
+  const keyFeatureBirchSpeech = `${t("ecosystem.keyFeatures.birch.title")} ${t("ecosystem.keyFeatures.birch.text")}`;
   /**
    * State to track the currently spoken text.
    * @type {[string, Function]}
@@ -69,19 +82,19 @@ const Ecosystem = () => {
           <div className="flex items-center mb-4 pt-20">
             <TbTrees className="text-green-700 dark:text-green-300 text-8xl mr-3" />
             <h2 className="text-7xl font-semibold text-blue-500 pl-2 pr-2">
-              Ecosystem
+              {t("ecosystem.heading")}
             </h2>
             <button
               onClick={() =>
                 handleSpeakText(
-                  "This woodland conservation site is home to a diverse and vibrant ecosystem, teeming with life and natural beauty. Our woodlands are characterized by a rich variety of flora and fauna, each playing a crucial role in maintaining the ecological balance."
+                  ecosystemText.intro
                 )
               }
               className="mr-4 p-2 bg-transparent text-blue-500 hover:text-blue-700 rounded-full shadow-lg hover:bg-light-primary transition-all duration-300"
-              aria-label="Read out loud"
+              aria-label={t("ecosystem.readAloud")}
             >
               {speakingText ===
-              "This woodland conservation site is home to a diverse and vibrant ecosystem, teeming with life and natural beauty. Our woodlands are characterized by a rich variety of flora and fauna, each playing a crucial role in maintaining the ecological balance." ? (
+              ecosystemText.intro ? (
                 <FaPause className="text-xl" />
               ) : (
                 <FaVolumeUp className="text-xl" />
@@ -91,18 +104,13 @@ const Ecosystem = () => {
           <div className="grid sm:grid-cols-2 gap-6">
             {/* Ecosystem Decscriptive Text and Lake Image */}
             <div className="flex flex-col justify-center items-center">
-              <p className="text-1g sm:text-2xl leading-relaxed pt-5 pb-10 w-full sm:w-[650px]">
-                This woodland conservation site is home to a diverse and vibrant
-                ecosystem, teeming with life and natural beauty. Our woodlands
-                are characterized by a rich variety of flora and fauna, each
-                playing a crucial role in maintaining the ecological balance.
-              </p>
+              <p className="text-1g sm:text-2xl leading-relaxed pt-5 pb-10 w-full sm:w-[650px]">{ecosystemText.intro}</p>
               <div className="flex gap-4">
                 <div className="flex flex-col gap-4">
                   <div className="flex relative pt-10 px-auto justify-center items-center">
                     <img
                       src={lake}
-                      alt="Lake"
+                      alt={t("ecosystem.lakeAlt")}
                       className="sm:pr-0 h-auto rounded shadow-md"
                     />
                   </div>
@@ -119,14 +127,14 @@ const Ecosystem = () => {
                     <button
                       onClick={() =>
                         handleSpeakText(
-                          "Herons are wading birds known for their long legs and necks, often found near water bodies."
+                          ecosystemText.heron
                         )
                       }
                       className="mr-4 p-2 bg-transparent text-blue-500 hover:text-blue-700 rounded-full shadow-lg hover:bg-light-primary transition-all duration-300"
-                      aria-label="Read out loud"
+                      aria-label={t("ecosystem.readAloud")}
                     >
                       {speakingText ===
-                      "Herons are wading birds known for their long legs and necks, often found near water bodies." ? (
+                      ecosystemText.heron ? (
                         <FaPause className="text-xl" />
                       ) : (
                         <FaVolumeUp className="text-xl" />
@@ -145,10 +153,7 @@ const Ecosystem = () => {
 
                     {/* Text on back side of image */}
                     <div className="absolute inset-0 flex items-center justify-center bg-light-background text-black dark:bg-gray-800 dark:text-dark-text text-center rounded-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                      <p className="px-10">
-                        Herons are wading birds known for their long legs and
-                        necks, often found near water bodies.
-                      </p>
+                      <p className="px-10">{ecosystemText.heron}</p>
                     </div>
                   </div>
                 </div>
@@ -164,14 +169,14 @@ const Ecosystem = () => {
                     <button
                       onClick={() =>
                         handleSpeakText(
-                          "Deer are graceful herbivores, commonly found in forests and grasslands."
+                          ecosystemText.deer
                         )
                       }
                       className="mr-4 p-2 bg-transparent text-blue-500 hover:text-blue-700 rounded-full shadow-lg hover:bg-light-primary transition-all duration-300"
-                      aria-label="Read out loud"
+                      aria-label={t("ecosystem.readAloud")}
                     >
                       {speakingText ===
-                      "Deer are graceful herbivores, commonly found in forests and grasslands." ? (
+                      ecosystemText.deer ? (
                         <FaPause className="text-xl" />
                       ) : (
                         <FaVolumeUp className="text-xl" />
@@ -180,10 +185,7 @@ const Ecosystem = () => {
 
                     {/* Text on back side of image */}
                     <div className="absolute inset-0 flex items-center justify-center bg-light-background text-black dark:bg-gray-800 dark:text-dark-text text-center rounded-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                      <p className="px-10">
-                        Deer are graceful herbivores, commonly found in forests
-                        and grasslands.
-                      </p>
+                      <p className="px-10">{ecosystemText.deer}</p>
                     </div>
                   </div>
                 </div>
@@ -197,14 +199,14 @@ const Ecosystem = () => {
                     <button
                       onClick={() =>
                         handleSpeakText(
-                          "The coyote is a highly adaptable, opportunistic predator, playing a key role in maintaining the balance of local ecosystems by controlling populations of small mammals."
+                          ecosystemText.coyote
                         )
                       }
                       className="mr-4 p-2 bg-transparent text-blue-500 hover:text-blue-700 rounded-full shadow-lg hover:bg-light-primary transition-all duration-300"
-                      aria-label="Read out loud"
+                      aria-label={t("ecosystem.readAloud")}
                     >
                       {speakingText ===
-                      "The coyote is a highly adaptable, opportunistic predator, playing a key role in maintaining the balance of local ecosystems by controlling populations of small mammals." ? (
+                      ecosystemText.coyote ? (
                         <FaPause className="text-xl" />
                       ) : (
                         <FaVolumeUp className="text-xl" />
@@ -213,12 +215,7 @@ const Ecosystem = () => {
 
                     {/* Text on back side of image */}
                     <div className="absolute inset-0 flex items-center justify-center bg-light-background text-black dark:bg-gray-800 dark:text-dark-text text-center rounded-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                      <p className="px-10 text-sm">
-                        The coyote is a highly adaptable, opportunistic
-                        predator, playing a key role in maintaining the balance
-                        of local ecosystems by controlling populations of small
-                        mammals.
-                      </p>
+                      <p className="px-10 text-sm">{ecosystemText.coyote}</p>
                     </div>
                   </div>
                   {/* TTS Button */}
@@ -240,20 +237,20 @@ const Ecosystem = () => {
           {/* Key Features Intro and TTS Button */}
           <div className="flex items-start">
             <p className="light-disc leading-relaxed text-xl text-white pl-20 pb-10">
-              Key features of our ecosystem:
+              {t("ecosystem.keyFeatures.intro")}
             </p>
             {/* TTS Button */}
             <button
               onClick={() =>
                 handleSpeakText(
-                  "Yellow Birch Trees: These majestic trees are a hallmark of our woodland, providing habitat and food for numerous species. Their distinctive yellow bark and graceful form make them a standout feature."
+                  keyFeatureBirchSpeech
                 )
               }
               className="ml-4 p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition-all duration-300"
-              aria-label="Read out loud"
+              aria-label={t("ecosystem.readAloud")}
             >
               {speakingText ===
-              "Yellow Birch Trees: These majestic trees are a hallmark of our woodland, providing habitat and food for numerous species. Their distinctive yellow bark and graceful form make them a standout feature." ? (
+              keyFeatureBirchSpeech ? (
                 <FaPause className="text-xl" />
               ) : (
                 <FaVolumeUp className="text-xl" />
@@ -264,21 +261,16 @@ const Ecosystem = () => {
           {/* Key Features Dotted List */}
           <ul className="list-disc list-inside text-lg text-white sm:px-40">
             <li className="pb-5">
-              <b className="text-xl">Yellow Birch Trees:</b> These majestic
-              trees are a hallmark of our woodland, providing habitat and food
-              for numerous species. Their distinctive yellow bark and graceful
-              form make them a standout feature.
+              <b className="text-xl">{t("ecosystem.keyFeatures.birch.title")}</b>{" "}
+              {t("ecosystem.keyFeatures.birch.text")}
             </li>
             <li>
-              <b className="text-xl">Wetlands:</b> Our wetlands are vital for
-              water purification, flood control, and providing a habitat for a
-              wide range of wildlife. They are a haven for birds, amphibians,
-              and aquatic plants.
+              <b className="text-xl">{t("ecosystem.keyFeatures.wetlands.title")}</b>{" "}
+              {t("ecosystem.keyFeatures.wetlands.text")}
             </li>
             <li className="pt-5">
-              <b className="text-xl">Historical Artifacts:</b> Scattered
-              throughout the woodland are remnants of the past, providing
-              insight into how people lived in a time long forgotten.
+              <b className="text-xl">{t("ecosystem.keyFeatures.artifacts.title")}</b>{" "}
+              {t("ecosystem.keyFeatures.artifacts.text")}
             </li>
           </ul>
         </div>
@@ -298,20 +290,20 @@ const Ecosystem = () => {
                 <div className="flex items-center">
                   {/* Flora Heading */}
                   <h3 className="text-3xl font-semibold pl-10 pr-2 text-blue-500">
-                    Flora
+                    {t("ecosystem.floraHeading")}
                   </h3>
                   {/* TTS Button */}
                   <button
                     onClick={() =>
                       handleSpeakText(
-                        "Our woodlands are adorned with a variety of plant species, including towering Yellow Birch Trees, delicate wildflowers, and lush ferns."
+                        ecosystemText.floraText
                       )
                     }
                     className="mr-4 p-2 bg-transparent text-blue-500 hover:text-blue-700 rounded-full shadow-lg hover:bg-light-primary transition-all duration-300"
-                    aria-label="Read out loud"
+                    aria-label={t("ecosystem.readAloud")}
                   >
                     {speakingText ===
-                    "Our woodlands are adorned with a variety of plant species, including towering Yellow Birch Trees, delicate wildflowers, and lush ferns." ? (
+                    ecosystemText.floraText ? (
                       <FaPause className="text-xl" />
                     ) : (
                       <FaVolumeUp className="text-xl" />
@@ -320,11 +312,7 @@ const Ecosystem = () => {
                 </div>
               </div>
               {/* Flora Descriptive Text */}
-              <p className="text-lg leading-relaxed text-center mx-20">
-                Our woodlands are adorned with a variety of plant species,
-                including towering Yellow Birch Trees, delicate wildflowers, and
-                lush ferns.
-              </p>
+              <p className="text-lg leading-relaxed text-center mx-20">{ecosystemText.floraText}</p>
             </div>
           </div>
 
@@ -336,20 +324,20 @@ const Ecosystem = () => {
                 <div className="flex items-center">
                   {/* Fauna Heading */}
                   <h3 className="text-3xl font-semibold pl-10 pr-2 text-blue-500">
-                    Fauna
+                    {t("ecosystem.faunaHeading")}
                   </h3>
                   {/* TTS Button */}
                   <button
                     onClick={() =>
                       handleSpeakText(
-                        "Among the fauna, you can find graceful deer, playful foxes, and a myriad of bird species, each contributing to the vibrant ecosystem."
+                        ecosystemText.faunaText
                       )
                     }
                     className="mr-4 p-2 bg-transparent text-blue-500 hover:text-blue-700 rounded-full shadow-lg hover:bg-light-primary transition-all duration-300"
-                    aria-label="Read out loud"
+                    aria-label={t("ecosystem.readAloud")}
                   >
                     {speakingText ===
-                    "Among the fauna, you can find graceful deer, playful foxes, and a myriad of bird species, each contributing to the vibrant ecosystem." ? (
+                    ecosystemText.faunaText ? (
                       <FaPause className="text-xl" />
                     ) : (
                       <FaVolumeUp className="text-xl" />
@@ -358,11 +346,7 @@ const Ecosystem = () => {
                 </div>
               </div>
               {/* Fauna Descriptive Text */}
-              <p className="text-lg leading-relaxed text-center mx-20">
-                Among the fauna, you can find graceful deer, playful foxes, and
-                a myriad of bird species, each contributing to the vibrant
-                ecosystem.
-              </p>
+              <p className="text-lg leading-relaxed text-center mx-20">{ecosystemText.faunaText}</p>
             </div>
           </div>
 
@@ -374,20 +358,20 @@ const Ecosystem = () => {
                 <div className="flex items-center">
                   {/* Fungi Heading */}
                   <h3 className="text-3xl font-semibold pl-10 pr-2 text-blue-500">
-                    Fungi
+                    {t("ecosystem.fungiHeading")}
                   </h3>
                   {/* TTS Button */}
                   <button
                     onClick={() =>
                       handleSpeakText(
-                        "Woodland fungi play a vital role in the ecosystem, breaking down organic matter and forming symbiotic relationships with trees and plants."
+                        ecosystemText.fungiText
                       )
                     }
                     className="mr-4 p-2 bg-transparent text-blue-500 hover:text-blue-700 rounded-full shadow-lg hover:bg-light-primary transition-all duration-300"
-                    aria-label="Read out loud"
+                    aria-label={t("ecosystem.readAloud")}
                   >
                     {speakingText ===
-                    "Woodland fungi play a vital role in the ecosystem, breaking down organic matter and forming symbiotic relationships with trees and plants." ? (
+                    ecosystemText.fungiText ? (
                       <FaPause className="text-xl" />
                     ) : (
                       <FaVolumeUp className="text-xl" />
@@ -396,11 +380,7 @@ const Ecosystem = () => {
                 </div>
               </div>
               {/* Fauna Descriptive Text */}
-              <p className="text-lg leading-relaxed text-center mx-20">
-                Woodland fungi play a vital role in the ecosystem, breaking down
-                organic matter and forming symbiotic relationships with trees
-                and plants.
-              </p>
+              <p className="text-lg leading-relaxed text-center mx-20">{ecosystemText.fungiText}</p>
             </div>
           </div>
         </div>
