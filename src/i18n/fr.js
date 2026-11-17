@@ -317,7 +317,11 @@ const fr = {
     readDescriptionLabel: "Lire la description à voix haute",
     listenToDescription: "Écouter la description",
     descriptionText: "L'inhumation naturelle est une façon respectueuse de la nature de mettre un défunt en terre. Elle protège les ressources naturelles et réduit l'effet sur l'environnement. Le corps est déposé dans un cercueil biodégradable, dans un linceul ou directement dans le sol, sans produit d'embaumement ni matériau qui ne se décompose pas.",
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    moreAbout: "En savoir plus sur : {title}",
     types: {
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      alt: "Un cercueil simple en bois, fait de matériaux naturels",
       title: "Types d'inhumation",
       summary: "Cercueils biodégradables, linceuls et autres choix d'inhumation naturelle",
       modalTitle: "Types d'inhumation naturelle",

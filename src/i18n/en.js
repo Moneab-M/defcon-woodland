@@ -309,7 +309,9 @@ const en = {
     readDescriptionLabel: "Read description out loud",
     listenToDescription: "Listen to description",
     descriptionText: "Natural burial is an eco-friendly alternative to conventional burial methods that emphasizes the conservation of natural resources and the reduction of environmental impact. This practice involves the interment of the body in a biodegradable coffin, shroud, or directly in the soil, without a use of embalming fluids or non-biodegradable materials.",
+    moreAbout: "More about {title}",
     types: {
+      alt: "A simple wooden coffin made from natural materials",
       title: "Types of Burial",
       summary: "Biodegradable coffins, shrouds, and natural burial options",
       modalTitle: "Types of Natural Burial",

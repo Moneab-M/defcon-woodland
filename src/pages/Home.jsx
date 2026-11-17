@@ -8,6 +8,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useText } from "../i18n/useText";
+import useDialogFocus from "../Components/useDialogFocus";
 import {
   FaVolumeUp,
   FaPause,
@@ -170,17 +171,27 @@ function WeatherWidget() {
 // -----------------------------------------------------------------------------
 const Modal = ({ isOpen, onClose, speciesInfo }) => {
   const t = useText();
+  const dialogRef = useDialogFocus(isOpen && !!speciesInfo, onClose);
   if (!isOpen || !speciesInfo) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="featured-species-title"
+        tabIndex={-1}
+        ref={dialogRef}
+        data-cy="featured-dialog"
+        onClick={(e) => e.stopPropagation()}
+      >
         <img
           src={speciesInfo.img}
           alt={speciesInfo.title}
           className="modal-image"
         />
-        <h2>{speciesInfo.title}</h2>
+        <h2 id="featured-species-title">{speciesInfo.title}</h2>
         <p>{speciesInfo.description}</p>
         <button onClick={onClose} className="close-button">
           {t("home.modal.close")}
