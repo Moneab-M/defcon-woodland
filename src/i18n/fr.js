@@ -373,6 +373,33 @@ const fr = {
       submitFailed: "Le formulaire n'a pas pu être envoyé.",
     },
   },
+  // NEEDS REVIEW BY A FLUENT SPEAKER
+  // Page Carte
+  map: {
+    youAreHere: "JE SUIS ICI",
+    returnToSiteMap: "Revenir à la carte du site",
+    north: "Nord",
+    attribution: "&copy; les contributeurs d'OpenStreetMap",
+    userMarker: "Tu es ici",
+    playAudio: "Écouter l'audio \u2014 {name} ({distance} m)",
+    footnote: "Les limites de la carte, les sentiers et les arbres parlants sont approximatifs. Ils servent à t'aider à te déplacer sur place et à apprendre.",
+    status: {
+      initial: "Le GPS sert seulement à placer un repère sur la carte. Les coordonnées ne sont jamais affichées.",
+      unsupported: "Ce navigateur ne peut pas utiliser le GPS.",
+      locating: "Recherche de ta position\u2026",
+      found: "Position trouvée. Ton repère est sur la carte, mais les coordonnées ne sont pas affichées.",
+      failed: "Impossible d'obtenir ta position GPS. Vérifie les autorisations, s'il te plaît.",
+    },
+    places: {
+      dock: { name: "Quai" },
+      trailhead: { name: "Début du sentier", description: "L'entrée principale des sentiers du boisé." },
+      farmhouse: { name: "Fondations de la ferme", description: "Ce qui reste d'une ancienne ferme." },
+      well: { name: "Puits", description: "Ce vieux puits fournissait de l'eau à la région." },
+      sittingArea: { name: "Coin de repos", description: "Un endroit tranquille pour se reposer et observer la nature." },
+      yellowBirch: { name: "Bouleau jaune côtier", description: "Une espèce d'arbre importante pour la biodiversité." },
+      labyrinth: { name: "Entrée du labyrinthe", description: "L'entrée du petit labyrinthe du boisé." },
+    },
+  },
 };
 
 export default fr;

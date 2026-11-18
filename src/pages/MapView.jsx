@@ -29,6 +29,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import { defaultIcon } from "../leaflet-icon";
+import { useText } from "../i18n/useText";
 
 const COORDS = {
   dock: [44.620807, -63.914325],
@@ -75,31 +76,31 @@ const PATH_COORDS = [
 const TALKING_TREE_POIS = [
   {
     id: "trailhead",
-    name: "Trailhead",
+    nameKey: "map.places.trailhead.name",
     position: POINTS.trailhead,
     tts: "You are at the trailhead. This path leads into the St. Margaret’s Bay woodland, where visitors begin their walk through the conservation area.",
   },
   {
     id: "farmhouse",
-    name: "Farmhouse Foundation",
+    nameKey: "map.places.farmhouse.name",
     position: POINTS.farmhouseFoundation,
     tts: "This is the farmhouse foundation. It is a remaining footprint of an early homestead and shows how people once lived and worked in this woodland area.",
   },
   {
     id: "well",
-    name: "Well",
+    nameKey: "map.places.well.name",
     position: POINTS.well,
     tts: "You are near the old well. It once provided fresh water for residents and visitors.",
   },
   {
     id: "sittingArea",
-    name: "Sitting Area",
+    nameKey: "map.places.sittingArea.name",
     position: POINTS.sittingArea,
     tts: "This is a sitting area. People use this space to rest, listen to the forest, and observe wildlife.",
   },
   {
     id: "yellowBirch",
-    name: "Coastal Yellow Birch",
+    nameKey: "map.places.yellowBirch.name",
     position: POINTS.yellowBirch,
     tts: "You are near a Coastal Yellow Birch. This species is important for local biodiversity.",
   },
@@ -141,11 +142,11 @@ function distanceInMeters(a, b) {
 }
 
 export default function MapView() {
+  const t = useText();
   const [map, setMap] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
-  const [statusText, setStatusText] = useState(
-    "GPS is used only to place a marker on the map; coordinates are never shown."
-  );
+  // Holds a translation key so the status follows the Selected Language.
+  const [statusKey, setStatusKey] = useState("map.status.initial");
   const [nearestPoi, setNearestPoi] = useState(null);
   const [speechActiveId, setSpeechActiveId] = useState(null);
   const gpsIntervalRef = useRef(null);
@@ -202,11 +203,11 @@ export default function MapView() {
 
   const handleLocateUser = () => {
     if (!navigator.geolocation) {
-      setStatusText("GPS is not supported in this browser.");
+      setStatusKey("map.status.unsupported");
       return;
     }
 
-    setStatusText("Locating…");
+    setStatusKey("map.status.locating");
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -214,9 +215,7 @@ export default function MapView() {
         const loc = [latitude, longitude];
         setUserLocation(loc);
         updateNearestPoiFromLocation(latitude, longitude);
-        setStatusText(
-          "Location found. Your marker is placed on the map, but coordinates are not shown."
-        );
+        setStatusKey("map.status.found");
 
         if (map) {
           map.flyTo(loc, 18, { duration: 1.2 });
@@ -228,7 +227,7 @@ export default function MapView() {
         }
       },
       () => {
-        setStatusText("Unable to get GPS position. Please check permissions.");
+        setStatusKey("map.status.failed");
       },
       { enableHighAccuracy: true }
     );
@@ -275,18 +274,18 @@ export default function MapView() {
           onClick={handleLocateUser}
           className="px-5 py-2 rounded-full font-semibold border border-blue-700 bg-blue-600 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
         >
-          YOU ARE HERE
+          {t("map.youAreHere")}
         </button>
         <button
           type="button"
           onClick={handleReturnToSiteMap}
           className="px-5 py-2 rounded-full font-semibold border border-neutral-400 bg-neutral-100 text-neutral-900 hover:bg-neutral-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
         >
-          Return to Site Map
+          {t("map.returnToSiteMap")}
         </button>
       </div>
 
-      <p className="text-center text-sm mb-2 px-4">{statusText}</p>
+      <p className="text-center text-sm mb-2 px-4">{t(statusKey)}</p>
 
       <div className="mx-auto max-w-6xl border border-neutral-300 rounded-xl overflow-hidden">
         <MapContainer
@@ -302,7 +301,7 @@ export default function MapView() {
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; OpenStreetMap contributors"
+            attribution={t("map.attribution")}
           />
 
           <div
@@ -310,7 +309,7 @@ export default function MapView() {
             style={{ pointerEvents: "none" }}
           >
             <div className="m-2 bg-white/90 rounded-md shadow px-2 py-1 text-xs font-semibold text-neutral-800 flex flex-col items-center">
-              <span>North</span>
+              <span>{t("map.north")}</span>
               <span>↑</span>
             </div>
           </div>
@@ -345,74 +344,74 @@ export default function MapView() {
 
           <Marker position={POINTS.dock} icon={defaultIcon}>
             <Tooltip direction="top" offset={[0, -8]} permanent>
-              Dock
+              {t("map.places.dock.name")}
             </Tooltip>
           </Marker>
 
           <Marker position={POINTS.trailhead} icon={ICONS.trailhead}>
             <Tooltip direction="top" offset={[0, -8]} permanent>
-              Trailhead
+              {t("map.places.trailhead.name")}
             </Tooltip>
             <Popup>
-              <strong>Trailhead</strong>
-              <p>Main entrance to the woodland trails.</p>
+              <strong>{t("map.places.trailhead.name")}</strong>
+              <p>{t("map.places.trailhead.description")}</p>
             </Popup>
           </Marker>
 
           <Marker position={POINTS.farmhouseFoundation} icon={ICONS.farmhouse}>
             <Tooltip direction="top" offset={[0, -8]} permanent>
-              Farmhouse Foundation
+              {t("map.places.farmhouse.name")}
             </Tooltip>
             <Popup>
-              <strong>Farmhouse Foundation</strong>
-              <p>The remains of an early farmhouse.</p>
+              <strong>{t("map.places.farmhouse.name")}</strong>
+              <p>{t("map.places.farmhouse.description")}</p>
             </Popup>
           </Marker>
 
           <Marker position={POINTS.well} icon={ICONS.well}>
             <Tooltip direction="top" offset={[0, -8]} permanent>
-              Well
+              {t("map.places.well.name")}
             </Tooltip>
             <Popup>
-              <strong>Well</strong>
-              <p>This old well supplied water to the area.</p>
+              <strong>{t("map.places.well.name")}</strong>
+              <p>{t("map.places.well.description")}</p>
             </Popup>
           </Marker>
 
           <Marker position={POINTS.sittingArea} icon={ICONS.sittingArea}>
             <Tooltip direction="top" offset={[0, -8]} permanent>
-              Sitting Area
+              {t("map.places.sittingArea.name")}
             </Tooltip>
             <Popup>
-              <strong>Sitting Area</strong>
-              <p>A quiet place to rest and observe nature.</p>
+              <strong>{t("map.places.sittingArea.name")}</strong>
+              <p>{t("map.places.sittingArea.description")}</p>
             </Popup>
           </Marker>
 
           <Marker position={POINTS.yellowBirch} icon={ICONS.yellowBirch}>
             <Tooltip direction="top" offset={[0, -8]} permanent>
-              Coastal Yellow Birch
+              {t("map.places.yellowBirch.name")}
             </Tooltip>
             <Popup>
-              <strong>Coastal Yellow Birch</strong>
-              <p>An important tree species for biodiversity.</p>
+              <strong>{t("map.places.yellowBirch.name")}</strong>
+              <p>{t("map.places.yellowBirch.description")}</p>
             </Popup>
           </Marker>
 
           <Marker position={POINTS.labyrinthEntrance} icon={ICONS.labyrinth}>
             <Tooltip direction="top" offset={[0, -8]} permanent>
-              Labyrinth Entrance
+              {t("map.places.labyrinth.name")}
             </Tooltip>
             <Popup>
-              <strong>Labyrinth Entrance</strong>
-              <p>Entrance to the small woodland labyrinth.</p>
+              <strong>{t("map.places.labyrinth.name")}</strong>
+              <p>{t("map.places.labyrinth.description")}</p>
             </Popup>
           </Marker>
 
           {userLocation && (
             <Marker position={userLocation} icon={defaultIcon}>
               <Tooltip direction="top" offset={[0, -8]} permanent>
-                You are here
+                {t("map.userMarker")}
               </Tooltip>
             </Marker>
           )}
@@ -426,13 +425,16 @@ export default function MapView() {
             onClick={handlePlayAudio}
             className="px-4 py-3 rounded-full shadow-lg bg-green-600 text-white font-semibold text-sm hover:bg-green-700"
           >
-            Play Audio — {nearestPoi.poi.name} ({nearestPoi.distance.toFixed(1)} m)
+            {t("map.playAudio", {
+              name: t(nearestPoi.poi.nameKey),
+              distance: nearestPoi.distance.toFixed(1),
+            })}
           </button>
         </div>
       )}
 
       <p className="mt-3 text-center text-xs text-neutral-600">
-        Map bounds, paths, and Talking Trees are approximations to support on-site navigation and education.
+        {t("map.footnote")}
       </p>
     </div>
   );
