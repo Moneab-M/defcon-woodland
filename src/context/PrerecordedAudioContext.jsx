@@ -11,7 +11,10 @@
  * - React Context: https://react.dev/reference/react/createContext
  * - HTMLAudioElement: https://developer.mozilla.org/docs/Web/API/HTMLAudioElement
  *
- * API: const { playingId, unavailableId, toggle, stop } = usePrerecordedAudio();
+ * API: const { playingId, unavailableId, currentTime, toggle, stop } = usePrerecordedAudio();
+ * - currentTime:   seconds played so far in the current recording (0 when nothing
+ *                  plays), updated on the audio element's "timeupdate" event. Used
+ *                  for captions (SCRUM-57).
  * - playingId:     id of the recording playing now, or null.
  * - unavailableId: id of the last recording that failed to load or play, or null
  *                  (cleared on the next toggle).
@@ -48,6 +51,7 @@ export function PrerecordedAudioProvider({ children }) {
   const tokenRef = useRef(0); // changes on every toggle/stop so late events from an older play are ignored
   const [playingId, setPlayingIdState] = useState(null);
   const [unavailableId, setUnavailableId] = useState(null);
+  const [currentTime, setCurrentTime] = useState(0);
 
   // Keep the ref and the state in step
   const setPlayingId = useCallback((id) => {
@@ -63,7 +67,9 @@ export function PrerecordedAudioProvider({ children }) {
       audio.pause();
       audio.onended = null;
       audio.onerror = null;
+      audio.ontimeupdate = null;
     }
+    setCurrentTime(0);
     setPlayingId(null);
   }, [setPlayingId]);
 
@@ -91,6 +97,8 @@ export function PrerecordedAudioProvider({ children }) {
         if (tokenRef.current !== token || playingIdRef.current !== id) return; // a newer play or stop took over
         audio.onended = null;
         audio.onerror = null;
+        audio.ontimeupdate = null;
+        setCurrentTime(0);
         setPlayingId(null);
         if (failed) {
           setUnavailableId(id);
@@ -100,6 +108,9 @@ export function PrerecordedAudioProvider({ children }) {
 
       audio.onended = () => finish(false);
       audio.onerror = () => finish(true);
+      audio.ontimeupdate = () => {
+        if (tokenRef.current === token) setCurrentTime(audio.currentTime || 0);
+      };
       audio.src = src;
       setPlayingId(id);
       try {
@@ -118,8 +129,8 @@ export function PrerecordedAudioProvider({ children }) {
   useEffect(() => () => stop(), [stop]);
 
   const value = useMemo(
-    () => ({ playingId, unavailableId, toggle, stop }),
-    [playingId, unavailableId, toggle, stop]
+    () => ({ playingId, unavailableId, currentTime, toggle, stop }),
+    [playingId, unavailableId, currentTime, toggle, stop]
   );
 
   return (
@@ -132,9 +143,9 @@ export function PrerecordedAudioProvider({ children }) {
 /**
  * Purpose: Let any component play, stop or check the shared recording.
  *
- * Usage: const { playingId, unavailableId, toggle, stop } = usePrerecordedAudio();
+ * Usage: const { playingId, unavailableId, currentTime, toggle, stop } = usePrerecordedAudio();
  *
- * Returns: { playingId, unavailableId, toggle, stop }
+ * Returns: { playingId, unavailableId, currentTime, toggle, stop }
  */
 export function usePrerecordedAudio() {
   const context = useContext(PrerecordedAudioContext);

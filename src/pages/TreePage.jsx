@@ -4,7 +4,7 @@
  * Language. An unknown tree ID shows a kind message and a link back to the list.
  *
  * Author: Moneab Milad (DEFCON)
- * Jira: SCRUM-54 | SRS: Talking Tree
+ * Jira: SCRUM-54, SCRUM-57 | SRS: Talking Tree
  *
  * COTS (Commercial Off-The-Shelf Software):
  * - React Router useParams / Link: https://reactrouter.com/en/main/hooks/use-params
@@ -13,11 +13,13 @@
  * - Needs no location and no camera. Nothing is stored.
  */
 
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useText } from "../i18n/useText";
 import { getTreeById } from "../talkingTrees/trees";
 import { BUTTON_CLASSES } from "../Components/controlStyles";
 import TreeCharacter from "../Components/TreeCharacter";
+import TreeAudio from "../Components/TreeAudio";
 
 /**
  * Purpose: Show the tree named by the :treeId part of the address.
@@ -28,6 +30,7 @@ export default function TreePage() {
   const t = useText();
   const { treeId } = useParams();
   const tree = getTreeById(treeId);
+  const [speaking, setSpeaking] = useState(false); // true while this tree's recording plays
 
   // Back link shared by both views
   const backLink = (
@@ -53,7 +56,10 @@ export default function TreePage() {
       <h1 className="text-3xl leading-[1.2] mb-4" data-cy="tree-name">
         {t(`trees.species.${tree.species}.name`)}
       </h1>
-      <TreeCharacter species={tree.species} speaking={false} className="mx-auto mb-4 !max-w-[160px] sm:!max-w-[240px]" />
+      <TreeCharacter species={tree.species} speaking={speaking} className="mx-auto mb-4 !max-w-[160px] sm:!max-w-[240px]" />
+      <div className="mb-4 flex flex-col items-start gap-3">
+        <TreeAudio tree={tree} onSpeakingChange={setSpeaking} />
+      </div>
       <p className="text-lg leading-[1.2] mb-4" data-cy="tree-greeting">
         {t(`trees.species.${tree.species}.greeting`)}
       </p>
