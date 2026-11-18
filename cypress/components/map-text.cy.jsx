@@ -37,21 +37,21 @@ describe("Map page text", () => {
 
   it("shows English text by default", () => {
     mountMap();
-    cy.contains("button", "YOU ARE HERE").should("exist");
+    cy.contains("button", "Show where I am").should("exist");
     cy.contains("button", "Return to Site Map").should("exist");
     cy.contains("North").should("exist");
-    cy.contains("Map bounds, paths, and Talking Trees").should("exist");
+    cy.contains("The map, the paths and the Talking Trees").should("exist");
   });
 
   it("switches to French without a reload", () => {
     mountMap();
     cy.get('[data-cy="language-option-fr"]').click();
-    cy.contains("button", "JE SUIS ICI").should("exist");
+    cy.contains("button", "Montrer où je suis").should("exist");
     cy.contains("button", "Revenir à la carte du site").should("exist");
     cy.contains("Nord").should("exist");
-    cy.contains("Les limites de la carte").should("exist");
-    cy.contains("Le GPS sert seulement").should("exist");
-    cy.contains("YOU ARE HERE").should("not.exist");
+    cy.contains("La carte, les sentiers et les arbres parlants").should("exist");
+    cy.contains("Ta position sert seulement").should("exist");
+    cy.contains("Show where I am").should("not.exist");
   });
 
   it("translates the map attribution link in both languages", () => {

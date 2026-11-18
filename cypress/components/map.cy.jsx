@@ -18,6 +18,6 @@ describe("Map Page Component", () => {
         <MapView />
       </LanguageProvider>
     );
-    cy.contains("YOU ARE HERE").should("exist");
+    cy.contains("Show where I am").should("exist");
   });
 });

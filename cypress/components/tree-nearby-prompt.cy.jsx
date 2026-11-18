@@ -47,7 +47,7 @@ describe("Tree nearby prompt (SCRUM-59)", () => {
     mountMap(44.62464, -63.920329);
     cy.window().then((win) => {
       const start = win.performance.now();
-      cy.contains("button", "YOU ARE HERE").click();
+      cy.contains("button", "Show where I am").click();
       cy.get("[data-cy=tree-nearby-prompt]").should("be.visible").then(() => {
         expect(win.performance.now() - start).to.be.lessThan(2000);
       });
@@ -79,7 +79,7 @@ describe("Tree nearby prompt (SCRUM-59)", () => {
 
   it("shows nothing at an in-range point that is not a Talking Tree", () => {
     mountMap(44.626556, -63.923382);
-    cy.contains("button", "YOU ARE HERE").click();
+    cy.contains("button", "Show where I am").click();
     cy.contains("Play Audio").should("exist");
     cy.get("[data-cy=tree-nearby-prompt]").should("not.exist");
   });

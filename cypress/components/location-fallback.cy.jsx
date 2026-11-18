@@ -51,7 +51,7 @@ describe("Location fallback (SCRUM-60)", () => {
   it("shows the denied message with both links, then hides on success", () => {
     mountMap();
     cy.get("@gps").invoke("callsFake", (ok, fail) => fail({ code: 1 }));
-    cy.contains("button", "YOU ARE HERE").click();
+    cy.contains("button", "Show where I am").click();
     cy.get("[data-cy=location-fallback]")
       .should("have.attr", "role", "status")
       .and("have.attr", "aria-live", "polite")
@@ -61,18 +61,18 @@ describe("Location fallback (SCRUM-60)", () => {
     cy.get("[data-cy=location-fallback-list]").should("have.attr", "href", "/trees");
 
     cy.get("@gps").invoke("callsFake", (ok) => ok({ coords: { latitude: 44.63, longitude: -63.93 } }));
-    cy.contains("button", "YOU ARE HERE").click();
+    cy.contains("button", "Show where I am").click();
     cy.get("[data-cy=location-fallback]").should("not.exist");
   });
 
   it("shows the unavailable message for codes 2 and 3", () => {
     mountMap();
     cy.get("@gps").invoke("callsFake", (ok, fail) => fail({ code: 2 }));
-    cy.contains("button", "YOU ARE HERE").click();
+    cy.contains("button", "Show where I am").click();
     cy.get("[data-cy=location-fallback]")
       .should("contain.text", "The forest is hiding your signal for now.");
     cy.get("@gps").invoke("callsFake", (ok, fail) => fail({ code: 3 }));
-    cy.contains("button", "YOU ARE HERE").click();
+    cy.contains("button", "Show where I am").click();
     cy.get("[data-cy=location-fallback]")
       .should("contain.text", "The forest is hiding your signal for now.");
   });
@@ -82,7 +82,7 @@ describe("Location fallback (SCRUM-60)", () => {
     cy.get("@gps").invoke("callsFake", (ok, fail) => fail({ code: 1 }));
     cy.get("[data-cy=to-fr]").click();
     cy.get("[data-cy=to-fr]").next("div").find("button").first().click();
-    cy.get("button").contains("JE SUIS ICI").click();
+    cy.get("button").contains("Montrer où je suis").click();
     cy.get("[data-cy=location-fallback]").should("contain.text", "Ce n'est pas grave.");
     cy.get("[data-cy=location-fallback-scan]").should("have.attr", "href", "/trees#scan");
     cy.get("[data-cy=location-fallback-list]").should("have.attr", "href", "/trees");
