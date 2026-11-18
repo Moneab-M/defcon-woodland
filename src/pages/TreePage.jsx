@@ -14,12 +14,13 @@
  */
 
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useText } from "../i18n/useText";
 import { getTreeById } from "../talkingTrees/trees";
 import { BUTTON_CLASSES } from "../Components/controlStyles";
 import TreeCharacter from "../Components/TreeCharacter";
 import TreeAudio from "../Components/TreeAudio";
+import GentleMessage from "../Components/GentleMessage"; // SCRUM-75
 
 /**
  * Purpose: Show the tree named by the :treeId part of the address.
@@ -31,6 +32,10 @@ export default function TreePage() {
   const { treeId } = useParams();
   const tree = getTreeById(treeId);
   const [speaking, setSpeaking] = useState(false); // true while this tree's recording plays
+  // SCRUM-75: the scanner sends { foundByScan: true }; a new visit has a new location.key
+  const location = useLocation();
+  const [dismissedKey, setDismissedKey] = useState(null);
+  const showFound = location.state?.foundByScan === true && dismissedKey !== location.key;
 
   // Back link shared by both views
   const backLink = (
@@ -53,6 +58,13 @@ export default function TreePage() {
 
   return (
     <section className="mx-auto max-w-3xl px-4 sm:px-6 py-8" data-cy="tree-page">
+      {showFound && (
+        <div className="mb-4" data-cy="scan-confirmation">
+          <GentleMessage kind="good" onDismiss={() => setDismissedKey(location.key)}>
+            {t("trees.found", { name: t(`trees.species.${tree.species}.name`) })}
+          </GentleMessage>
+        </div>
+      )}
       <h1 className="text-3xl leading-[1.2] mb-4" data-cy="tree-name">
         {t(`trees.species.${tree.species}.name`)}
       </h1>

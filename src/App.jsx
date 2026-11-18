@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound"; // SCRUM-74: friendly page for unknown 
 import PageTitle from "./Components/PageTitle"; // Sets the translated browser tab title per route.
 import { BUTTON_CLASSES } from "./Components/controlStyles"; // SCRUM-69: shared button look
 import { useText } from "./i18n/useText"; // SCRUM-69: skip link text
+import LanguageChangeMessage from "./Components/LanguageChangeMessage"; // SCRUM-75
 /**
  * @function App
  * @description The main React component that defines the structure of the application.
@@ -49,6 +50,7 @@ function App() {
        {/* Displays the navigation bar */}
       {/* Main Content */}
       <main id="main-content" tabIndex={-1} className="flex-grow focus:outline-none">
+        <LanguageChangeMessage />
         {" "}
         {/* Main area for routing different pages */}
         <Routes>

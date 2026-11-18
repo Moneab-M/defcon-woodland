@@ -23,6 +23,8 @@ const en = {
       careful: "One more step:",
       dismiss: "Close this message",
     },
+    // SCRUM-75: shown after the visitor changes the language
+    languageChanged: "The woods now speak English.",
     // SCRUM-73: waiting moments
     waiting: {
       locating: "The forest is listening for where you are\u2026",
@@ -438,6 +440,8 @@ const en = {
   },
   // Talking Trees
   trees: {
+    // SCRUM-75: shown after a tree sign is found by scanning
+    found: "You found the {name}.",
     page: {
       title: "Talking Trees",
       intro: "Some trees in our woodland have a sign. Scan the sign, or pick a tree below, to hear its story. You do not need to share your location or your camera.",
