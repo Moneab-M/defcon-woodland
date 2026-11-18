@@ -513,6 +513,12 @@ const fr = {
     character: {
       alt: "Un dessin amical d'un arbre : {name}",
     },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    // SCRUM-78 : une petite surprise dans le tronc
+    easterEgg: {
+      button: "Regarder dans le trou du tronc",
+      line: "Tchic-a-di-di-di. Une mésange se reposait ici.",
+    },
     species: {
       // NEEDS REVIEW BY A FLUENT SPEAKER
       yellowBirch: {

@@ -4,7 +4,7 @@
  * Language. An unknown tree ID shows a kind message and a link back to the list.
  *
  * Author: Moneab Milad (DEFCON)
- * Jira: SCRUM-54, SCRUM-57, SCRUM-76 | SRS: Talking Tree
+ * Jira: SCRUM-54, SCRUM-57, SCRUM-76, SCRUM-78 | SRS: Talking Tree
  *
  * COTS (Commercial Off-The-Shelf Software):
  * - React Router useParams / Link: https://reactrouter.com/en/main/hooks/use-params
@@ -20,7 +20,7 @@ import { useText } from "../i18n/useText";
 import { getTreeById } from "../talkingTrees/trees";
 import { markTreeFound } from "../talkingTrees/foundTrees"; // SCRUM-76
 import { BUTTON_CLASSES } from "../Components/controlStyles";
-import TreeCharacter from "../Components/TreeCharacter";
+import TreeKnotHole from "../Components/TreeKnotHole"; // SCRUM-78 (draws the TreeCharacter)
 import TreeAudio from "../Components/TreeAudio";
 import WoodlandGuide from "../Components/WoodlandGuide"; // SCRUM-77
 import GentleMessage from "../Components/GentleMessage"; // SCRUM-75
@@ -106,7 +106,7 @@ export default function TreePage() {
       <h1 className="text-3xl leading-[1.2] mb-4" data-cy="tree-name">
         {t(`trees.species.${tree.species}.name`)}
       </h1>
-      <TreeCharacter species={tree.species} speaking={speaking} className="mx-auto mb-4 !max-w-[160px] sm:!max-w-[240px]" />
+      <TreeKnotHole species={tree.species} speaking={speaking} className="mx-auto mb-4 !max-w-[160px] sm:!max-w-[240px]" />
       <div className="mb-4 flex flex-col items-start gap-3">
         <TreeAudio tree={tree} onSpeakingChange={setSpeaking} />
       </div>
