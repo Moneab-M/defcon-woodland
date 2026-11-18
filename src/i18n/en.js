@@ -28,6 +28,10 @@ const en = {
       menu: "Menu",
       closeMenu: "Close menu",
     },
+    siteName: "Woodland Conservation Area",
+    pageTitle: {
+      notFound: "Page not found",
+    },
     theme: {
       toggleLabel: "Toggle light and dark mode",
       title: "Light/Dark",
