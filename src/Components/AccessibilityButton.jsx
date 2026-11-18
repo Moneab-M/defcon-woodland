@@ -21,7 +21,7 @@ const AccessibilityButton = () => {
         aria-expanded={isOpen}
         aria-controls="accessibility-panel"
         data-cy="settings-button"
-        className="fixed bottom-4 right-4 z-50 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition"
+        className="fixed bottom-4 right-4 z-50 inline-flex items-center justify-center min-h-[44px] min-w-[44px] bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition"
       >
         <FiSettings size={24} aria-hidden="true" />
       </button>

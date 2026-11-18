@@ -19,6 +19,8 @@
 const fr = {
   // NEEDS REVIEW BY A FLUENT SPEAKER
   common: {
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    skipToContent: "Passer au contenu principal",
     nav: {
       home: "Accueil",
       about: "À propos",

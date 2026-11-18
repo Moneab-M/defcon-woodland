@@ -69,9 +69,10 @@ export default function Navbar() {
           </button>
           <LanguageSelector />
           <button
+            type="button"
             onClick={toggleTheme}
             aria-label={text("common.theme.toggleLabel")}
-            className="inline-flex items-center gap-2 rounded-md border border-black/10 dark:border-white/20 px-3 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 transition"
+            className={BUTTON_CLASSES}
             title={text("common.theme.title")}
           >
             {theme === "dark" ? <FaSun /> : <FaMoon />}
@@ -115,7 +116,7 @@ export function Footer() {
             href="https://www.facebook.com/StMargaretsBayStewardshipAssociation/"
             aria-label={text("common.footer.facebook")}
             data-cy="footer-facebook"
-            className="relative inline-flex bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+            className="relative inline-flex items-center justify-center min-h-[44px] min-w-[44px] bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
           >
             <FaFacebook className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>
@@ -123,7 +124,7 @@ export function Footer() {
             href="https://www.instagram.com/stmargaretsbaysa/"
             aria-label={text("common.footer.instagram")}
             data-cy="footer-instagram"
-            className="relative inline-flex bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+            className="relative inline-flex items-center justify-center min-h-[44px] min-w-[44px] bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
           >
             <FaSquareInstagram className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>
@@ -131,7 +132,7 @@ export function Footer() {
             href="https://www.youtube.com/watch?v=hhed9dEyfVU&list=PLsIXMc3B__c2jg_yjIN1E9HMuRwEnMMuS&pp=iAQB"
             aria-label={text("common.footer.youtube")}
             data-cy="footer-youtube"
-            className="relative inline-flex bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+            className="relative inline-flex items-center justify-center min-h-[44px] min-w-[44px] bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
           >
             <FaYoutube className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>

@@ -287,14 +287,14 @@ export default function MapView() {
         <button
           type="button"
           onClick={handleLocateUser}
-          className="px-5 py-2 rounded-full font-semibold border border-blue-700 bg-blue-600 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+          className="px-5 py-2 rounded-full font-semibold border border-blue-700 bg-blue-600 text-white shadow-sm hover:bg-blue-700"
         >
           {t("map.youAreHere")}
         </button>
         <button
           type="button"
           onClick={handleReturnToSiteMap}
-          className="px-5 py-2 rounded-full font-semibold border border-neutral-400 bg-neutral-100 text-neutral-900 hover:bg-neutral-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+          className="px-5 py-2 rounded-full font-semibold border border-neutral-400 bg-neutral-100 text-neutral-900 hover:bg-neutral-200"
         >
           {t("map.returnToSiteMap")}
         </button>

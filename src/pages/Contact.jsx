@@ -300,7 +300,7 @@ const InquiryForm = () => {
                     : formData.fullName
                     ? "border-green-500"
                     : "border-gray-300"
-                } focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500`}
+                }`}
               />
             </div>
             {errors.fullName && (
@@ -328,7 +328,7 @@ const InquiryForm = () => {
                     : formData.email
                     ? "border-green-500"
                     : "border-gray-300"
-                } focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500`}
+                }`}
               />
             </div>
             {errors.email && (
@@ -381,7 +381,7 @@ const InquiryForm = () => {
                       : formData.otp
                       ? "border-green-500"
                       : "border-gray-300"
-                  } focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500`}
+                  }`}
                 />
               </div>
               {errors.otp && (
@@ -431,7 +431,7 @@ const InquiryForm = () => {
                     : formData.inquiryType
                     ? "border-green-500"
                     : "border-gray-300"
-                } focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500`}
+                }`}
               >
                 <option value="">{t("contact.selectOption")}</option>
                 <option value="General Inquiry">📌 {t("contact.types.general")}</option>
@@ -474,7 +474,7 @@ const InquiryForm = () => {
                     : formData.message
                     ? "border-green-500"
                     : "border-gray-300"
-                } focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500`}
+                }`}
               ></textarea>
             </div>
 

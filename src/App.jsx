@@ -19,6 +19,8 @@ import TreePage from "./pages/TreePage"; // SCRUM-54: one Talking Tree
 import { Route, Routes } from "react-router-dom"; // Routing utilities from react-router-dom.
 import AccessibilityButton from "./Components/AccessibilityButton";
 import PageTitle from "./Components/PageTitle"; // Sets the translated browser tab title per route.
+import { BUTTON_CLASSES } from "./Components/controlStyles"; // SCRUM-69: shared button look
+import { useText } from "./i18n/useText"; // SCRUM-69: skip link text
 /**
  * @function App
  * @description The main React component that defines the structure of the application.
@@ -27,16 +29,25 @@ import PageTitle from "./Components/PageTitle"; // Sets the translated browser t
  * @returns {JSX.Element} - The rendered application structure.
  */
 function App() {
+  const t = useText();
   return (
     <div className="flex flex-col min-h-screen font-sans">
       {" "}
       {/* Container for the entire application */}
       <PageTitle />
+      {/* SCRUM-69: first tab stop; visible only when focused */}
+      <a
+        href="#main-content"
+        data-cy="skip-link"
+        className={`${BUTTON_CLASSES} sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] bg-white dark:bg-gray-900`}
+      >
+        {t("common.skipToContent")}
+      </a>
       {/* Navbar */}
       <Navbar />
        {/* Displays the navigation bar */}
       {/* Main Content */}
-      <main className="flex-grow">
+      <main id="main-content" tabIndex={-1} className="flex-grow focus:outline-none">
         {" "}
         {/* Main area for routing different pages */}
         <Routes>

@@ -206,3 +206,13 @@ html.linespace-4 body{
     scroll-behavior: auto !important;
   }
 }
+
+/* SCRUM-69: one clearly visible focus outline for every control (WCAG 2.4.7).
+   Blue, 3:1 or more against the light and dark backgrounds. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+.dark :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline-color: #93c5fd;
+}
