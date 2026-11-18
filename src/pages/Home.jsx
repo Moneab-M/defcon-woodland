@@ -1,16 +1,15 @@
 /**@author xavier Mcdonald
  * @file Home.jsx
  * @description Main landing page featuring hero image rotation, theme persistence,
- * text-to-speech, weather widget integration, featured species modal, and
+ * prerecorded section audio, weather widget integration, featured species modal, and
  * accessible UI elements for the Woodland Conservation website.
  */
 
 
 import React, { useEffect, useState } from "react";
 import { useText } from "../i18n/useText";
+import SectionAudioButton from "../Components/SectionAudioButton";
 import {
-  FaVolumeUp,
-  FaPause,
   FaSun,
   FaMoon,
   FaMapMarkerAlt,
@@ -195,9 +194,6 @@ const Modal = ({ isOpen, onClose, speciesInfo }) => {
 // -----------------------------------------------------------------------------
 export default function Home() {
   const t = useText();
-  // Text-to-speech
-  const [speakingText, setSpeakingText] = useState("");
-
   // Theme state
   const [theme, setTheme] = useState(() => {
     const stored = getStoredTheme();
@@ -219,7 +215,7 @@ export default function Home() {
   useEffect(() => {
     applyTheme(theme);
     storeTheme(theme);
-    
+
   }, [theme]);
 
   // Rotate hero images every 6 seconds
@@ -233,21 +229,6 @@ export default function Home() {
 
   const toggleTheme = () =>
     setTheme((t) => (t === "dark" ? "light" : "dark"));
-
-  const handleSpeakText = (text) => {
-    if (speakingText === text) {
-      window.speechSynthesis.pause();
-      window.speechSynthesis.cancel();
-      setSpeakingText("");
-    } else {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "en-CA";
-      utterance.onend = () => setSpeakingText("");
-      window.speechSynthesis.speak(utterance);
-      setSpeakingText(text);
-    }
-  };
 
   // Species info for modal
   const featuredSpeciesInfo = {
@@ -266,18 +247,26 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
       {/* ============================= [H1] NAV ============================= */}
-      
 
-      {/* Murf AI embed */}
-      <iframe
-        className="murf-embed w-full"
-        height="102"
-        src="https://murf.ai/embeds/index.html?embedId=m4nccss4"
-        allowFullScreen
-        title="Murf Embed Player"
-        style={{ border: "none" }}
-      ></iframe>
-      <script src="https://murf.ai/embeds/widget.js"></script>
+
+      {/* SCRUM-27: Full Home narration uses the shared audio player.
+          Remove the independent Murf iframe so recordings cannot overlap. */}
+      <section className="mx-auto max-w-7xl px-6 py-4">
+        <h2 className="text-xl font-semibold mb-2">
+          {t("common.sectionAudio.siteTitle")}
+        </h2>
+        <p className="text-sm opacity-80 mb-3">
+          {t("common.sectionAudio.siteDescription")}
+        </p>
+        <SectionAudioButton
+          audioId="section:home:full"
+          pageId="home"
+          sectionId="full"
+          sectionTitle={t("common.sectionAudio.siteTitle")}
+          playLabelKey="common.sectionAudio.sitePlay"
+          stopLabelKey="common.sectionAudio.siteStop"
+        />
+      </section>
 
       {/* ============================ [H3] HERO ============================ */}
       <div
@@ -294,25 +283,15 @@ export default function Home() {
                 {t("home.hero.siteName")}
               </span>
             </h1>
-            <p className="text-lg lg:text-2xl max-w-3xl mx-auto flex items-start">
-              <button
-                onClick={() =>
-                  handleSpeakText(
-                    t("home.hero.intro")
-                  )
-                }
-                className="mr-4 mt-1 p-2 bg-transparent text-blue-300 hover:text-white rounded-full shadow-lg hover:bg-white/10 transition"
-                aria-label={t("home.readAloud")}
-              >
-                {speakingText ===
-                t("home.hero.intro") ? (
-                  <FaPause className="text-xl" />
-                ) : (
-                  <FaVolumeUp className="text-xl" />
-                )}
-              </button>
-              {t("home.hero.intro")}
-            </p>
+            <div className="text-lg lg:text-2xl max-w-3xl mx-auto flex items-start gap-3">
+              <SectionAudioButton
+                audioId="section:home:hero"
+                pageId="home"
+                sectionId="hero"
+                sectionTitle={t("home.hero.welcome")}
+              />
+              <p>{t("home.hero.intro")}</p>
+            </div>
           </div>
 
           {/* Right: rotating hero images */}
@@ -345,22 +324,12 @@ export default function Home() {
             <p>
               {t("home.whatWeDo.conservation.text")}
             </p>
-            <button
-              onClick={() =>
-                handleSpeakText(
-                  t("home.whatWeDo.conservation.text")
-                )
-              }
-              className="mt-3 p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
-              aria-label={t("home.readAloud")}
-            >
-              {speakingText ===
-              t("home.whatWeDo.conservation.text") ? (
-                <FaPause className="text-xl" />
-              ) : (
-                <FaVolumeUp className="text-xl" />
-              )}
-            </button>
+            <SectionAudioButton
+              audioId="section:home:conservation"
+              pageId="home"
+              sectionId="conservation"
+              sectionTitle={t("home.whatWeDo.conservation.title")}
+            />
           </div>
 
           {/* Sustainable Practices Card */}
@@ -371,22 +340,12 @@ export default function Home() {
             <p>
               {t("home.whatWeDo.sustainable.text")}
             </p>
-            <button
-              onClick={() =>
-                handleSpeakText(
-                  t("home.whatWeDo.sustainable.text")
-                )
-              }
-              className="mt-3 p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
-              aria-label={t("home.readAloud")}
-            >
-              {speakingText ===
-              t("home.whatWeDo.sustainable.text") ? (
-                <FaPause className="text-xl" />
-              ) : (
-                <FaVolumeUp className="text-xl" />
-              )}
-            </button>
+            <SectionAudioButton
+              audioId="section:home:sustainable"
+              pageId="home"
+              sectionId="sustainable"
+              sectionTitle={t("home.whatWeDo.sustainable.title")}
+            />
           </div>
 
           {/* Wildlife Protection Card */}
@@ -397,22 +356,12 @@ export default function Home() {
             <p>
               {t("home.whatWeDo.wildlife.text")}
             </p>
-            <button
-              onClick={() =>
-                handleSpeakText(
-                  t("home.whatWeDo.wildlife.text")
-                )
-              }
-              className="mt-3 p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
-              aria-label={t("home.readAloud")}
-            >
-              {speakingText ===
-              t("home.whatWeDo.wildlife.text") ? (
-                <FaPause className="text-xl" />
-              ) : (
-                <FaVolumeUp className="text-xl" />
-              )}
-            </button>
+            <SectionAudioButton
+              audioId="section:home:wildlife"
+              pageId="home"
+              sectionId="wildlife"
+              sectionTitle={t("home.whatWeDo.wildlife.title")}
+            />
           </div>
         </div>
       </div>
