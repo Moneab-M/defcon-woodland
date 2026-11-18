@@ -25,23 +25,17 @@ const SECTIONS = [
   {
     id: "about",
     imgSrc: "fern-leaves.jpg",
-    audioDescSrc: "/audio/about-desc.mp3",
-    ttsFallback:
-      "A photo showing green ferns along a shaded woodland trail near St. Margaret’s Bay."
+    audioDescSrc: "/audio/about-desc.mp3"
   },
   {
     id: "mission",
     imgSrc: "ferns.jpg",
-    audioDescSrc: "/audio/mission-desc.mp3",
-    ttsFallback:
-      "A photo of volunteers planting small trees along a forest trail."
+    audioDescSrc: "/audio/mission-desc.mp3"
   },
   {
     id: "vision",
     imgSrc: "red-maple.jpg",
-    audioDescSrc: "/audio/vision-desc.mp3",
-    ttsFallback:
-      "A photo showing red maple leaves lit by autumn sunlight."
+    audioDescSrc: "/audio/vision-desc.mp3"
   }
 ];
 
@@ -411,7 +405,6 @@ export default function About() {
                 <ImageAudioButton
                   imageId={sec.id}
                   src={sec.audioDescSrc}
-                  onUnavailable={() => speak(`${sec.id}-image`, sec.ttsFallback)}
                 />
               </div>
 

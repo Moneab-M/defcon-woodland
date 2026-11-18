@@ -35,6 +35,7 @@ const en = {
     imageAudio: {
       play: "Play image description",
       stop: "Stop image description",
+      unavailable: "This picture's audio description is not ready yet.",
     },
     theme: {
       toggleLabel: "Toggle light and dark mode",
@@ -175,7 +176,6 @@ const en = {
       soundPlay: "Play Forest Sound",
       soundStop: "Stop Forest Sound",
     },
-    imageAudio: "Image Audio",
     readAloud: "Read Aloud",
     sections: {
       about: {

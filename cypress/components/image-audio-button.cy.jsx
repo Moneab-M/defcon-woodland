@@ -106,6 +106,51 @@ describe("Image Audio Button", () => {
     cy.get('[data-cy="image-audio-button-one"]').should("have.attr", "aria-pressed", "false");
   });
 
+  it("shows a notice (no text-to-speech) when play() fails, in English", () => {
+    cy.window().then((win) => {
+      win.__playResult = () => Promise.reject(new Error("missing"));
+      win.speechSynthesis.speak = cy.stub().as("speak");
+    });
+    mountButtons();
+    cy.get('[data-cy="image-audio-unavailable-one"]').should("not.exist");
+    cy.get('[data-cy="image-audio-button-one"]').click();
+    cy.get('[data-cy="image-audio-unavailable-one"]')
+      .should("be.visible")
+      .and("have.attr", "role", "status")
+      .and("contain.text", "This picture's audio description is not ready yet.");
+    cy.get('[data-cy="image-audio-button-one"]').should("have.attr", "aria-pressed", "false");
+    cy.get("@speak").should("not.have.been.called");
+  });
+
+  it("shows the notice on an error event, in French, and clears it on the next click", () => {
+    cy.window().then((win) => {
+      win.localStorage.setItem("wc_selected_language", "fr");
+      win.speechSynthesis.speak = cy.stub().as("speak");
+    });
+    mountButtons();
+    cy.get('[data-cy="image-audio-button-one"]').click().should("have.attr", "aria-pressed", "true");
+    cy.window().then((win) => {
+      win.__fakeAudio.onerror();
+    });
+    cy.get('[data-cy="image-audio-unavailable-one"]')
+      .should("contain.text", "La description audio de cette image n'est pas encore prête.");
+    cy.get('[data-cy="image-audio-button-one"]').should("have.attr", "aria-pressed", "false");
+    cy.get("@speak").should("not.have.been.called");
+    cy.get('[data-cy="image-audio-button-two"]').click();
+    cy.get('[data-cy="image-audio-unavailable-one"]').should("not.exist");
+  });
+
+  it("shows no notice after a successful play and when it ends", () => {
+    mountButtons();
+    cy.get('[data-cy="image-audio-button-one"]').click();
+    cy.get('[data-cy="image-audio-unavailable-one"]').should("not.exist");
+    cy.window().then((win) => {
+      win.__fakeAudio.onended();
+    });
+    cy.get('[data-cy="image-audio-button-one"]').should("have.attr", "aria-pressed", "false");
+    cy.get('[data-cy="image-audio-unavailable-one"]').should("not.exist");
+  });
+
   it("can be reached by keyboard and is a native button", () => {
     // Cypress sends Enter on a button as a click that does not bubble to React, so
     // we check the browser's own keyboard behaviour is available instead:
