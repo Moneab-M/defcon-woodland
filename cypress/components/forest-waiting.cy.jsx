@@ -63,7 +63,8 @@ describe("ForestWaiting (SCRUM-73)", () => {
       .and("have.attr", "aria-live", "polite")
       .and("contain.text", en.common.waiting.locating);
     cy.get("[data-cy=forest-waiting-shapes]").should("have.attr", "aria-hidden", "true");
-    cy.get("[data-cy=forest-waiting] svg").should("have.length", 3);
+    cy.get("[data-cy=forest-waiting-shapes] svg").should("have.length", 3); // SCRUM-77: the guide is a separate fourth svg
+    cy.get("[data-cy=forest-waiting] [data-cy=woodland-guide]").should("have.length", 1);
     cy.get("[data-cy=forest-waiting]").find("button, a, input, [tabindex]").should("have.length", 0);
   });
 

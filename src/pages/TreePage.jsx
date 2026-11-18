@@ -22,6 +22,7 @@ import { markTreeFound } from "../talkingTrees/foundTrees"; // SCRUM-76
 import { BUTTON_CLASSES } from "../Components/controlStyles";
 import TreeCharacter from "../Components/TreeCharacter";
 import TreeAudio from "../Components/TreeAudio";
+import WoodlandGuide from "../Components/WoodlandGuide"; // SCRUM-77
 import GentleMessage from "../Components/GentleMessage"; // SCRUM-75
 
 /**
@@ -61,7 +62,10 @@ export default function TreePage() {
     return (
       <section className="mx-auto max-w-3xl px-4 sm:px-6 py-8" data-cy="tree-page">
         <h1 className="text-3xl leading-[1.2] mb-4">{t("trees.page.title")}</h1>
-        <p className="text-lg leading-[1.2] mb-6" data-cy="tree-unknown">{t("trees.page.unknown")}</p>
+        <div className="flex items-center gap-3 mb-6">
+          <WoodlandGuide size={56} />
+          <p className="text-lg leading-[1.2]" data-cy="tree-unknown">{t("trees.page.unknown")}</p>
+        </div>
         {backLink}
       </section>
     );

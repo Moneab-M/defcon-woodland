@@ -23,6 +23,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { useText } from "../i18n/useText";
 import { BUTTON_CLASSES } from "./controlStyles";
 import ForestWaiting from "./ForestWaiting";
+import WoodlandGuide from "./WoodlandGuide";
 import { scanDeps } from "../talkingTrees/cameraScan";
 import { parseTreeQrPayload } from "../talkingTrees/qrPayload";
 
@@ -262,7 +263,10 @@ function ScannerPanel({ onClose, onFound, onPickFromList }) {
 
         {phase === "denied" && (
           <>
-            <p role="status" className="text-lg leading-[1.2] mb-4" data-cy="scanner-denied">{t("trees.scanner.denied")}</p>
+            <div className="flex items-center gap-3 mb-4">
+              <WoodlandGuide size={56} />
+              <p role="status" className="text-lg leading-[1.2]" data-cy="scanner-denied">{t("trees.scanner.denied")}</p>
+            </div>
             <div className="flex flex-wrap gap-3">
               <button type="button" className={BUTTON_CLASSES} onClick={onPickFromList} data-cy="scanner-pick-list">
                 {t("trees.scanner.pickFromList")}
