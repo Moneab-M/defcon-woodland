@@ -9,6 +9,8 @@
 import React, { useEffect, useState } from "react";
 import { useText } from "../i18n/useText";
 import useDialogFocus from "../Components/useDialogFocus";
+import usePrefersReducedMotion from "../Components/usePrefersReducedMotion";
+import { BUTTON_CLASSES } from "../Components/controlStyles";
 import {
   FaVolumeUp,
   FaPause,
@@ -226,6 +228,12 @@ export default function Home() {
 
   // Hero image rotation
   const [heroIndex, setHeroIndex] = useState(0);
+  // SCRUM-68: the slideshow starts paused when the visitor prefers reduced motion
+  const reduceMotion = usePrefersReducedMotion();
+  const [slidesPaused, setSlidesPaused] = useState(reduceMotion);
+  useEffect(() => {
+    if (reduceMotion) setSlidesPaused(true);
+  }, [reduceMotion]);
 
   useEffect(() => {
     applyTheme(theme);
@@ -235,12 +243,13 @@ export default function Home() {
 
   // Rotate hero images every 6 seconds
   useEffect(() => {
+    if (slidesPaused) return undefined;
     const id = setInterval(
       () => setHeroIndex((prev) => (prev + 1) % heroImages.length),
       6000
     );
     return () => clearInterval(id);
-  }, []);
+  }, [slidesPaused]);
 
   const toggleTheme = () =>
     setTheme((t) => (t === "dark" ? "light" : "dark"));
@@ -340,6 +349,14 @@ export default function Home() {
                 />
               ))}
             </div>
+            <button
+              type="button"
+              onClick={() => setSlidesPaused((p) => !p)}
+              data-cy="slideshow-toggle"
+              className={`${BUTTON_CLASSES} mt-4`}
+            >
+              {slidesPaused ? t("home.slideshow.play") : t("home.slideshow.pause")}
+            </button>
           </div>
         </div>
       </div>

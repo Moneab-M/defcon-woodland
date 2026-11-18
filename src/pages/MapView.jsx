@@ -30,6 +30,7 @@ import {
 import L from "leaflet";
 import { defaultIcon } from "../leaflet-icon";
 import { useText } from "../i18n/useText";
+import usePrefersReducedMotion from "../Components/usePrefersReducedMotion";
 import TreeNearbyPrompt from "../Components/TreeNearbyPrompt";
 import LocationFallback from "../Components/LocationFallback";
 import { getTreeByMapPoiId } from "../talkingTrees/trees";
@@ -154,6 +155,7 @@ function distanceInMeters(a, b) {
 export default function MapView() {
   const t = useText();
   const [map, setMap] = useState(null);
+  const reduceMotion = usePrefersReducedMotion(); // SCRUM-68: no flying animation when reduced motion is on
   const [userLocation, setUserLocation] = useState(null);
   // Holds a translation key so the status follows the Selected Language.
   const [statusKey, setStatusKey] = useState("map.status.initial");
@@ -231,7 +233,8 @@ export default function MapView() {
         setStatusKey("map.status.found");
 
         if (map) {
-          map.flyTo(loc, 18, { duration: 1.2 });
+          if (reduceMotion) map.setView(loc, 18, { animate: false });
+          else map.flyTo(loc, 18, { duration: 1.2 });
         }
 
         if (!gpsStartedRef.current) {
@@ -249,11 +252,9 @@ export default function MapView() {
 
   const handleReturnToSiteMap = () => {
     if (map && siteBoundsRef.current) {
-      map.flyToBounds(siteBoundsRef.current, {
-        duration: 1.0,
-        paddingTopLeft: [40, 40],
-        paddingBottomRight: [40, 40],
-      });
+      const padding = { paddingTopLeft: [40, 40], paddingBottomRight: [40, 40] };
+      if (reduceMotion) map.fitBounds(siteBoundsRef.current, { ...padding, animate: false });
+      else map.flyToBounds(siteBoundsRef.current, { duration: 1.0, ...padding });
     }
   };
 

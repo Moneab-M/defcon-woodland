@@ -194,3 +194,15 @@ html.linespace-4 body{
     animation: none;
   }
 }
+
+/* SCRUM-68: respect the visitor's reduced-motion setting site-wide (WCAG 2.2.2) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

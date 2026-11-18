@@ -93,6 +93,10 @@ const en = {
       intro: "Explore the serenity of nature and contribute to preserving the delicate balance of our ecosystem.",
       imageAlt: "Woodland Conservation",
     },
+    slideshow: {
+      pause: "Pause the pictures",
+      play: "Play the pictures",
+    },
     whatWeDo: {
       heading: "What We Do",
       conservation: {
