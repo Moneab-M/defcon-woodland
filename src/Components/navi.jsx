@@ -111,20 +111,29 @@ export function Footer() {
       <div className="flex items-center justify-between pl-4 sm:px-6 py-4">
         {/* Socials */}
         <div className="flex gap-4">
-          <a href="https://www.facebook.com/StMargaretsBayStewardshipAssociation/">
-            <button className="relative bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200">
-              <FaFacebook className="fill-[#1c1f26]" size={25} />
-            </button>
+          <a
+            href="https://www.facebook.com/StMargaretsBayStewardshipAssociation/"
+            aria-label={text("common.footer.facebook")}
+            data-cy="footer-facebook"
+            className="relative inline-flex bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+          >
+            <FaFacebook className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>
-          <a href="https://www.instagram.com/stmargaretsbaysa/">
-            <button className="relative bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200">
-              <FaSquareInstagram className="fill-[#1c1f26]" size={25} />
-            </button>
+          <a
+            href="https://www.instagram.com/stmargaretsbaysa/"
+            aria-label={text("common.footer.instagram")}
+            data-cy="footer-instagram"
+            className="relative inline-flex bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+          >
+            <FaSquareInstagram className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>
-          <a href="https://www.youtube.com/watch?v=hhed9dEyfVU&list=PLsIXMc3B__c2jg_yjIN1E9HMuRwEnMMuS&pp=iAQB">
-            <button className="relative bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200">
-              <FaYoutube className="fill-[#1c1f26]" size={25} />
-            </button>
+          <a
+            href="https://www.youtube.com/watch?v=hhed9dEyfVU&list=PLsIXMc3B__c2jg_yjIN1E9HMuRwEnMMuS&pp=iAQB"
+            aria-label={text("common.footer.youtube")}
+            data-cy="footer-youtube"
+            className="relative inline-flex bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+          >
+            <FaYoutube className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>
         </div>
         {/* Address / copyright */}

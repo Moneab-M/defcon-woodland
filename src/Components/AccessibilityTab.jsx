@@ -41,7 +41,7 @@ const AccessibilityTab = () => {
   }, [textSize, contrast, lineSpace]); // Re-run effect whenever these change
 
   return (
-    <div className="fixed bottom-20 right-4 p-4 bg-white dark:bg-gray-800 text-black dark:text-white shadow-lg rounded-lg z-50 w-64">
+    <div id="accessibility-panel" className="fixed bottom-20 right-4 p-4 bg-white dark:bg-gray-800 text-black dark:text-white shadow-lg rounded-lg z-50 w-64">
       <h3 className="font-bold mb-2">{t("common.accessibility.title")}</h3>
 
       {/* =======================

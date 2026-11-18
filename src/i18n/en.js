@@ -54,9 +54,15 @@ const en = {
     footer: {
       address: "Head Of St Margarets Bay, NS B3Z 2C9",
       copyright: "© 2024 SMU, CSCI 3428 Group25G",
+      // Names for the icon-only social links ([ID 410] WCAG 4.1.2)
+      facebook: "St. Margaret's Bay Stewardship Association on Facebook",
+      instagram: "St. Margaret's Bay Stewardship Association on Instagram",
+      youtube: "St. Margaret's Bay Stewardship Association on YouTube",
     },
     accessibility: {
       title: "Accessibility Settings",
+      openSettings: "Open display settings",
+      closeSettings: "Close display settings",
       textSize: "Text Size:",
       sizeSmall: "Small",
       sizeMedium: "Medium",
@@ -303,7 +309,9 @@ const en = {
     readDescriptionLabel: "Read description out loud",
     listenToDescription: "Listen to description",
     descriptionText: "Natural burial is an eco-friendly alternative to conventional burial methods that emphasizes the conservation of natural resources and the reduction of environmental impact. This practice involves the interment of the body in a biodegradable coffin, shroud, or directly in the soil, without a use of embalming fluids or non-biodegradable materials.",
+    moreAbout: "More about {title}",
     types: {
+      alt: "A simple wooden coffin made from natural materials",
       title: "Types of Burial",
       summary: "Biodegradable coffins, shrouds, and natural burial options",
       modalTitle: "Types of Natural Burial",
