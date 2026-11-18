@@ -27,6 +27,13 @@ const fr = {
       careful: "Encore une étape :",
       dismiss: "Fermer ce message",
     },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    // SCRUM-73 : moments d'attente
+    waiting: {
+      locating: "La forêt écoute pour savoir où tu es\u2026",
+      scanning: "La forêt regarde l'affiche\u2026",
+      noTreeNearby: "Aucun arbre parlant n'est tout près pour le moment. Continue de marcher, la forêt te le dira.",
+    },
     nav: {
       home: "Accueil",
       about: "À propos",
@@ -44,7 +51,7 @@ const fr = {
     siteName: "Woodland Conservation Area",
     // NEEDS REVIEW BY A FLUENT SPEAKER
     pageTitle: {
-      notFound: "Page introuvable",
+      notFound: "Hors du sentier",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
     imageAudio: {
@@ -539,6 +546,15 @@ const fr = {
         ],
       },
     },
+  },
+  // SCRUM-74: friendly page for addresses that match no page
+  // NEEDS REVIEW BY A FLUENT SPEAKER
+  notFound: {
+    heading: "Ce chemin sort du sentier",
+    text: "Nous ne trouvons pas cette page. Ce n'est pas grave. Retournons vers un endroit que nous connaissons.",
+    home: "Aller à la page d'accueil",
+    map: "Voir la carte",
+    trees: "Rencontrer les arbres parlants",
   },
 };
 

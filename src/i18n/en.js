@@ -23,6 +23,12 @@ const en = {
       careful: "One more step:",
       dismiss: "Close this message",
     },
+    // SCRUM-73: waiting moments
+    waiting: {
+      locating: "The forest is listening for where you are\u2026",
+      scanning: "The forest is looking at the sign\u2026",
+      noTreeNearby: "No talking tree is close by yet. Keep walking, the forest will tell you.",
+    },
     nav: {
       home: "Home",
       about: "About",
@@ -37,7 +43,7 @@ const en = {
     },
     siteName: "Woodland Conservation Area",
     pageTitle: {
-      notFound: "Page not found",
+      notFound: "Off the trail",
     },
     imageAudio: {
       play: "Play image description",
@@ -532,6 +538,14 @@ const en = {
         ],
       },
     },
+  },
+  // SCRUM-74: friendly page for addresses that match no page
+  notFound: {
+    heading: "This path leads off the trail",
+    text: "We cannot find that page. That's okay. Let's walk back to a place we know.",
+    home: "Go to the Home page",
+    map: "Show the Map",
+    trees: "Meet the Talking Trees",
   },
 };
 

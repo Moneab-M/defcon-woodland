@@ -82,8 +82,8 @@ describe("Page titles (SCRUM-52)", () => {
 
   it("uses the not-found title for an unknown path", () => {
     mountAt("/nope");
-    cy.document().its("title").should("eq", `Page not found | ${SITE}`);
+    cy.document().its("title").should("eq", `Off the trail | ${SITE}`);
     cy.get("[data-cy=to-fr]").click();
-    cy.document().its("title").should("eq", `Page introuvable | ${SITE}`);
+    cy.document().its("title").should("eq", `Hors du sentier | ${SITE}`);
   });
 });
