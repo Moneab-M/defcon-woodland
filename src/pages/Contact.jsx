@@ -9,6 +9,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useText } from "../i18n/useText";
+import GentleMessage from "../Components/GentleMessage.jsx";
 
 const InquiryForm = () => {
   const t = useText();
@@ -30,6 +31,12 @@ const InquiryForm = () => {
 
   // Global form error message key (top red text); translated when shown
   const [formError, setFormError] = useState("");
+
+  // Gentle on-page messages that replace pop-up alerts (SCRUM-71).
+  // Each is { kind: "good" | "careful", text } or null; they stay until the visitor acts again.
+  const [otpMessage, setOtpMessage] = useState(null);
+  const [verifyMessage, setVerifyMessage] = useState(null);
+  const [submitMessage, setSubmitMessage] = useState(null);
 
   // submit button shake offset (for error feedback)
   const [shakeOffset, setShakeOffset] = useState(0);
@@ -91,12 +98,14 @@ const InquiryForm = () => {
     }
 
     try {
+      setOtpMessage(null);
+      setVerifyMessage(null);
       setSendingOtp(true);
       const res = await axios.post("/api/send-otp", { email: formData.email });
       setOtpSent(true);
-      alert(res.data.message);
+      setOtpMessage({ kind: "good", text: res.data.message });
     } catch (err) {
-      alert(t("contact.alerts.sendOtpFailed"));
+      setOtpMessage({ kind: "careful", text: t("contact.alerts.sendOtpFailed") });
     } finally {
       setSendingOtp(false);
     }
@@ -109,15 +118,16 @@ const InquiryForm = () => {
     }
 
     try {
+      setVerifyMessage(null);
       setVerifyingOtp(true);
       const res = await axios.post("/api/verify-otp", {
         email: formData.email,
         otp: formData.otp,
       });
       setFormData({ ...formData, otpVerified: true });
-      alert(res.data.message);
+      setVerifyMessage({ kind: "good", text: res.data.message });
     } catch (err) {
-      alert(t("contact.alerts.incorrectOtp"));
+      setVerifyMessage({ kind: "careful", text: t("contact.alerts.incorrectOtp") });
     } finally {
       setVerifyingOtp(false);
     }
@@ -180,6 +190,7 @@ const InquiryForm = () => {
     }
 
     try {
+      setSubmitMessage(null);
       setSubmitting(true);
       const res = await axios.post("/api/send-confirmation", {
         email: formData.email,
@@ -188,7 +199,7 @@ const InquiryForm = () => {
         message: formData.message,
       });
 
-      alert(res.data.message);
+      setSubmitMessage({ kind: "good", text: res.data.message });
       setSubmitted(true);
 
       // Reset
@@ -201,10 +212,11 @@ const InquiryForm = () => {
         otpVerified: false,
       });
       setOtpSent(false);
+      setVerifyMessage(null);
       setErrors({});
       setFormError("");
     } catch (err) {
-      alert(t("contact.alerts.submitFailed"));
+      setSubmitMessage({ kind: "careful", text: t("contact.alerts.submitFailed") });
     } finally {
       setSubmitting(false);
     }
@@ -225,7 +237,10 @@ const InquiryForm = () => {
     setErrors({});
     setSubmitted(false);
     setOtpSent(false);
+    setOtpMessage(null);
+    setVerifyMessage(null);
     setFormError("");
+    setSubmitMessage(null); 
   };
 
   // ------------------------------------------------------------
@@ -360,6 +375,13 @@ const InquiryForm = () => {
             >
               {sendingOtp ? t("contact.sending") : t("contact.sendOtp")}
             </button>
+            {otpMessage && (
+              <div className="mt-3" data-cy="otp-message">
+                <GentleMessage kind={otpMessage.kind} onDismiss={() => setOtpMessage(null)}>
+                  {otpMessage.text}
+                </GentleMessage>
+              </div>
+            )}
           </div>
 
           {/* OTP Entry */}
@@ -396,6 +418,13 @@ const InquiryForm = () => {
               >
                 {verifyingOtp ? t("contact.verifying") : t("contact.verifyOtp")}
               </button>
+              {verifyMessage && (
+                <div className="mt-2" data-cy="verify-message">
+                  <GentleMessage kind={verifyMessage.kind} onDismiss={() => setVerifyMessage(null)}>
+                    {verifyMessage.text}
+                  </GentleMessage>
+                </div>
+              )}
 
               {formData.otpVerified && (
                 <p className="text-green-600 text-sm mt-1">
@@ -529,6 +558,14 @@ const InquiryForm = () => {
             {t("contact.clear")}
           </button>
         </div>
+
+        {submitMessage && (
+          <div data-cy="submit-message">
+            <GentleMessage kind={submitMessage.kind} onDismiss={() => setSubmitMessage(null)}>
+              {submitMessage.text}
+            </GentleMessage>
+          </div>
+        )}
       </form>
     </div>
   );
