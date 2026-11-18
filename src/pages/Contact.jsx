@@ -240,6 +240,7 @@ const InquiryForm = () => {
     setOtpMessage(null);
     setVerifyMessage(null);
     setFormError("");
+    setSubmitMessage(null); 
   };
 
   // ------------------------------------------------------------
