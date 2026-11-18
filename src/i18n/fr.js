@@ -414,10 +414,52 @@ const fr = {
   // Arbres parlants
   trees: {
     species: {
-      yellowBirch: { name: "Bouleau jaune" },
-      redSpruce: { name: "Épinette rouge" },
-      redMaple: { name: "Érable rouge" },
-      whitePine: { name: "Pin blanc" },
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      yellowBirch: {
+        name: "Bouleau jaune",
+        greeting: "Bonjour ! Je suis un bouleau jaune.",
+        facts: [
+          "Mon écorce est luisante, d'un jaune bronze, et elle se détache en fines bandes frisées.",
+          "Si on gratte une jeune brindille, elle sent la gaulthérie.",
+          "Mes feuilles deviennent jaunes à l'automne.",
+          "Mes petites graines nourrissent les oiseaux en hiver.",
+          "Je peux vivre bien plus de cent ans.",
+        ],
+      },
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      redSpruce: {
+        name: "Épinette rouge",
+        greeting: "Bonjour ! Je suis une épinette rouge.",
+        facts: [
+          "Je suis l'arbre provincial de la Nouvelle-Écosse.",
+          "Mes aiguilles sont courtes, piquantes et à quatre côtés.",
+          "Mes cônes pendent de mes branches.",
+          "Je peux vivre plusieurs centaines d'années.",
+          "J'aime l'air frais et humide près de la côte.",
+        ],
+      },
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      redMaple: {
+        name: "Érable rouge",
+        greeting: "Bonjour ! Je suis un érable rouge.",
+        facts: [
+          "Au début du printemps, j'ai des bourgeons et des fleurs rouges.",
+          "Mes feuilles ont trois à cinq pointes, et elles prennent de vives couleurs à l'automne.",
+          "Mes graines ont des ailes, alors elles tournent en tombant.",
+          "Je peux pousser dans un sol mouillé comme dans un sol sec.",
+        ],
+      },
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      whitePine: {
+        name: "Pin blanc",
+        greeting: "Bonjour ! Je suis un pin blanc.",
+        facts: [
+          "Mes aiguilles sont longues et douces, et elles poussent en groupes de cinq.",
+          "Mes cônes sont longs et minces.",
+          "Je suis l'un des plus grands arbres de l'est du Canada.",
+          "Mes branches poussent en étages plats.",
+        ],
+      },
     },
   },
 };
