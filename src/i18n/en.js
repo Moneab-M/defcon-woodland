@@ -426,6 +426,12 @@ const en = {
       close: "Close",
       waiting: "Waiting for your camera. If your device asks, tap Allow.",
     },
+    nearby: {
+      message: "A talking tree is close by: the {name}. Can you find its sign?",
+      scan: "Scan the tree's sign",
+      meet: "Meet this tree without scanning",
+      dismiss: "Not now",
+    },
     species: {
       yellowBirch: {
         name: "Yellow birch",

@@ -438,6 +438,13 @@ const fr = {
       close: "Fermer",
       waiting: "J'attends ta caméra. Si ton appareil le demande, touche Autoriser.",
     },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    nearby: {
+      message: "Un arbre parlant est tout près : le {name}. Peux-tu trouver son affiche ?",
+      scan: "Lire l'affiche de l'arbre",
+      meet: "Rencontrer cet arbre sans lire l'affiche",
+      dismiss: "Pas maintenant",
+    },
     species: {
       // NEEDS REVIEW BY A FLUENT SPEAKER
       yellowBirch: {
