@@ -18,6 +18,7 @@
 import { Link } from "react-router-dom";
 import { useText } from "../i18n/useText";
 import { BUTTON_CLASSES } from "./controlStyles";
+import WoodlandGuide from "./WoodlandGuide";
 
 /**
  * Purpose: Show the location fallback message and its two links.
@@ -34,9 +35,12 @@ export default function LocationFallback({ reason }) {
       data-cy="location-fallback"
       className="mx-auto max-w-6xl my-3 px-4 py-3 rounded-xl border border-black/10 dark:border-white/20"
     >
-      <p className="text-lg leading-[1.2] mb-3" data-cy="location-fallback-message">
-        {t(`map.locationFallback.${reason}`)}
-      </p>
+      <div className="flex items-center gap-3 mb-3">
+        <WoodlandGuide size={56} />
+        <p className="text-lg leading-[1.2]" data-cy="location-fallback-message">
+          {t(`map.locationFallback.${reason}`)}
+        </p>
+      </div>
       <div className="flex flex-wrap gap-3">
         <Link to="/trees#scan" className={BUTTON_CLASSES} data-cy="location-fallback-scan">
           {t("map.locationFallback.scan")}

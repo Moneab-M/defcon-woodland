@@ -236,3 +236,22 @@ html.linespace-4 body{
     transform: none;
   }
 }
+
+/* SCRUM-76: three small leaves drift down once (about 2 s). Off for reduced motion. */
+@keyframes milestone-leaf-drift {
+  0% { opacity: 0; transform: translateY(-12px) rotate(-10deg); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(40px) rotate(25deg); }
+}
+.milestone-leaf {
+  animation: milestone-leaf-drift 2s ease-in 1 both;
+}
+.milestone-leaf-2 { animation-delay: 0.25s; }
+.milestone-leaf-3 { animation-delay: 0.5s; }
+@media (prefers-reduced-motion: reduce) {
+  .milestone-leaf,
+  .milestone-leaf-2,
+  .milestone-leaf-3 {
+    display: none !important;
+  }
+}

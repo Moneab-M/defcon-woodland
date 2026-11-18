@@ -442,6 +442,14 @@ const en = {
   trees: {
     // SCRUM-75: shown after a tree sign is found by scanning
     found: "You found the {name}.",
+    // SCRUM-76: found trees and milestones (kept on this device only)
+    milestones: {
+      first: "Your first talking tree. Well found.",
+      all: "You have met every talking tree on the trail.",
+      found: "Found",
+      count: "You have met {count} of {total} trees.",
+      reset: "Start again",
+    },
     page: {
       title: "Talking Trees",
       intro: "Some trees in our woodland have a sign. Scan the sign, or pick a tree below, to hear its story. You do not need to share your location or your camera.",

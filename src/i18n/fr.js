@@ -462,6 +462,15 @@ const fr = {
     // NEEDS REVIEW BY A FLUENT SPEAKER
     // SCRUM-75 : après la lecture d'une affiche
     found: "Tu as trouvé cet arbre : {name}.",
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    // SCRUM-76 : arbres trouvés et étapes (gardés sur cet appareil seulement)
+    milestones: {
+      first: "Ton premier arbre parlant. Bien trouvé.",
+      all: "Tu as rencontré tous les arbres parlants du sentier.",
+      found: "Trouvé",
+      count: "Tu as rencontré {count} sur {total} arbres.",
+      reset: "Recommencer",
+    },
     page: {
       title: "Arbres parlants",
       intro: "Certains arbres de notre boisé ont une affiche. Lis l'affiche, ou choisis un arbre ci-dessous, pour entendre son histoire. Tu n'as pas besoin de partager ta position ni ta caméra.",

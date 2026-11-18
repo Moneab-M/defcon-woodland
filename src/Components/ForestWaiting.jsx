@@ -12,6 +12,8 @@
  * - Shape colours come from the illustration palette; the text colour is inherited.
  */
 
+import WoodlandGuide from "./WoodlandGuide";
+
 const LEAF_COLOURS = ["#C9A227", "#B9772E", "#5F7A8A"];
 
 /**
@@ -26,6 +28,7 @@ export default function ForestWaiting({ message, className = "" }) {
       data-cy="forest-waiting"
       className={("flex items-center justify-center gap-3 " + className).trim()}
     >
+      <WoodlandGuide size={48} />
       <span aria-hidden="true" className="inline-flex items-center gap-1" data-cy="forest-waiting-shapes">
         {LEAF_COLOURS.map((colour, i) => (
           <svg
