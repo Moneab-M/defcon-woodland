@@ -423,6 +423,21 @@ const fr = {
       unknown: "Nous n'avons pas trouvé cet arbre. Retournons vers les arbres que nous connaissons.",
       factsLabel: "Ce que j'aimerais que tu saches",
     },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    scanner: {
+      open: "Lire l'affiche d'un arbre",
+      title: "Lire l'affiche d'un arbre",
+      explain: "Pour lire l'affiche de l'arbre, cette page a besoin de regarder avec ta caméra. L'image reste sur ton appareil. Rien n'est gardé ni envoyé.",
+      turnOn: "Allumer la caméra",
+      notNow: "Pas maintenant",
+      videoLabel: "Vue de la caméra. Tiens l'affiche de l'arbre devant la caméra.",
+      looking: "Je cherche l'affiche de l'arbre. Tiens-la bien droite devant la caméra.",
+      notTree: "Ce code n'est pas l'un de nos arbres. Essaie l'affiche sur l'arbre.",
+      denied: "Ce n'est pas grave. Tu peux quand même rencontrer les arbres. Choisis-en un dans la liste.",
+      pickFromList: "Choisir un arbre dans la liste",
+      close: "Fermer",
+      waiting: "J'attends ta caméra. Si ton appareil le demande, touche Autoriser.",
+    },
     species: {
       // NEEDS REVIEW BY A FLUENT SPEAKER
       yellowBirch: {

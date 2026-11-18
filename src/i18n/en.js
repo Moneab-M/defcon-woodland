@@ -412,6 +412,20 @@ const en = {
       unknown: "We could not find that tree. Let's go back to the trees we know.",
       factsLabel: "Things I would like you to know",
     },
+    scanner: {
+      open: "Scan a tree's sign",
+      title: "Scan a tree's sign",
+      explain: "To read the tree's sign, this page needs to look through your camera. The picture stays on your device. Nothing is saved or sent.",
+      turnOn: "Turn on the camera",
+      notNow: "Not now",
+      videoLabel: "Camera view. Hold the tree's sign in front of the camera.",
+      looking: "Looking for the tree's sign. Hold it steady in front of the camera.",
+      notTree: "That code is not one of our trees. Try the sign on the tree.",
+      denied: "That's okay. You can still meet the trees. Pick one from the list.",
+      pickFromList: "Pick a tree from the list",
+      close: "Close",
+      waiting: "Waiting for your camera. If your device asks, tap Allow.",
+    },
     species: {
       yellowBirch: {
         name: "Yellow birch",
