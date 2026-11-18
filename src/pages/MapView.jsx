@@ -31,6 +31,7 @@ import L from "leaflet";
 import { defaultIcon } from "../leaflet-icon";
 import { useText } from "../i18n/useText";
 import TreeNearbyPrompt from "../Components/TreeNearbyPrompt";
+import LocationFallback from "../Components/LocationFallback";
 import { getTreeByMapPoiId } from "../talkingTrees/trees";
 
 const COORDS = {
@@ -137,6 +138,13 @@ const ICONS = {
   labyrinth: emojiIcon("🧭"),
 };
 
+// SCRUM-60: status keys that show the reassuring location fallback.
+const FALLBACK_REASONS = {
+  "map.status.denied": "denied",
+  "map.status.unavailable": "unavailable",
+  "map.status.unsupported": "unsupported",
+};
+
 function distanceInMeters(a, b) {
   const la = L.latLng(a[0], a[1]);
   const lb = L.latLng(b[0], b[1]);
@@ -231,8 +239,9 @@ export default function MapView() {
           startGpsInterval();
         }
       },
-      () => {
-        setStatusKey("map.status.failed");
+      (err) => {
+        // SCRUM-60: code 1 = permission denied; 2 or 3 = unavailable or timed out.
+        setStatusKey(err && err.code === 1 ? "map.status.denied" : "map.status.unavailable");
       },
       { enableHighAccuracy: true }
     );
@@ -291,6 +300,8 @@ export default function MapView() {
       </div>
 
       <p className="text-center text-sm mb-2 px-4">{t(statusKey)}</p>
+
+      {FALLBACK_REASONS[statusKey] && <LocationFallback reason={FALLBACK_REASONS[statusKey]} />}
 
       {nearbyTree && nearbyTree.id !== dismissedTreeId && (
         <TreeNearbyPrompt tree={nearbyTree} onDismiss={() => setDismissedTreeId(nearbyTree.id)} />

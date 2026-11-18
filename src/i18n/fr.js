@@ -396,11 +396,21 @@ const fr = {
     playAudio: "Écouter l'audio \u2014 {name} ({distance} m)",
     footnote: "Les limites de la carte, les sentiers et les arbres parlants sont approximatifs. Ils servent à t'aider à te déplacer sur place et à apprendre.",
     status: {
-      initial: "Le GPS sert seulement à placer un repère sur la carte. Les coordonnées ne sont jamais affichées.",
-      unsupported: "Ce navigateur ne peut pas utiliser le GPS.",
+      initial: "Le GPS sert seulement à placer un repère sur la carte, et ta position reste sur ton appareil. Les coordonnées ne sont jamais affichées.",
+      unsupported: "Cet appareil ne peut pas partager où il se trouve.",
+      denied: "Ta position n'est pas partagée.",
+      unavailable: "Nous ne trouvons pas ta position pour le moment.",
       locating: "Recherche de ta position\u2026",
       found: "Position trouvée. Ton repère est sur la carte, mais les coordonnées ne sont pas affichées.",
       failed: "Impossible d'obtenir ta position GPS. Vérifie les autorisations, s'il te plaît.",
+    },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    locationFallback: {
+      denied: "Ce n'est pas grave. Tu peux explorer sans partager où tu es.",
+      unavailable: "La forêt cache ton signal pour le moment. Tu peux quand même rencontrer les arbres.",
+      unsupported: "Cet appareil ne peut pas partager où il se trouve. Tu peux quand même rencontrer les arbres.",
+      scan: "Scanner le panneau d'un arbre",
+      list: "Choisir un arbre dans la liste",
     },
     places: {
       dock: { name: "Quai" },

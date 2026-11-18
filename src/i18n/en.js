@@ -386,11 +386,20 @@ const en = {
     playAudio: "Play Audio \u2014 {name} ({distance} m)",
     footnote: "Map bounds, paths, and Talking Trees are approximations to support on-site navigation and education.",
     status: {
-      initial: "GPS is used only to place a marker on the map; coordinates are never shown.",
-      unsupported: "GPS is not supported in this browser.",
+      initial: "GPS is used only to place a marker on the map, and your location stays on your device; coordinates are never shown.",
+      unsupported: "This device cannot share where it is.",
+      denied: "Your location is not being shared.",
+      unavailable: "We cannot find your location right now.",
       locating: "Locating\u2026",
       found: "Location found. Your marker is placed on the map, but coordinates are not shown.",
       failed: "Unable to get GPS position. Please check permissions.",
+    },
+    locationFallback: {
+      denied: "That's okay. You can explore without sharing where you are.",
+      unavailable: "The forest is hiding your signal for now. You can still meet the trees.",
+      unsupported: "This device cannot share where it is. You can still meet the trees.",
+      scan: "Scan a tree's sign",
+      list: "Pick a tree from the list",
     },
     places: {
       dock: { name: "Dock" },
