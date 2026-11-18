@@ -36,6 +36,11 @@ const fr = {
     pageTitle: {
       notFound: "Page introuvable",
     },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    imageAudio: {
+      play: "Écouter la description de l'image",
+      stop: "Arrêter la description de l'image",
+    },
     theme: {
       toggleLabel: "Passer du mode clair au mode sombre",
       title: "Clair/Sombre",

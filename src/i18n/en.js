@@ -32,6 +32,10 @@ const en = {
     pageTitle: {
       notFound: "Page not found",
     },
+    imageAudio: {
+      play: "Play image description",
+      stop: "Stop image description",
+    },
     theme: {
       toggleLabel: "Toggle light and dark mode",
       title: "Light/Dark",
