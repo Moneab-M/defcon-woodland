@@ -14,6 +14,8 @@ import Gallery from "./pages/Gallery"; // Gallery page component.
 import NaturalBurial from "./pages/NaturalBurial"; // Natural Burial page component.
 import Contact from "./pages/Contact"; // Contact page component.
 import MapView from "./pages/MapView";
+import TalkingTrees from "./pages/TalkingTrees"; // SCRUM-54: list of Talking Trees
+import TreePage from "./pages/TreePage"; // SCRUM-54: one Talking Tree
 import { Route, Routes } from "react-router-dom"; // Routing utilities from react-router-dom.
 import AccessibilityButton from "./Components/AccessibilityButton";
 import PageTitle from "./Components/PageTitle"; // Sets the translated browser tab title per route.
@@ -54,6 +56,9 @@ function App() {
           {/* Route for the Contact page */}
           <Route path="/map" element={<MapView />} />{" "}
           {/* Route for the Map page */}
+          <Route path="/trees" element={<TalkingTrees />} />
+          <Route path="/trees/:treeId" element={<TreePage />} />
+          {/* SCRUM-54: Talking Trees list and one page per tree */}
         </Routes>
       </main>
       <AccessibilityButton/>
