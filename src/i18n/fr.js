@@ -321,6 +321,58 @@ const fr = {
     close: "Fermer",
     footer: "\u00a9 2025 Woodland Conservation. Tous droits réservés.",
   },
+  // NEEDS REVIEW BY A FLUENT SPEAKER
+  // Page Contact
+  contact: {
+    heading: "Formulaire de contact et de demande",
+    successBanner: "Ton formulaire a bien été envoyé!",
+    personalHeading: "Renseignements personnels",
+    detailsHeading: "Détails de la demande",
+    fullName: "Nom complet",
+    email: "Adresse courriel",
+    inquiryType: "Type de demande",
+    message: "Message (500 caractères au maximum)",
+    required: "(Obligatoire)",
+    optional: "(Facultatif)",
+    suggestions: "Suggestions :",
+    sendOtp: "Envoyer le code",
+    sending: "Envoi en cours...",
+    enterOtp: "Entrer le code",
+    verifyOtp: "Vérifier le code",
+    verifying: "Vérification en cours...",
+    emailVerified: "Ton adresse courriel est vérifiée.",
+    selectOption: "Choisir une option",
+    types: {
+      general: "Question générale",
+      siteVisit: "Demande de visite du site",
+      burial: "Question sur les services d'inhumation",
+    },
+    hints: {
+      general: "Pour les questions générales sur le boisé ou sur le travail de conservation.",
+      siteVisit: "Choisis cette option pour organiser une visite du site.",
+      burial: "Choisis cette option pour les questions sur les services d'inhumation naturelle et leur disponibilité.",
+    },
+    previewHeading: "Aperçu de ton message :",
+    previewEmpty: "L'aperçu de ton message va s'afficher ici pendant que tu écris.",
+    submit: "Envoyer la demande",
+    submitting: "Envoi en cours...",
+    clear: "Effacer le formulaire",
+    errors: {
+      emailBeforeOtp: "Entre une adresse courriel valide avant d'envoyer le code.",
+      otpRequired: "Entre le code avant de le vérifier.",
+      fullNameRequired: "Le nom complet est obligatoire.",
+      emailRequired: "L'adresse courriel est obligatoire.",
+      emailInvalid: "Entre une adresse courriel valide.",
+      inquiryTypeRequired: "Choisis un type de demande, s'il te plaît.",
+      messageTooLong: "Le message dépasse 500 caractères.",
+      formInvalid: "Remplis tous les champs obligatoires correctement avant d'envoyer le formulaire.",
+    },
+    alerts: {
+      sendOtpFailed: "Le code n'a pas pu être envoyé.",
+      incorrectOtp: "Le code est incorrect.",
+      submitFailed: "Le formulaire n'a pas pu être envoyé.",
+    },
+  },
 };
 
 export default fr;

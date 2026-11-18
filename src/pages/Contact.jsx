@@ -8,8 +8,10 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useText } from "../i18n/useText";
 
 const InquiryForm = () => {
+  const t = useText();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -26,7 +28,7 @@ const InquiryForm = () => {
   const [verifyingOtp, setVerifyingOtp] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Global form error message (top red text)
+  // Global form error message key (top red text); translated when shown
   const [formError, setFormError] = useState("");
 
   // submit button shake offset (for error feedback)
@@ -84,7 +86,7 @@ const InquiryForm = () => {
   // ------------------------------------------------------------
   const handleSendOtp = async () => {
     if (!validateEmail(formData.email)) {
-      setErrors({ ...errors, email: "Enter a valid email before sending OTP." });
+      setErrors({ ...errors, email: "contact.errors.emailBeforeOtp" });
       return;
     }
 
@@ -94,7 +96,7 @@ const InquiryForm = () => {
       setOtpSent(true);
       alert(res.data.message);
     } catch (err) {
-      alert("Failed to send OTP.");
+      alert(t("contact.alerts.sendOtpFailed"));
     } finally {
       setSendingOtp(false);
     }
@@ -102,7 +104,7 @@ const InquiryForm = () => {
 
   const verifyOtp = async () => {
     if (!formData.otp) {
-      setErrors({ ...errors, otp: "Enter the OTP before verifying." });
+      setErrors({ ...errors, otp: "contact.errors.otpRequired" });
       return;
     }
 
@@ -115,7 +117,7 @@ const InquiryForm = () => {
       setFormData({ ...formData, otpVerified: true });
       alert(res.data.message);
     } catch (err) {
-      alert("Incorrect OTP.");
+      alert(t("contact.alerts.incorrectOtp"));
     } finally {
       setVerifyingOtp(false);
     }
@@ -153,26 +155,26 @@ const InquiryForm = () => {
     setFormError("");
 
     const newErrors = {};
-    if (!formData.fullName) newErrors.fullName = "Full Name is required.";
-    if (!formData.email) newErrors.email = "Email is required.";
+    if (!formData.fullName) newErrors.fullName = "contact.errors.fullNameRequired";
+    if (!formData.email) newErrors.email = "contact.errors.emailRequired";
     else if (!validateEmail(formData.email))
-      newErrors.email = "Enter a valid email address.";
+      newErrors.email = "contact.errors.emailInvalid";
 
     // OTP is OPTIONAL now – no required check here
 
     if (!formData.inquiryType)
-      newErrors.inquiryType = "Please choose an inquiry type.";
+      newErrors.inquiryType = "contact.errors.inquiryTypeRequired";
 
     // Message is OPTIONAL:
     // only validate if user typed something, and then only for length > 500
     if (formData.message && formData.message.length > 500) {
-      newErrors.message = "Message exceeds 500 characters.";
+      newErrors.message = "contact.errors.messageTooLong";
     }
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length !== 0) {
-      setFormError("Please fill in all required fields correctly before submitting the form.");
+      setFormError("contact.errors.formInvalid");
       triggerShake();
       return; // stop submission if any required field is wrong
     }
@@ -202,7 +204,7 @@ const InquiryForm = () => {
       setErrors({});
       setFormError("");
     } catch (err) {
-      alert("Failed to submit form.");
+      alert(t("contact.alerts.submitFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -231,13 +233,13 @@ const InquiryForm = () => {
   // ------------------------------------------------------------
   const renderInquiryHint = () => {
     if (formData.inquiryType === "General Inquiry") {
-      return "For general questions about the woodland site or conservation work.";
+      return t("contact.hints.general");
     }
     if (formData.inquiryType === "Site Visit Request") {
-      return "Use this if you would like to arrange a visit to the site.";
+      return t("contact.hints.siteVisit");
     }
     if (formData.inquiryType === "Burial Service Query") {
-      return "Use this for questions about natural burial services and availability.";
+      return t("contact.hints.burial");
     }
     return "";
   };
@@ -251,13 +253,13 @@ const InquiryForm = () => {
     <div className="max-w-3xl mx-auto px-5 py-8">
       {/* Header */}
       <h1 className="text-3xl font-bold text-center mb-8">
-        Contact & Inquiry Form
+        {t("contact.heading")}
       </h1>
 
       {/* Success Banner */}
       {submitted && (
         <div className="mb-6 p-4 rounded-md bg-green-100 text-green-800 border border-green-300">
-          Your form has been submitted successfully!
+          {t("contact.successBanner")}
         </div>
       )}
 
@@ -268,7 +270,7 @@ const InquiryForm = () => {
         {/* GLOBAL ERROR MESSAGE */}
         {formError && (
           <div className="mb-4 p-3 rounded-md bg-red-50 border border-red-300">
-            <p className="text-red-600 text-sm">{formError}</p>
+            <p className="text-red-600 text-sm">{t(formError)}</p>
           </div>
         )}
 
@@ -276,12 +278,12 @@ const InquiryForm = () => {
         {/* Section A: Personal Information */}
         {/* ------------------------------------------------------------ */}
         <div className="transition-opacity duration-500">
-          <h2 className="text-xl font-semibold mb-3">Personal Information</h2>
+          <h2 className="text-xl font-semibold mb-3">{t("contact.personalHeading")}</h2>
 
           {/* Full Name */}
           <div className="mb-4">
             <label className="block font-medium mb-1">
-              Full Name <span className="italic text-neutral-400 ml-1">(Required)</span>
+              {t("contact.fullName")} <span className="italic text-neutral-400 ml-1">{t("contact.required")}</span>
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -302,14 +304,14 @@ const InquiryForm = () => {
               />
             </div>
             {errors.fullName && (
-              <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+              <p className="text-red-500 text-sm mt-1">{t(errors.fullName)}</p>
             )}
           </div>
 
           {/* Email */}
           <div className="mb-3">
             <label className="block font-medium mb-1">
-              Email Address <span className="italic text-neutral-400 ml-1">(Required)</span>
+              {t("contact.email")} <span className="italic text-neutral-400 ml-1">{t("contact.required")}</span>
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -330,13 +332,13 @@ const InquiryForm = () => {
               />
             </div>
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              <p className="text-red-500 text-sm mt-1">{t(errors.email)}</p>
             )}
 
             {/* Email domain suggestions */}
             {emailSuggestions.length > 0 && (
               <div className="mt-1 text-sm text-neutral-700 dark:text-neutral-200">
-                <span className="mr-2">Suggestions:</span>
+                <span className="mr-2">{t("contact.suggestions")}</span>
                 {emailSuggestions.map(({ local, domain }) => (
                   <button
                     key={domain}
@@ -356,14 +358,14 @@ const InquiryForm = () => {
               disabled={sendingOtp}
               className="mt-3 px-3 py-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-md"
             >
-              {sendingOtp ? "Sending..." : "Send OTP"}
+              {sendingOtp ? t("contact.sending") : t("contact.sendOtp")}
             </button>
           </div>
 
           {/* OTP Entry */}
           {otpSent && (
             <div className="mb-4 mt-3 p-3 rounded-md border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800">
-              <label className="block font-medium mb-1">Enter OTP</label>
+              <label className="block font-medium mb-1">{t("contact.enterOtp")}</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
                   🔑
@@ -383,7 +385,7 @@ const InquiryForm = () => {
                 />
               </div>
               {errors.otp && (
-                <p className="text-red-500 text-sm mt-1">{errors.otp}</p>
+                <p className="text-red-500 text-sm mt-1">{t(errors.otp)}</p>
               )}
 
               <button
@@ -392,12 +394,12 @@ const InquiryForm = () => {
                 disabled={verifyingOtp}
                 className="mt-2 px-3 py-1 bg-green-600 hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-md"
               >
-                {verifyingOtp ? "Verifying..." : "Verify OTP"}
+                {verifyingOtp ? t("contact.verifying") : t("contact.verifyOtp")}
               </button>
 
               {formData.otpVerified && (
                 <p className="text-green-600 text-sm mt-1">
-                  ✔ Email verified successfully.
+                  ✔ {t("contact.emailVerified")}
                 </p>
               )}
             </div>
@@ -408,12 +410,12 @@ const InquiryForm = () => {
         {/* Section B: Inquiry Details */}
         {/* ------------------------------------------------------------ */}
         <div className="transition-opacity duration-500">
-          <h2 className="text-xl font-semibold mb-3">Inquiry Details</h2>
+          <h2 className="text-xl font-semibold mb-3">{t("contact.detailsHeading")}</h2>
 
           {/* Inquiry Type */}
           <div className="mb-4">
             <label className="block font-medium mb-1">
-              Inquiry Type <span className="italic text-neutral-400 ml-1">(Required)</span>
+              {t("contact.inquiryType")} <span className="italic text-neutral-400 ml-1">{t("contact.required")}</span>
             </label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -431,14 +433,14 @@ const InquiryForm = () => {
                     : "border-gray-300"
                 } focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500`}
               >
-                <option value="">Select an option</option>
-                <option value="General Inquiry">📌 General Inquiry</option>
-                <option value="Site Visit Request">🌲 Site Visit Request</option>
-                <option value="Burial Service Query">⚰ Burial Service Query</option>
+                <option value="">{t("contact.selectOption")}</option>
+                <option value="General Inquiry">📌 {t("contact.types.general")}</option>
+                <option value="Site Visit Request">🌲 {t("contact.types.siteVisit")}</option>
+                <option value="Burial Service Query">⚰ {t("contact.types.burial")}</option>
               </select>
             </div>
             {errors.inquiryType && (
-              <p className="text-red-500 text-sm mt-1">{errors.inquiryType}</p>
+              <p className="text-red-500 text-sm mt-1">{t(errors.inquiryType)}</p>
             )}
 
             {/* Inquiry type hint (tooltip-style text) */}
@@ -452,8 +454,8 @@ const InquiryForm = () => {
           {/* Message */}
           <div>
             <label className="block font-medium mb-1">
-              Message (500 characters max)
-              <span className="italic text-neutral-400 ml-1">(Optional)</span>
+              {t("contact.message")}
+              <span className="italic text-neutral-400 ml-1">{t("contact.optional")}</span>
             </label>
             <div className="relative">
               <span className="absolute left-3 top-3 pointer-events-none">
@@ -479,7 +481,7 @@ const InquiryForm = () => {
             <div className="flex justify-between text-sm mt-1">
               <span className="text-gray-500">
                 {errors.message && (
-                  <span className="text-red-500">{errors.message}</span>
+                  <span className="text-red-500">{t(errors.message)}</span>
                 )}
               </span>
               <span
@@ -495,11 +497,11 @@ const InquiryForm = () => {
 
             {/* Live Preview of Message */}
             <div className="mt-4 border border-neutral-200 dark:border-neutral-700 rounded-md p-3 bg-neutral-50 dark:bg-neutral-800 text-sm">
-              <p className="font-semibold mb-1">Preview of your message:</p>
+              <p className="font-semibold mb-1">{t("contact.previewHeading")}</p>
               <div className="whitespace-pre-wrap text-neutral-800 dark:text-neutral-100 min-h-[40px]">
                 {formData.message.trim()
                   ? formData.message
-                  : "Your message preview will appear here as you type."}
+                  : t("contact.previewEmpty")}
               </div>
             </div>
           </div>
@@ -515,7 +517,7 @@ const InquiryForm = () => {
             style={{ transform: `translateX(${shakeOffset}px)` }}
             className="w-full sm:w-auto sm:flex-1 py-3 rounded-lg bg-green-600 hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold shadow"
           >
-            {submitting ? "Submitting..." : "Submit Inquiry"}
+            {submitting ? t("contact.submitting") : t("contact.submit")}
           </button>
 
           {/* Clear Form button */}
@@ -524,7 +526,7 @@ const InquiryForm = () => {
             onClick={handleClear}
             className="w-full sm:w-auto sm:flex-none py-3 rounded-lg border border-neutral-400 text-neutral-800 dark:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 font-semibold"
           >
-            Clear Form
+            {t("contact.clear")}
           </button>
         </div>
       </form>
