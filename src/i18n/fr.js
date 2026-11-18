@@ -455,6 +455,10 @@ const fr = {
       meet: "Rencontrer cet arbre sans lire l'affiche",
       dismiss: "Pas maintenant",
     },
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    character: {
+      alt: "Un dessin amical d'un arbre : {name}",
+    },
     species: {
       // NEEDS REVIEW BY A FLUENT SPEAKER
       yellowBirch: {
