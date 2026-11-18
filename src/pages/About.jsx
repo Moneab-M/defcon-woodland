@@ -24,18 +24,15 @@ import ImageAudioButton from "../Components/ImageAudioButton"; // SCRUM-9: Image
 const SECTIONS = [
   {
     id: "about",
-    imgSrc: "fern-leaves.jpg",
-    audioDescSrc: "/audio/about-desc.mp3"
+    imgSrc: "fern-leaves.jpg"
   },
   {
     id: "mission",
-    imgSrc: "ferns.jpg",
-    audioDescSrc: "/audio/mission-desc.mp3"
+    imgSrc: "ferns.jpg"
   },
   {
     id: "vision",
-    imgSrc: "red-maple.jpg",
-    audioDescSrc: "/audio/vision-desc.mp3"
+    imgSrc: "red-maple.jpg"
   }
 ];
 
@@ -404,7 +401,6 @@ export default function About() {
                 <p className="text-xs italic opacity-80">{sec.caption}</p>
                 <ImageAudioButton
                   imageId={sec.id}
-                  src={sec.audioDescSrc}
                 />
               </div>
 

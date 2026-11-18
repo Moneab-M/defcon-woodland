@@ -18,6 +18,7 @@
  * - toggle(id, src, { onUnavailable }): if `id` is playing, stop it; otherwise stop
  *                  whatever is playing and play `src` for `id`. The optional third
  *                  argument may hold an onUnavailable callback, called if it fails.
+ *                  If `src` is empty nothing plays and `id` is marked unavailable.
  * - stop():        stop whatever is playing.
  * Use an id that names the kind of audio, e.g. "image:about" or "section:about".
  *
@@ -44,6 +45,7 @@ const PrerecordedAudioContext = createContext(null);
 export function PrerecordedAudioProvider({ children }) {
   const audioRef = useRef(null);
   const playingIdRef = useRef(null);
+  const tokenRef = useRef(0); // changes on every toggle/stop so late events from an older play are ignored
   const [playingId, setPlayingIdState] = useState(null);
   const [unavailableId, setUnavailableId] = useState(null);
 
@@ -55,6 +57,7 @@ export function PrerecordedAudioProvider({ children }) {
 
   // Stop whatever is playing
   const stop = useCallback(() => {
+    tokenRef.current += 1;
     const audio = audioRef.current;
     if (audio) {
       audio.pause();
@@ -73,12 +76,19 @@ export function PrerecordedAudioProvider({ children }) {
         return;
       }
       stop();
+      if (!src) {
+        // No recording for this request: show it as unavailable, play nothing
+        setUnavailableId(id);
+        if (typeof options.onUnavailable === "function") options.onUnavailable();
+        return;
+      }
+      const token = tokenRef.current; // this play's token
       if (!audioRef.current) audioRef.current = new Audio();
       const audio = audioRef.current;
 
       // Back to not playing, remembering the failure if there was one
       const finish = (failed) => {
-        if (playingIdRef.current !== id) return; // another recording took over
+        if (tokenRef.current !== token || playingIdRef.current !== id) return; // a newer play or stop took over
         audio.onended = null;
         audio.onerror = null;
         setPlayingId(null);
