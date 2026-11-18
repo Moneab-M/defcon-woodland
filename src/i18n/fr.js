@@ -21,6 +21,12 @@ const fr = {
   common: {
     // NEEDS REVIEW BY A FLUENT SPEAKER
     skipToContent: "Passer au contenu principal",
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    message: {
+      good: "Tout va bien :",
+      careful: "Encore une étape :",
+      dismiss: "Fermer ce message",
+    },
     nav: {
       home: "Accueil",
       about: "À propos",
@@ -397,9 +403,9 @@ const fr = {
       formInvalid: "Remplis tous les champs obligatoires correctement avant d'envoyer le formulaire.",
     },
     alerts: {
-      sendOtpFailed: "Le code n'a pas pu être envoyé.",
-      incorrectOtp: "Le code est incorrect.",
-      submitFailed: "Le formulaire n'a pas pu être envoyé.",
+      sendOtpFailed: "Nous n'avons pas pu envoyer le code pour le moment. Vérifie l'adresse courriel et essaie encore.",
+      incorrectOtp: "Ce code ne correspond pas. Vérifie le code dans ton courriel et essaie encore, ou demande-en un nouveau.",
+      submitFailed: "Nous n'avons pas pu envoyer ton formulaire pour le moment. Tes réponses sont toujours là, alors essaie encore dans un instant.",
     },
   },
   // NEEDS REVIEW BY A FLUENT SPEAKER
@@ -420,6 +426,7 @@ const fr = {
       locating: "Recherche de ta position\u2026",
       found: "Position trouvée. Ton repère est sur la carte, mais les coordonnées ne sont pas affichées.",
       failed: "Impossible d'obtenir ta position GPS. Vérifie les autorisations, s'il te plaît.",
+      noSpeech: "Ce navigateur ne peut pas lire les mots de l'arbre à voix haute. Tu peux quand même regarder le panneau.",
     },
     // NEEDS REVIEW BY A FLUENT SPEAKER
     locationFallback: {

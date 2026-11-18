@@ -281,7 +281,7 @@ export default function MapView() {
     if (!nearestPoi || !nearestPoi.poi) return;
     const synth = window.speechSynthesis;
     if (!synth) {
-      alert("Text-to-Speech is not supported in this browser.");
+      setStatusKey("map.status.noSpeech");
       return;
     }
 
