@@ -18,6 +18,6 @@ describe("Natural Burial Page Component", () => {
         <NaturalBurial />
       </LanguageProvider>
     );
-    cy.contains("Natural Burial").should("exist");
+    cy.contains("h2", "Description of Natural burial").should("exist");
   });
 });

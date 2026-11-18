@@ -336,7 +336,7 @@ const fr = {
   // Page Inhumation naturelle
   naturalBurial: {
     headerAlt: "Un monticule de sépulture couvert de fleurs sauvages et de mousse dans une clairière de la forêt",
-    descriptionHeading: "Qu'est-ce que l'inhumation naturelle?",
+    descriptionHeading: "Qu'est-ce que l'inhumation naturelle ?",
     readDescriptionLabel: "Lire la description à voix haute",
     listenToDescription: "Écouter la description",
     descriptionText: "L'inhumation naturelle est une façon respectueuse de la nature de mettre un défunt en terre. Elle protège les ressources naturelles et réduit l'effet sur l'environnement. Le corps est déposé dans un cercueil biodégradable, dans un linceul ou directement dans le sol, sans produit d'embaumement ni matériau qui ne se décompose pas.",
@@ -347,19 +347,25 @@ const fr = {
       alt: "Un cercueil simple en bois, fait de matériaux naturels",
       title: "Types d'inhumation",
       summary: "Cercueils biodégradables, linceuls et autres choix d'inhumation naturelle",
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      speech: "Les types d'inhumation comprennent des cercueils biodégradables faits de matériaux naturels comme le bois ou le bambou, des linceuls en fibres naturelles, et l'inhumation directe en pleine terre, où le corps est déposé directement au contact du sol.",
       modalTitle: "Types d'inhumation naturelle",
       modalText: "L'inhumation naturelle (ou inhumation verte) cherche des façons de remettre un corps à la terre qui respectent l'environnement.\n\nI. Sites d'inhumation naturelle traditionnels\n1. Terrains de conservation - Le plus haut niveau de protection, la terre est protégée pour toujours.\n2. Terrains d'inhumation naturelle - Milieux de boisés ou de prés bien entretenus.\n3. Cimetières hybrides - Cimetières habituels qui ont une section d'inhumation naturelle.\n\nII. Autres méthodes respectueuses de la nature\n1. Réduction organique naturelle (compostage humain)\n2. Hydrolyse alcaline (crémation par l'eau)\n3. Inhumation dans une capsule d'arbre (idée à l'étude)",
     },
     markers: {
-      alt: "Un marqueur de tombe en bois en forme de coeur",
+      alt: "Un marqueur de tombe en bois en forme de cœur",
       title: "Marqueurs de sépulture",
       summary: "Des marqueurs naturels comme des arbres, des pierres ou des plantes",
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      speech: "Dans les inhumations naturelles, les marqueurs de sépulture utilisent des choix respectueux de l'environnement comme des arbres ou des arbustes de la région, des pierres naturelles, des poteaux de bois ou des coordonnées GPS, au lieu des pierres tombales traditionnelles faites de matériaux qui ne se décomposent pas.",
       modalText: "Marqueurs de sépulture traditionnels et naturels. Les marqueurs vont des plus traditionnels aux plus respectueux de l'environnement. Les pierres tombales debout sont courantes dans les cimetières habituels, mais on les évite en général dans un cadre naturel. Les marqueurs plats (plaques posées au ras du sol) servent souvent dans les cimetières hybrides pour identifier simplement une tombe. Dans les terrains d'inhumation naturelle stricts, on préfère une pierre naturelle ou un marqueur vivant, comme un arbre ou un arbuste de la région. Ainsi, le souvenir se fond dans le paysage naturel et l'appuie.",
     },
     locations: {
       alt: "Un appareil GPS portatif qui marque l'emplacement d'une sépulture",
       title: "Lieux de sépulture",
       summary: "Terrains d'inhumation naturelle et aires de conservation",
+      // NEEDS REVIEW BY A FLUENT SPEAKER
+      speech: "Les inhumations naturelles ont lieu dans des terrains d'inhumation naturelle désignés, des aires de conservation, des boisés, des prés ou des cimetières verts, qui sont spécialement consacrés à des pratiques d'inhumation respectueuses de l'environnement et à la préservation des habitats.",
       modalText: "Les inhumations naturelles ont lieu dans des terrains d'inhumation naturelle, des aires de conservation, des boisés, des prés ou des cimetières verts.",
     },
     learnMore: "En savoir plus",

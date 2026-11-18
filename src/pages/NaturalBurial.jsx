@@ -14,13 +14,30 @@ import gpsImage from '../assets/Gps.png';
 import React, { useState, useEffect } from 'react'; 
 import { FaVolumeUp, FaPause } from 'react-icons/fa'
 import { useText } from '../i18n/useText.js';
+import { useLanguage, DEFAULT_LANGUAGE } from '../context/LanguageContext.jsx';
+import { isLanguageVerified } from '../i18n/languageStatus.js';
 import useDialogFocus from '../Components/useDialogFocus.js';
 
 // Keeps the image button looking exactly like the bare image, with a visible focus ring
 const CARD_IMAGE_BUTTON = "card-image-button block p-0 border-0 bg-transparent cursor-pointer";
 
+// Voice locale per Selected Language, so read-aloud matches the text on screen (SCRUM-49 review)
+const SPEECH_LOCALES = { en: "en-CA", fr: "fr-CA" };
+
 const NaturalBurial = () => {
   const t = useText();
+  const { language } = useLanguage();
+  // useText shows English for a language that is not verified, so the spoken
+  // locale has to follow the dictionary t() actually read from.
+  const spokenLanguage = isLanguageVerified(language) ? language : DEFAULT_LANGUAGE;
+  // Read-aloud text comes from the same dictionary as the text on screen, so the
+  // page never speaks English while showing French (SCRUM-49 review).
+  const speech = {
+    description: t("naturalBurial.descriptionText"),
+    types: t("naturalBurial.types.speech"),
+    markers: t("naturalBurial.markers.speech"),
+    locations: t("naturalBurial.locations.speech"),
+  };
   const [speakingText, setSpeakingText] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({ img: '', titleKey: '', descriptionKey: '' });
@@ -84,10 +101,11 @@ const NaturalBurial = () => {
     // Get available voices
     const voices = window.speechSynthesis.getVoices();
     
-    // Find a standard English voice
-    const standardVoice = voices.find((voice) =>
-      voice.lang === "en-CA" //|| voice.lang === "en-GB" || voice.lang === "en"
-    );
+    // Find a voice for the Selected Language, exact locale first
+    const localeTag = SPEECH_LOCALES[spokenLanguage] ?? SPEECH_LOCALES.en;
+    const standardVoice =
+      voices.find((voice) => voice.lang === localeTag) ??
+      voices.find((voice) => voice.lang?.startsWith(`${spokenLanguage}-`));
 
     if (standardVoice) {
       utterance.voice = standardVoice;
@@ -97,7 +115,7 @@ const NaturalBurial = () => {
     utterance.rate = 0.95;    // Normal speed
     utterance.pitch = 1.05;   // Normal pitch
     utterance.volume = 1.0;  // Normal volume
-    utterance.lang = "en-CA"; // Standard US English
+    utterance.lang = localeTag; // Matches the Selected Language
     
     // Add event listeners
     utterance.onend = () => {
@@ -129,16 +147,12 @@ const NaturalBurial = () => {
               <h2>{t("naturalBurial.descriptionHeading")}</h2>
               {/* Sound icon button */}
               <button
-                onClick={() =>
-                  handleSpeakText(
-                    "Natural burial is an eco-friendly alternative to conventional burial methods that emphasizes the conservation of natural resources and the reduction of environmental impact. This practice involves the interment of the body in a biodegradable coffin, shroud, or directly in the soil, without the use of embalming fluids or non-biodegradable materials."
-                  )
-                }
+                onClick={() => handleSpeakText(speech.description)}
                 className="sound-button"
                 aria-label={t("naturalBurial.readDescriptionLabel")}
                 title={t("naturalBurial.listenToDescription")}
               >
-                {speakingText === "Natural burial is an eco-friendly alternative to conventional burial methods that emphasizes the conservation of natural resources and the reduction of environmental impact. This practice involves the interment of the body in a biodegradable coffin, shroud, or directly in the soil, without the use of embalming fluids or non-biodegradable materials." ? (
+                {speakingText === speech.description ? (
                   <FaPause className="icon" />
                 ) : (
                   <FaVolumeUp className="icon" />
@@ -167,10 +181,10 @@ const NaturalBurial = () => {
               </button>
       
               <button 
-                onClick={() => handleSpeakText("Kinds of burial include biodegradable coffins made from natural materials like wood or bamboo, burial shrouds made from natural fibers, and direct earth burial where the body is placed directly in contact with the soil.")}
+                onClick={() => handleSpeakText(speech.types)}
                 className="sound-button small"
               >
-                {speakingText === "Kinds of burial include biodegradable coffins made from natural materials like wood or bamboo, burial shrouds made from natural fibers, and direct earth burial where the body is placed directly in contact with the soil." ? (
+                {speakingText === speech.types ? (
                   <FaPause className="icon" />
                 ) : (
                   <FaVolumeUp className="icon" />
@@ -196,10 +210,10 @@ const NaturalBurial = () => {
                 />
               </button>
               <button 
-                onClick={() => handleSpeakText("Burial markers in natural burials use environmentally friendly options like native trees, shrubs, natural stones, wooden posts, or GPS coordinates instead of traditional headstones made from non-biodegradable materials.")}
+                onClick={() => handleSpeakText(speech.markers)}
                 className="sound-button small"
               >
-                {speakingText === "Burial markers in natural burials use environmentally friendly options like native trees, shrubs, natural stones, wooden posts, or GPS coordinates instead of traditional headstones made from non-biodegradable materials." ? (
+                {speakingText === speech.markers ? (
                   <FaPause className="icon" />
                 ) : (
                   <FaVolumeUp className="icon" />
@@ -226,10 +240,10 @@ const NaturalBurial = () => {
                 />
               </button>
               <button 
-                onClick={() => handleSpeakText("Natural burials take place in designated natural burial grounds, conservation areas, woodlands, meadows, or green cemeteries that are specifically dedicated to environmentally friendly burial practices and habitat preservation.")}
+                onClick={() => handleSpeakText(speech.locations)}
                 className="sound-button small"
               >
-                {speakingText === "Natural burials take place in designated natural burial grounds, conservation areas, woodlands, meadows, or green cemeteries that are specifically dedicated to environmentally friendly burial practices and habitat preservation." ? (
+                {speakingText === speech.locations ? (
                   <FaPause className="icon" />
                 ) : (
                   <FaVolumeUp className="icon" />
