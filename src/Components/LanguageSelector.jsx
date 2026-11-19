@@ -17,8 +17,8 @@
  * - Page Text is translated by useText() (SCRUM-8). The language names stay in
  *   each language's own name and are not translated.
  * - SCRUM-8: group label moved to src/i18n (Moneab Milad)
- * - Button styling copies the Light/Dark button in navi.jsx so controls of the
- *   same type look the same ([ID 317]). Colours are neutral black/white
+ * - SCRUM-69: buttons use the shared BUTTON_CLASSES (44 px minimum) from
+ *   controlStyles.js so controls of the same type look the same ([ID 317]). Colours are neutral black/white
  *   tints only: no Red, Green or Neon Colours ([ID 316]).
  * - Font is Calibri and weight 300 from the global rule in index.css
  *   ([ID 308], [ID 309]); no bold class is used here.
@@ -28,6 +28,7 @@
 
 import { useLanguage, SUPPORTED_LANGUAGES } from "../context/LanguageContext";
 import { useText } from "../i18n/useText"; // SCRUM-8: Page Text lookup
+import { BUTTON_CLASSES, BUTTON_SELECTED_CLASSES } from "./controlStyles"; // SCRUM-69: shared 44 px button look ([ID 317])
 
 // ---------- Global constants ----------
 // Each language is written in its own name, so visitors who do not read
@@ -42,18 +43,6 @@ export const LANGUAGE_OPTIONS = [
   { code: "fr", label: "Français", short: "FR" },
   { code: "mic", label: "Mi'kmaq", short: "MI'K" }, // PENDING CLIENT: label wording ([ID 410])
 ].filter((option) => SUPPORTED_LANGUAGES.includes(option.code));
-
-// Same look as the Light/Dark button in navi.jsx ([ID 317])
-const BASE_BUTTON_CLASSES =
-  "inline-flex items-center gap-2 rounded-md border border-black/10 dark:border-white/20 " +
-  "px-3 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 transition";
-
-// The selected button is underlined as well as shaded, so the choice is
-// not shown by colour alone. The hover classes keep the shading the same
-// on mouse-over (otherwise the lighter hover tint would replace it).
-const SELECTED_BUTTON_CLASSES =
-  "bg-black/10 dark:bg-white/20 hover:bg-black/10 dark:hover:bg-white/20 " +
-  "underline underline-offset-4";
 
 /**
  * Purpose: Display one button per supported language and change the
@@ -90,7 +79,7 @@ export default function LanguageSelector() {
             aria-label={option.label}
             aria-pressed={isSelected}
             onClick={() => setLanguage(option.code)}
-            className={`${BASE_BUTTON_CLASSES} ${isSelected ? SELECTED_BUTTON_CLASSES : ""}`}
+            className={`${BUTTON_CLASSES} ${isSelected ? BUTTON_SELECTED_CLASSES : ""}`}
             data-cy={`language-option-${option.code}`}
           >
             <span className="hidden xl:inline">{option.label}</span>

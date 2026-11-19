@@ -51,6 +51,7 @@ export default function Navbar() {
           <NavItem to="/gallery">{text("common.nav.gallery")}</NavItem>
           <NavItem to="/naturalburial">{text("common.nav.naturalBurial")}</NavItem>
           <NavItem to="/map">{text("common.nav.map")}</NavItem>
+          <NavItem to="/trees">{text("common.nav.trees")}</NavItem>
           <NavItem to="/contacts">{text("common.nav.contact")}</NavItem>
         </ul>
 
@@ -68,9 +69,10 @@ export default function Navbar() {
           </button>
           <LanguageSelector />
           <button
+            type="button"
             onClick={toggleTheme}
             aria-label={text("common.theme.toggleLabel")}
-            className="inline-flex items-center gap-2 rounded-md border border-black/10 dark:border-white/20 px-3 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 transition"
+            className={BUTTON_CLASSES}
             title={text("common.theme.title")}
           >
             {theme === "dark" ? <FaSun /> : <FaMoon />}
@@ -104,31 +106,41 @@ function NavItem({ to, children }) {
 
 /* ---- (Optional) Footer kept here so existing imports don't break ---- */
 export function Footer() {
+  const text = useText();
   return (
     <footer className="bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 transition-colors duration-300 border-t border-black/10 dark:border-white/10 w-screen">
       <div className="flex items-center justify-between pl-4 sm:px-6 py-4">
         {/* Socials */}
         <div className="flex gap-4">
-          <a href="https://www.facebook.com/StMargaretsBayStewardshipAssociation/">
-            <button className="relative bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200">
-              <FaFacebook className="fill-[#1c1f26]" size={25} />
-            </button>
+          <a
+            href="https://www.facebook.com/StMargaretsBayStewardshipAssociation/"
+            aria-label={text("common.footer.facebook")}
+            data-cy="footer-facebook"
+            className="relative inline-flex items-center justify-center min-h-[44px] min-w-[44px] bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+          >
+            <FaFacebook className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>
-          <a href="https://www.instagram.com/stmargaretsbaysa/">
-            <button className="relative bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200">
-              <FaSquareInstagram className="fill-[#1c1f26]" size={25} />
-            </button>
+          <a
+            href="https://www.instagram.com/stmargaretsbaysa/"
+            aria-label={text("common.footer.instagram")}
+            data-cy="footer-instagram"
+            className="relative inline-flex items-center justify-center min-h-[44px] min-w-[44px] bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+          >
+            <FaSquareInstagram className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>
-          <a href="https://www.youtube.com/watch?v=hhed9dEyfVU&list=PLsIXMc3B__c2jg_yjIN1E9HMuRwEnMMuS&pp=iAQB">
-            <button className="relative bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200">
-              <FaYoutube className="fill-[#1c1f26]" size={25} />
-            </button>
+          <a
+            href="https://www.youtube.com/watch?v=hhed9dEyfVU&list=PLsIXMc3B__c2jg_yjIN1E9HMuRwEnMMuS&pp=iAQB"
+            aria-label={text("common.footer.youtube")}
+            data-cy="footer-youtube"
+            className="relative inline-flex items-center justify-center min-h-[44px] min-w-[44px] bg-white p-2 rounded-full hover:ring-2 hover:ring-gray-200 transition-all duration-200"
+          >
+            <FaYoutube className="fill-[#1c1f26]" size={25} aria-hidden="true" />
           </a>
         </div>
         {/* Address / copyright */}
         <div className="flex flex-col sm:flex-row sm:justify-between gap-4 pr-[15px] w-[170px] sm:w-[900px]">
-          <p className="text-[12px] sm:text-sm">Head Of St Margarets Bay, NS B3Z 2C9</p>
-          <p className="text-[10px] sm:text-xs">&copy; 2024 SMU, CSCI 3428 Group25G</p>
+          <p className="text-[12px] sm:text-sm">{text("common.footer.address")}</p>
+          <p className="text-[10px] sm:text-xs">{text("common.footer.copyright")}</p>
         </div>
       </div>
     </footer>

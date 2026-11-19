@@ -7,6 +7,10 @@
 
 
 import React, { useEffect, useState } from "react";
+import { useText } from "../i18n/useText";
+import useDialogFocus from "../Components/useDialogFocus";
+import usePrefersReducedMotion from "../Components/usePrefersReducedMotion";
+import { BUTTON_CLASSES } from "../Components/controlStyles";
 import {
   FaVolumeUp,
   FaPause,
@@ -64,18 +68,19 @@ const heroImages = [image2, image3, image4];
 // Weather widget (H4)
 // -----------------------------------------------------------------------------
 function WeatherWidget() {
+  const t = useText();
   // Halifax-ish fallback
-  const DEFAULT = { lat: 44.6511, lon: -63.582, label: "Local woodland" };
+  const DEFAULT = { lat: 44.6511, lon: -63.582, labelKey: "home.weather.localWoodland" };
 
   const [coords, setCoords] = useState(DEFAULT);
   const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState("");
+  const [errKey, setErrKey] = useState("");
   const [data, setData] = useState(null);
 
   async function loadWeather(lat, lon) {
     try {
       setLoading(true);
-      setErr("");
+      setErrKey("");
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m&timezone=auto`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("Weather unavailable");
@@ -86,7 +91,7 @@ function WeatherWidget() {
         tz: json?.timezone ?? "local",
       });
     } catch (e) {
-      setErr("Weather unavailable. Showing fallback.");
+      setErrKey("home.weather.unavailable");
       setData(null);
     } finally {
       setLoading(false);
@@ -100,7 +105,7 @@ function WeatherWidget() {
 
   const requestLocation = () => {
     if (!("geolocation" in navigator)) {
-      setErr("Geolocation not supported; using fallback.");
+      setErrKey("home.weather.notSupported");
       return;
     }
     navigator.geolocation.getCurrentPosition(
@@ -108,11 +113,11 @@ function WeatherWidget() {
         setCoords({
           lat: pos.coords.latitude,
           lon: pos.coords.longitude,
-          label: "Your location",
+          labelKey: "home.weather.yourLocation",
         });
       },
       () => {
-        setErr("Permission denied; using fallback.");
+        setErrKey("home.weather.permissionDenied");
       },
       { enableHighAccuracy: true, timeout: 8000 }
     );
@@ -124,35 +129,35 @@ function WeatherWidget() {
         <div className="flex items-center justify-between gap-4">
           <h3 className="text-xl font-semibold flex items-center gap-2">
             <FaMapMarkerAlt className="opacity-80" />
-            Weather — <span className="opacity-80">{coords.label}</span>
+            {t("home.weather.title")} — <span className="opacity-80">{t(coords.labelKey)}</span>
           </h3>
           <button
             onClick={requestLocation}
             className="text-sm px-3 py-1 rounded-md border border-black/10 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/10 transition"
           >
-            Use my location
+            {t("home.weather.useMyLocation")}
           </button>
         </div>
 
         <div className="mt-4 text-sm opacity-80">
-          {loading && <p>Loading current conditions…</p>}
-          {!loading && err && <p>{err}</p>}
-          {!loading && !err && data && (
+          {loading && <p>{t("home.weather.loading")}</p>}
+          {!loading && errKey && <p>{t(errKey)}</p>}
+          {!loading && !errKey && data && (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-base">
               <div>
-                <div className="text-xs opacity-60">Temperature</div>
+                <div className="text-xs opacity-60">{t("home.weather.temperature")}</div>
                 <div className="text-lg font-medium">
                   {Math.round(data.temp)}°C
                 </div>
               </div>
               <div>
-                <div className="text-xs opacity-60">Wind</div>
+                <div className="text-xs opacity-60">{t("home.weather.wind")}</div>
                 <div className="text-lg font-medium">
-                  {Math.round(data.wind)} km/h
+                  {Math.round(data.wind)} {t("home.weather.windUnit")}
                 </div>
               </div>
               <div>
-                <div className="text-xs opacity-60">Timezone</div>
+                <div className="text-xs opacity-60">{t("home.weather.timezone")}</div>
                 <div className="text-lg font-medium">{data.tz}</div>
               </div>
             </div>
@@ -167,20 +172,31 @@ function WeatherWidget() {
 // Modal for Featured Species
 // -----------------------------------------------------------------------------
 const Modal = ({ isOpen, onClose, speciesInfo }) => {
+  const t = useText();
+  const dialogRef = useDialogFocus(isOpen && !!speciesInfo, onClose);
   if (!isOpen || !speciesInfo) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="featured-species-title"
+        tabIndex={-1}
+        ref={dialogRef}
+        data-cy="featured-dialog"
+        onClick={(e) => e.stopPropagation()}
+      >
         <img
           src={speciesInfo.img}
           alt={speciesInfo.title}
           className="modal-image"
         />
-        <h2>{speciesInfo.title}</h2>
+        <h2 id="featured-species-title">{speciesInfo.title}</h2>
         <p>{speciesInfo.description}</p>
         <button onClick={onClose} className="close-button">
-          Close
+          {t("home.modal.close")}
         </button>
       </div>
     </div>
@@ -191,6 +207,7 @@ const Modal = ({ isOpen, onClose, speciesInfo }) => {
 // Home page
 // -----------------------------------------------------------------------------
 export default function Home() {
+  const t = useText();
   // Text-to-speech
   const [speakingText, setSpeakingText] = useState("");
 
@@ -211,6 +228,12 @@ export default function Home() {
 
   // Hero image rotation
   const [heroIndex, setHeroIndex] = useState(0);
+  // SCRUM-68: the slideshow starts paused when the visitor prefers reduced motion
+  const reduceMotion = usePrefersReducedMotion();
+  const [slidesPaused, setSlidesPaused] = useState(reduceMotion);
+  useEffect(() => {
+    if (reduceMotion) setSlidesPaused(true);
+  }, [reduceMotion]);
 
   useEffect(() => {
     applyTheme(theme);
@@ -220,12 +243,13 @@ export default function Home() {
 
   // Rotate hero images every 6 seconds
   useEffect(() => {
+    if (slidesPaused) return undefined;
     const id = setInterval(
       () => setHeroIndex((prev) => (prev + 1) % heroImages.length),
       6000
     );
     return () => clearInterval(id);
-  }, []);
+  }, [slidesPaused]);
 
   const toggleTheme = () =>
     setTheme((t) => (t === "dark" ? "light" : "dark"));
@@ -248,9 +272,8 @@ export default function Home() {
   // Species info for modal
   const featuredSpeciesInfo = {
     img: image1,
-    title: "Yellow Birch",
-    description:
-      "The Yellow Birch is an important species in the area, known for its distinctive yellow bark and role in local biodiversity. It thrives in woodland areas, providing shelter for various wildlife.",
+    title: t("home.featured.name"),
+    description: t("home.featured.longDescription"),
   };
 
   const openModal = () => {
@@ -286,30 +309,29 @@ export default function Home() {
           {/* Left: text */}
           <div className="w-full lg:w-1/2 text-left text-white">
             <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-4 flex flex-col">
-              Welcome to the{" "}
+              {t("home.hero.welcome")}{" "}
               <span className="text-light-primary dark:text-dark-primary">
-                Woodland Conservation Site
+                {t("home.hero.siteName")}
               </span>
             </h1>
             <p className="text-lg lg:text-2xl max-w-3xl mx-auto flex items-start">
               <button
                 onClick={() =>
                   handleSpeakText(
-                    "Explore the serenity of nature and contribute to preserving the delicate balance of our ecosystem."
+                    t("home.hero.intro")
                   )
                 }
                 className="mr-4 mt-1 p-2 bg-transparent text-blue-300 hover:text-white rounded-full shadow-lg hover:bg-white/10 transition"
-                aria-label="Read out loud"
+                aria-label={t("home.readAloud")}
               >
                 {speakingText ===
-                "Explore the serenity of nature and contribute to preserving the delicate balance of our ecosystem." ? (
+                t("home.hero.intro") ? (
                   <FaPause className="text-xl" />
                 ) : (
                   <FaVolumeUp className="text-xl" />
                 )}
               </button>
-              Explore the serenity of nature and contribute to preserving the
-              delicate balance of our ecosystem.
+              {t("home.hero.intro")}
             </p>
           </div>
 
@@ -320,41 +342,48 @@ export default function Home() {
                 <img
                   key={idx}
                   src={src}
-                  alt="Woodland Conservation"
+                  alt={t("home.hero.imageAlt")}
                   className={`absolute inset-0 w-full h-full object-cover rounded-lg shadow-xl transition-opacity duration-1000 ${
                     heroIndex === idx ? "opacity-100" : "opacity-0"
                   }`}
                 />
               ))}
             </div>
+            <button
+              type="button"
+              onClick={() => setSlidesPaused((p) => !p)}
+              data-cy="slideshow-toggle"
+              className={`${BUTTON_CLASSES} mt-4`}
+            >
+              {slidesPaused ? t("home.slideshow.play") : t("home.slideshow.pause")}
+            </button>
           </div>
         </div>
       </div>
 
       {/* ======================= What We Do Section ======================== */}
       <div className="px-4 py-10 lg:px-20">
-        <h2 className="text-3xl font-semibold mb-6 text-center">What We Do</h2>
+        <h2 className="text-3xl font-semibold mb-6 text-center">{t("home.whatWeDo.heading")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Conservation Projects Card */}
           <div className="bg-light-background text-black dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">
             <h3 className="text-xl font-semibold mb-4">
-              Conservation Projects
+              {t("home.whatWeDo.conservation.title")}
             </h3>
             <p>
-              We focus on preserving natural habitats and wildlife to ensure a
-              healthy ecosystem for future generations.
+              {t("home.whatWeDo.conservation.text")}
             </p>
             <button
               onClick={() =>
                 handleSpeakText(
-                  "We focus on preserving natural habitats and wildlife to ensure a healthy ecosystem for future generations."
+                  t("home.whatWeDo.conservation.text")
                 )
               }
               className="mt-3 p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
-              aria-label="Read out loud"
+              aria-label={t("home.readAloud")}
             >
               {speakingText ===
-              "We focus on preserving natural habitats and wildlife to ensure a healthy ecosystem for future generations." ? (
+              t("home.whatWeDo.conservation.text") ? (
                 <FaPause className="text-xl" />
               ) : (
                 <FaVolumeUp className="text-xl" />
@@ -365,23 +394,22 @@ export default function Home() {
           {/* Sustainable Practices Card */}
           <div className="bg-light-background text-black dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">
             <h3 className="text-xl font-semibold mb-4">
-              Sustainable Practices
+              {t("home.whatWeDo.sustainable.title")}
             </h3>
             <p>
-              Learn about eco-friendly practices that help reduce our carbon
-              footprint and contribute to a greener planet.
+              {t("home.whatWeDo.sustainable.text")}
             </p>
             <button
               onClick={() =>
                 handleSpeakText(
-                  "Learn about eco-friendly practices that help reduce our carbon footprint and contribute to a greener planet."
+                  t("home.whatWeDo.sustainable.text")
                 )
               }
               className="mt-3 p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
-              aria-label="Read out loud"
+              aria-label={t("home.readAloud")}
             >
               {speakingText ===
-              "Learn about eco-friendly practices that help reduce our carbon footprint and contribute to a greener planet." ? (
+              t("home.whatWeDo.sustainable.text") ? (
                 <FaPause className="text-xl" />
               ) : (
                 <FaVolumeUp className="text-xl" />
@@ -392,23 +420,22 @@ export default function Home() {
           {/* Wildlife Protection Card */}
           <div className="bg-light-background text-black dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">
             <h3 className="text-xl font-semibold mb-4">
-              Wildlife Protection
+              {t("home.whatWeDo.wildlife.title")}
             </h3>
             <p>
-              We are committed to protecting endangered species and restoring
-              biodiversity to our natural surroundings.
+              {t("home.whatWeDo.wildlife.text")}
             </p>
             <button
               onClick={() =>
                 handleSpeakText(
-                  "We are committed to protecting endangered species and restoring biodiversity to our natural surroundings."
+                  t("home.whatWeDo.wildlife.text")
                 )
               }
               className="mt-3 p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
-              aria-label="Read out loud"
+              aria-label={t("home.readAloud")}
             >
               {speakingText ===
-              "We are committed to protecting endangered species and restoring biodiversity to our natural surroundings." ? (
+              t("home.whatWeDo.wildlife.text") ? (
                 <FaPause className="text-xl" />
               ) : (
                 <FaVolumeUp className="text-xl" />
@@ -421,17 +448,16 @@ export default function Home() {
       {/* ===================== Relevant Articles Section ==================== */}
       <div className="px-4 py-10 lg:px-20">
         <h2 className="text-3xl font-semibold mb-6 text-center">
-          Relevant Articles
+          {t("home.articles.heading")}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Article 1 */}
           <div className="bg-light-background text-black dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">
             <h3 className="text-xl font-semibold mb-4">
-              Proposed Conservation Area
+              {t("home.articles.article1.title")}
             </h3>
             <p>
-              Discover how the proposed conservation area will bring us closer
-              to achieving our ecological goals.
+              {t("home.articles.article1.text")}
             </p>
             <a
               href="https://ca.news.yahoo.com/proposed-conservation-area-bring-closer-090000532.html"
@@ -439,16 +465,17 @@ export default function Home() {
               rel="noopener noreferrer"
               className="mt-3 inline-block p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
             >
-              Read More
+              {t("home.articles.readMore")}
             </a>
           </div>
 
           {/* Article 2 */}
           <div className="bg-light-background text-black dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">
-            <h3 className="text-xl font-semibold mb-4">A Final Footprint</h3>
+            <h3 className="text-xl font-semibold mb-4">
+              {t("home.articles.article2.title")}
+            </h3>
             <p>
-              Learn more about the final footprint of conservation efforts in
-              our local area.
+              {t("home.articles.article2.text")}
             </p>
             <a
               href="https://www.climatestoriesatlantic.ca/stories/a-final-footprint"
@@ -456,18 +483,17 @@ export default function Home() {
               rel="noopener noreferrer"
               className="mt-3 inline-block p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
             >
-              Read More
+              {t("home.articles.readMore")}
             </a>
           </div>
 
           {/* Article 3 */}
           <div className="bg-light-background text-black dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition">
             <h3 className="text-xl font-semibold mb-4">
-              St. Paul's Nova Scotia
+              {t("home.articles.article3.title")}
             </h3>
             <p>
-              This article explores the ongoing conservation and restoration
-              efforts at St. Paul's, Nova Scotia.
+              {t("home.articles.article3.text")}
             </p>
             <a
               href="https://www.awakeashes.com/blog/stpaulsnovascotia"
@@ -475,7 +501,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="mt-3 inline-block p-2 bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition"
             >
-              Read More
+              {t("home.articles.readMore")}
             </a>
           </div>
         </div>
@@ -494,29 +520,28 @@ export default function Home() {
             <section className="w-full">
               <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-gray-800/60 backdrop-blur p-5 transition-all transform hover:scale-105 duration-300">
                 <h2 className="text-2xl font-semibold text-center mb-4">
-                  Featured Species
+                  {t("home.featured.heading")}
                 </h2>
 
                 <div className="mt-2 max-w-xs mx-auto bg-light-background text-black dark:bg-gray-900/80 p-4 rounded-lg shadow-lg transition-all transform hover:scale-105 duration-300">
                   <h3 className="text-lg font-semibold mb-3 text-center">
-                    Yellow Birch
+                    {t("home.featured.name")}
                   </h3>
                   <div className="flex justify-center mb-3">
                     <img
                       src={image1}
-                      alt="Yellow Birch"
+                      alt={t("home.featured.name")}
                       className="max-w-full h-auto rounded-lg"
                     />
                   </div>
                   <p className="text-sm text-center mb-3">
-                    The Yellow Birch is an important species in the area, known
-                    for its distinctive yellow bark.
+                    {t("home.featured.shortDescription")}
                   </p>
                   <button
                     onClick={openModal}
                     className="mt-1 px-4 py-2 text-sm bg-transparent text-blue-500 rounded-full shadow-lg hover:bg-light-primary transition mx-auto block"
                   >
-                    Learn More
+                    {t("home.featured.learnMore")}
                   </button>
                 </div>
               </div>

@@ -159,3 +159,112 @@ html.linespace-3 body{
 html.linespace-4 body{
   line-height: 4;
 }
+
+/* Talking Tree characters (SCRUM-56): slow, gentle motion; all off for reduced motion */
+.tree-character-crown,
+.tree-character-mouth,
+.tree-character-eye {
+  transform-box: fill-box;
+}
+.tree-character-crown { transform-origin: 50% 100%; }
+.tree-character-mouth { transform-origin: 50% 0%; }
+.tree-character-eye { transform-origin: 50% 50%; animation: tree-character-blink 5s ease-in-out infinite; }
+.tree-character-speaking .tree-character-crown { animation: tree-character-sway 4s ease-in-out infinite; }
+.tree-character-speaking .tree-character-mouth { animation: tree-character-talk 1.6s ease-in-out infinite; }
+
+@keyframes tree-character-sway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+@keyframes tree-character-talk {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.9); }
+}
+@keyframes tree-character-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-character-crown,
+  .tree-character-mouth,
+  .tree-character-eye,
+  .tree-character-speaking .tree-character-crown,
+  .tree-character-speaking .tree-character-mouth {
+    animation: none;
+  }
+}
+
+/* SCRUM-78: the chickadee in the knot-hole slides up gently; reduced motion just shows it */
+.tree-egg-bird {
+  transform-box: fill-box;
+  animation: tree-egg-peek 0.4s ease-out both;
+}
+@keyframes tree-egg-peek {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tree-egg-bird { animation: none; }
+}
+
+/* SCRUM-68: respect the visitor's reduced-motion setting site-wide (WCAG 2.2.2) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* SCRUM-69: one clearly visible focus outline for every control (WCAG 2.4.7).
+   Blue, 3:1 or more against the light and dark backgrounds. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+.dark :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline-color: #93c5fd;
+}
+
+/* SCRUM-73: "the forest is listening" waiting shapes. Slow pulse, about 2 s per cycle. */
+@keyframes forest-waiting-pulse {
+  0%, 60%, 100% { opacity: 0.35; transform: scale(0.85); }
+  30% { opacity: 1; transform: scale(1); }
+}
+.forest-waiting-leaf {
+  animation: forest-waiting-pulse 2s ease-in-out infinite;
+}
+.forest-waiting-leaf-2 { animation-delay: 0.3s; }
+.forest-waiting-leaf-3 { animation-delay: 0.6s; }
+@media (prefers-reduced-motion: reduce) {
+  .forest-waiting-leaf,
+  .forest-waiting-leaf-2,
+  .forest-waiting-leaf-3 {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* SCRUM-76: three small leaves drift down once (about 2 s). Off for reduced motion. */
+@keyframes milestone-leaf-drift {
+  0% { opacity: 0; transform: translateY(-12px) rotate(-10deg); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(40px) rotate(25deg); }
+}
+.milestone-leaf {
+  animation: milestone-leaf-drift 2s ease-in 1 both;
+}
+.milestone-leaf-2 { animation-delay: 0.25s; }
+.milestone-leaf-3 { animation-delay: 0.5s; }
+@media (prefers-reduced-motion: reduce) {
+  .milestone-leaf,
+  .milestone-leaf-2,
+  .milestone-leaf-3 {
+    display: none !important;
+  }
+}

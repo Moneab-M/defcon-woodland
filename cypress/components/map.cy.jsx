@@ -1,14 +1,23 @@
 import React from "react";
 import { mount } from "cypress/react";
 import MapView from "../../src/pages/MapView.jsx";
+import { LanguageProvider } from "../../src/context/LanguageContext.jsx";
 
 describe("Map Page Component", () => {
   it("mounts successfully", () => {
-    mount(<MapView />);
+    mount(
+      <LanguageProvider>
+        <MapView />
+      </LanguageProvider>
+    );
   });
 
   it("renders map controls or buttons", () => {
-    mount(<MapView />);
-    cy.contains("YOU ARE HERE").should("exist");
+    mount(
+      <LanguageProvider>
+        <MapView />
+      </LanguageProvider>
+    );
+    cy.contains("Show where I am").should("exist");
   });
 });

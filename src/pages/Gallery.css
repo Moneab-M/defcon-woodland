@@ -18,6 +18,13 @@
   background-repeat: no-repeat;
 }
 
+/* SCRUM-68: no parallax for visitors who asked for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .parallax-container {
+    background-attachment: scroll;
+  }
+}
+
 .parallax-content {
   position: absolute;
   top: 50%;
