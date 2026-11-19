@@ -1,3 +1,4 @@
+
 /**
  * @file home-text.cy.jsx
  * @description Component tests for the Home page Page Text in English and French.
@@ -14,17 +15,20 @@ import { mount } from "cypress/react";
 import Home from "../../src/pages/Home.jsx";
 import LanguageSelector from "../../src/Components/LanguageSelector.jsx";
 import { LanguageProvider } from "../../src/context/LanguageContext.jsx";
+import { PrerecordedAudioProvider } from "../../src/context/PrerecordedAudioContext.jsx";
 
 /**
- * Purpose: Mount the Home page and the Language Selector in the provider.
+ * Purpose: Mount the Home page and the Language Selector in the providers.
  *
  * Returns: the Cypress mount chain
  */
 function mountHome() {
   return mount(
     <LanguageProvider>
-      <LanguageSelector />
-      <Home />
+      <PrerecordedAudioProvider>
+        <LanguageSelector />
+        <Home />
+      </PrerecordedAudioProvider>
     </LanguageProvider>
   );
 }
@@ -40,7 +44,7 @@ describe("Home Page Text (SCRUM-46)", () => {
     mountHome();
     cy.contains("h2", "What We Do").should("exist");
     cy.contains("button", "Learn More").should("exist");
-    cy.get('button[aria-label="Read out loud"]').should("have.length.greaterThan", 0);
+    cy.get('[data-cy="section-audio-home-hero"]').should("exist");
     cy.get('img[alt="Woodland Conservation"]').should("exist");
     cy.contains("Weather unavailable. Showing fallback.").should("exist");
   });
@@ -50,7 +54,7 @@ describe("Home Page Text (SCRUM-46)", () => {
     cy.get('[data-cy="language-option-fr"]').click();
     cy.contains("h2", "Ce que nous faisons").should("exist");
     cy.contains("button", "En savoir plus").should("exist");
-    cy.get('button[aria-label="Lire à haute voix"]').should("have.length.greaterThan", 0);
+    cy.get('[data-cy="section-audio-home-hero"]').should("exist");
     cy.get('img[alt="Bouleau jaune"]').should("exist");
     cy.contains("Météo non disponible").should("exist");
     cy.contains("What We Do").should("not.exist");

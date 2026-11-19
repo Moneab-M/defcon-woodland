@@ -62,6 +62,18 @@ const fr = {
       stop: "Arrêter la description de l'image",
       unavailable: "La description audio de cette image n'est pas encore prête.",
     },
+
+    // NEEDS REVIEW BY A FLUENT SPEAKER
+    sectionAudio: {
+      play: "Écouter cette section",
+      stop: "Arrêter la lecture",
+      unavailable: "L'enregistrement audio de cette section n'est pas encore prêt.",
+      siteTitle: "Lire le site à voix haute",
+      siteDescription: "Écoutez l'enregistrement complet de la page d'accueil ou choisissez une section ci-dessous.",
+      sitePlay: "Écouter l'enregistrement complet",
+      siteStop: "Arrêter l'enregistrement complet",
+    },
+
     theme: {
       toggleLabel: "Passer du mode clair au mode sombre",
       title: "Clair/Sombre",
@@ -289,7 +301,7 @@ const fr = {
       },
       readAloud: {
         question: "Comment fonctionne la lecture à voix haute?",
-        answer: "Le bouton de lecture à voix haute utilise la synthèse vocale du navigateur pour dire le texte à voix haute. Tu peux mettre en pause ou reprendre avec la barre d'espace.",
+        answer: "Le bouton du haut-parleur lance un enregistrement de la section. Appuyez de nouveau pour arrêter la lecture. Si vous lancez un autre enregistrement, le précédent s’arrête.",
       },
       phone: {
         question: "Puis-je utiliser ce site sur mon téléphone?",
@@ -298,7 +310,7 @@ const fr = {
     },
     learnMore: "En savoir plus",
     backToTop: "Retour en haut",
-    accessibilityStrip: "Accessibilité : WCAG AA • Navigation au clavier • Boutons de lecture vocale • Zoom du texte • Options pour la dyslexie et le contraste",
+    accessibilityStrip: "Accessibilité : WCAG AA • Navigation au clavier • Lecture audio des sections • Zoom du texte • Options pour la dyslexie et le contraste",
   },
   // Ecosystem page
   // NEEDS REVIEW BY A FLUENT SPEAKER
