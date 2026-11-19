@@ -14,6 +14,7 @@ import React from "react";
 import { mount } from "cypress/react";
 import Home from "../../src/pages/Home.jsx";
 import { LanguageProvider } from "../../src/context/LanguageContext.jsx";
+import { PrerecordedAudioProvider } from "../../src/context/PrerecordedAudioContext.jsx";
 
 // Purpose: index of the slide that is currently visible (opacity-100).
 function activeSlide(win) {
@@ -42,7 +43,13 @@ describe("Reduced motion and slideshow pause control", () => {
   it("advances by itself, pauses on request and plays again", () => {
     cy.clock();
     cy.window().then((win) => stubMatchMedia(win, false));
-    mount(<LanguageProvider><Home /></LanguageProvider>);
+    mount(
+      <LanguageProvider>
+        <PrerecordedAudioProvider>
+          <Home />
+        </PrerecordedAudioProvider>
+      </LanguageProvider>
+    );
     cy.get("[data-cy=slideshow-toggle]").should("be.visible");
     cy.window().should((win) => expect(activeSlide(win)).to.eq(0));
     cy.wait(100);
@@ -60,7 +67,13 @@ describe("Reduced motion and slideshow pause control", () => {
   it("starts paused when the visitor prefers reduced motion, and can still play", () => {
     cy.clock();
     cy.window().then((win) => stubMatchMedia(win, true));
-    mount(<LanguageProvider><Home /></LanguageProvider>);
+    mount(
+      <LanguageProvider>
+        <PrerecordedAudioProvider>
+          <Home />
+        </PrerecordedAudioProvider>
+      </LanguageProvider>
+    );
     cy.get("[data-cy=slideshow-toggle]").should("contain", "Play the pictures");
     cy.tick(20000);
     cy.window().should((win) => expect(activeSlide(win)).to.eq(0));
@@ -71,7 +84,13 @@ describe("Reduced motion and slideshow pause control", () => {
 
   it("button is at least 44 px tall and labelled in French", () => {
     cy.window().then((win) => win.localStorage.setItem("wc_selected_language", "fr"));
-    mount(<LanguageProvider><Home /></LanguageProvider>);
+    mount(
+      <LanguageProvider>
+        <PrerecordedAudioProvider>
+          <Home />
+        </PrerecordedAudioProvider>
+      </LanguageProvider>
+    );
     cy.get("[data-cy=slideshow-toggle]")
       .should("contain", "Mettre les images en pause")
       .invoke("outerHeight")

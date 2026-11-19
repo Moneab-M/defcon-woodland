@@ -52,6 +52,17 @@ const en = {
       stop: "Stop image description",
       unavailable: "This picture's audio description is not ready yet.",
     },
+
+    sectionAudio: {
+      play: "Read aloud",
+      stop: "Stop reading",
+      unavailable: "This section's audio recording is not ready yet.",
+      siteTitle: "Read the Site Aloud",
+      siteDescription: "Play the full Home-page recording, or choose an individual section below.",
+      sitePlay: "Play full recording",
+      siteStop: "Stop full recording",
+    },
+
     theme: {
       toggleLabel: "Toggle light and dark mode",
       title: "Light/Dark",
@@ -278,7 +289,7 @@ const en = {
       },
       readAloud: {
         question: "How does the Read Aloud feature work?",
-        answer: "The Read Aloud button uses the browser’s Text-to-Speech engine to speak the text out loud. You can pause or resume using the spacebar.",
+        answer: "The speaker button plays a prerecorded section recording. Select it again to stop. Starting another section recording stops the previous one.",
       },
       phone: {
         question: "Can I use this site on my phone?",
@@ -287,7 +298,7 @@ const en = {
     },
     learnMore: "Learn More",
     backToTop: "Back to Top",
-    accessibilityStrip: "Accessibility: WCAG AA • Keyboard navigation • TTS buttons • Text zoom • Dyslexia & contrast options",
+    accessibilityStrip: "Accessibility: WCAG AA • Keyboard navigation • Audio playback controls • Text zoom • Dyslexia & contrast options",
   },
   // Ecosystem page
   ecosystem: {

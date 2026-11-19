@@ -15,6 +15,7 @@ import { mount } from "cypress/react";
 import Home from "../../src/pages/Home.jsx";
 import NaturalBurial from "../../src/pages/NaturalBurial.jsx";
 import { LanguageProvider } from "../../src/context/LanguageContext.jsx";
+import { PrerecordedAudioProvider } from "../../src/context/PrerecordedAudioContext.jsx";
 
 describe("Pop-up dialogs and keyboard cards", () => {
   beforeEach(() => {
@@ -23,7 +24,13 @@ describe("Pop-up dialogs and keyboard cards", () => {
   });
 
   it("Home: Featured Species dialog opens and closes from the keyboard", () => {
-    mount(<LanguageProvider><Home /></LanguageProvider>);
+    mount(
+      <LanguageProvider>
+        <PrerecordedAudioProvider>
+          <Home />
+        </PrerecordedAudioProvider>
+      </LanguageProvider>
+    );
     cy.contains("button", "Learn More").as("opener").focus().click();
     cy.get("[data-cy=featured-dialog]")
       .should("have.attr", "role", "dialog")
