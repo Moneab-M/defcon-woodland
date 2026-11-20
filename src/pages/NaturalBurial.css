@@ -291,3 +291,55 @@ body {
   outline: 3px solid #2563eb;
   outline-offset: 2px;
 }
+
+/* SCRUM-28: Keep prerecorded section audio buttons circular inside Burial cards.
+   Existing card and Learn More buttons retain their original styling. */
+.natural-burial .info-card button[data-cy^="section-audio-"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: #1d4ed8;
+  transform: none;
+}
+
+.natural-burial .info-card button[data-cy^="section-audio-"]:hover {
+  background-color: #dbeafe;
+  color: #1e40af;
+  transform: none;
+}
+
+.dark .natural-burial .info-card button[data-cy^="section-audio-"] {
+  background-color: transparent;
+  color: #93c5fd;
+}
+
+.dark .natural-burial .info-card button[data-cy^="section-audio-"]:hover {
+  background-color: #172554;
+  color: #fff;
+}
+
+/* SCRUM-28: Read-aloud controls in Natural Burial Learn More dialogs. */
+.natural-burial .modal-audio-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 15px;
+}
+
+.natural-burial .modal-audio-heading h2 {
+  margin-bottom: 0;
+}
+
+.natural-burial .modal-audio-heading button[data-cy^="section-audio-"] {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}

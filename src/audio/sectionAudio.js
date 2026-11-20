@@ -13,6 +13,15 @@ export const SECTION_AUDIO_FOLDER = "/audio/sections";
 const SECTION_IDS = {
   about: ["about", "mission", "vision"],
   home: ["full", "hero", "conservation", "sustainable", "wildlife"],
+
+  ecosystem: [
+    "intro", "heron", "deer", "coyote", "birch",
+    "wetlands", "artifacts", "flora", "fauna", "fungi",
+  ],
+
+  naturalburial: [
+    "description", "types", "markers", "locations", "modal_types", "modal_markers", "modal_locations",
+  ],
 };
 
 const AUDIO_LANGUAGES = ["en", "fr"];
