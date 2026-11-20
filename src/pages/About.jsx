@@ -1,12 +1,12 @@
 /**
  * About Page Component
- * 
+ *
  * Description:
  * This component renders the About page for the St. Margaret’s Bay Woodland Conservation website.
  * Features include:
  *  - Grade-7 reading level text for accessibility
  *  - Theme-aware Calibri styling (light/dark mode)
- *  - Text-to-Speech (TTS) with spacebar play/pause support
+ *  - Prerecorded section audio through the shared site player
  *  - Image description audio buttons
  *  - Responsive layout for desktop and mobile
  *  - Requirements IDs 401–410 fully implemented
@@ -19,6 +19,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useText } from "../i18n/useText";
 import ImageAudioButton from "../Components/ImageAudioButton"; // SCRUM-9: Image Audio Button
+import SectionAudioButton from "../Components/SectionAudioButton";
+
 
 // Text for these lists lives in the translation files under about.*; only ids, images and audio stay here.
 const SECTIONS = [
@@ -78,8 +80,6 @@ export default function About() {
     answer: t(`about.faq.${id}.answer`),
   }));
 
-  const [activeId, setActiveId] = useState(null);
-  const speechRef = useRef({ utter: null, speakingFor: null });
 
   const [textSize, setTextSize] = useState("text-base sm:text-lg");
   const [dyslexic, setDyslexic] = useState(false);
@@ -219,61 +219,13 @@ export default function About() {
     return () => observer.disconnect();
   }, []);
 
-  // Spacebar TTS control
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.code !== "Space") return;
-      e.preventDefault();
-      const synth = window.speechSynthesis;
-      if (!synth || !speechRef.current.utter) return;
-
-      if (synth.speaking && !synth.paused) synth.pause();
-      else if (synth.paused) synth.resume();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
   useEffect(() => {
     return () => {
-      window.speechSynthesis?.cancel();
       if (ambientRef.current) {
         ambientRef.current.pause();
       }
     };
   }, []);
-
-  const speak = (sectionId, text) => {
-    const synth = window.speechSynthesis;
-    if (!synth) return;
-    synth.cancel();
-
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = "en-CA";
-    utter.rate = 1.0;
-    utter.onend = () => {
-      speechRef.current.utter = null;
-      speechRef.current.speakingFor = null;
-      setActiveId(null);
-    };
-
-    speechRef.current.utter = utter;
-    speechRef.current.speakingFor = sectionId;
-    setActiveId(sectionId);
-
-    synth.speak(utter);
-  };
-
-  const handleRead = (sectionId, text) => {
-    const synth = window.speechSynthesis;
-    if (speechRef.current.speakingFor === sectionId) {
-      if (synth.speaking && !synth.paused) synth.pause();
-      else if (synth.paused) synth.resume();
-      else speak(sectionId, text);
-      return;
-    }
-    speak(sectionId, text);
-  };
 
   const toggleFaq = (index) => {
     setFaqOpenIndex((prev) => (prev === index ? null : index));
@@ -359,7 +311,7 @@ export default function About() {
         <button
           onClick={handleButtonClick(() => {
             if (navigator.share) {
-              navigator.share({ url: window.location.href }).catch(() => {});
+              navigator.share({ url: window.location.href }).catch(() => { });
             }
           })}
           className={btnBase}
@@ -419,14 +371,15 @@ export default function About() {
                 >
                   {sec.text}
                 </p>
-                <button
-                  className={btnBase}
-                  onClick={handleButtonClick(() =>
-                    handleRead(sec.id, sec.text)
-                  )}
-                >
-                  🗣️ {t("about.readAloud")}
-                </button>
+
+                {/* SCRUM-27: Section Audio for About Us, Mission, and Vision */}
+                <SectionAudioButton
+                  audioId={`section:about:${sec.id}`}
+                  pageId="about"
+                  sectionId={sec.id}
+                  sectionTitle={sec.title}
+                />
+
               </div>
             </article>
 

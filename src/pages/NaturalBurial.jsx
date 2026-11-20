@@ -1,8 +1,8 @@
 /**@author Rakhuzuwo
  * @file NaturalBurial.jsx
  * @description React component presenting Natural Burial information, including
- * interactive modals, text-to-speech accessibility, and image-based learning cards.
- * Handles modal state, speech synthesis, and structured content sections.
+ * interactive modals, prerecorded section audio, and image-based learning cards.
+ * Handles modal state, focus management, and structured content sections.
  */
 
 
@@ -11,124 +11,54 @@ import burialImage from '../assets/use.png';
 import coffinImage from '../assets/coffin.png';  
 import markerImage from '../assets/Marker.png'; 
 import gpsImage from '../assets/Gps.png';      
-import React, { useState, useEffect } from 'react'; 
-import { FaVolumeUp, FaPause } from 'react-icons/fa'
+import React, { useState } from 'react';
 import { useText } from '../i18n/useText.js';
-import { useLanguage, DEFAULT_LANGUAGE } from '../context/LanguageContext.jsx';
-import { isLanguageVerified } from '../i18n/languageStatus.js';
+import SectionAudioButton from '../Components/SectionAudioButton.jsx';
+import { usePrerecordedAudio } from '../context/PrerecordedAudioContext.jsx';
 import useDialogFocus from '../Components/useDialogFocus.js';
 
 // Keeps the image button looking exactly like the bare image, with a visible focus ring
 const CARD_IMAGE_BUTTON = "card-image-button block p-0 border-0 bg-transparent cursor-pointer";
 
-// Voice locale per Selected Language, so read-aloud matches the text on screen (SCRUM-49 review)
-const SPEECH_LOCALES = { en: "en-CA", fr: "fr-CA" };
-
 const NaturalBurial = () => {
   const t = useText();
-  const { language } = useLanguage();
-  // useText shows English for a language that is not verified, so the spoken
-  // locale has to follow the dictionary t() actually read from.
-  const spokenLanguage = isLanguageVerified(language) ? language : DEFAULT_LANGUAGE;
-  // Read-aloud text comes from the same dictionary as the text on screen, so the
-  // page never speaks English while showing French (SCRUM-49 review).
-  const speech = {
-    description: t("naturalBurial.descriptionText"),
-    types: t("naturalBurial.types.speech"),
-    markers: t("naturalBurial.markers.speech"),
-    locations: t("naturalBurial.locations.speech"),
-  };
-  const [speakingText, setSpeakingText] = useState("");
+  const { playingId, stop } = usePrerecordedAudio();
   const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState({ img: '', titleKey: '', descriptionKey: '' });
+  const [modalContent, setModalContent] = useState({ img: '', titleKey: '', descriptionKey: '', audioSectionId: '' });
   
   // Modal content: images plus translation keys (text is looked up with t when shown)
   const burialTypesInfo = {
     img: coffinImage,
     titleKey: "naturalBurial.types.modalTitle",
-    descriptionKey: "naturalBurial.types.modalText"
+    descriptionKey: "naturalBurial.types.modalText",
+    audioSectionId: "modal_types"
   };
 
   const burialMarkersInfo = {
     img: markerImage,
     titleKey: "naturalBurial.markers.title",
-    descriptionKey: "naturalBurial.markers.modalText"
+    descriptionKey: "naturalBurial.markers.modalText",
+    audioSectionId: "modal_markers"
   };
 
   const burialLocationsInfo = {
     img: gpsImage,
     titleKey: "naturalBurial.locations.title",
-    descriptionKey: "naturalBurial.locations.modalText"
+    descriptionKey: "naturalBurial.locations.modalText",
+    audioSectionId: "modal_locations"
   };
 
-  const closeModal = () => setShowModal(false);
+  const closeModal = () => {
+    // Closing a Learn More popup stops its recording, including on Escape.
+    // Do not interrupt unrelated audio if the popup itself is not playing.
+    if (playingId?.startsWith("naturalburial:modal_")) stop();
+    setShowModal(false);
+  };
   const dialogRef = useDialogFocus(showModal, closeModal);
 
   const openModal = (info) => {
     setModalContent(info);
     setShowModal(true);
-  };
-
-  // Load voices when component mounts
-  useEffect(() => {
-    const loadVoices = () => {
-      // This ensures voices are loaded
-      window.speechSynthesis.getVoices();
-    };
-    
-    loadVoices();
-    // Some browsers need this event listener
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-  }, []);
-
-  /**
-   * Handles text-to-speech functionality.
-   * Toggles speech synthesis for the provided text.
-   */
-  const handleSpeakText = (text) => {
-    if (speakingText === text) {
-      // Pause if the same text is being spoken
-      window.speechSynthesis.cancel(); // Stop any ongoing speech immediately
-      setSpeakingText(""); // Reset the speaking text
-      return;
-    }
-
-    // Stop current speech and start new text
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    
-    // Get available voices
-    const voices = window.speechSynthesis.getVoices();
-    
-    // Find a voice for the Selected Language, exact locale first
-    const localeTag = SPEECH_LOCALES[spokenLanguage] ?? SPEECH_LOCALES.en;
-    const standardVoice =
-      voices.find((voice) => voice.lang === localeTag) ??
-      voices.find((voice) => voice.lang?.startsWith(`${spokenLanguage}-`));
-
-    if (standardVoice) {
-      utterance.voice = standardVoice;
-    }
-    
-    // Most natural settings for standard voice
-    utterance.rate = 0.95;    // Normal speed
-    utterance.pitch = 1.05;   // Normal pitch
-    utterance.volume = 1.0;  // Normal volume
-    utterance.lang = localeTag; // Matches the Selected Language
-    
-    // Add event listeners
-    utterance.onend = () => {
-      setSpeakingText("");
-    };
-
-    utterance.onerror = (event) => {
-      console.error('Speech synthesis error:', event);
-      setSpeakingText("");
-    };
-
-    window.speechSynthesis.speak(utterance);
-    setSpeakingText(text); // Update speaking text
   };
 
   return (
@@ -145,19 +75,12 @@ const NaturalBurial = () => {
           <section className="description-section">
             <div className="description-header"> 
               <h2>{t("naturalBurial.descriptionHeading")}</h2>
-              {/* Sound icon button */}
-              <button
-                onClick={() => handleSpeakText(speech.description)}
-                className="sound-button"
-                aria-label={t("naturalBurial.readDescriptionLabel")}
-                title={t("naturalBurial.listenToDescription")}
-              >
-                {speakingText === speech.description ? (
-                  <FaPause className="icon" />
-                ) : (
-                  <FaVolumeUp className="icon" />
-                )}
-              </button>
+              <SectionAudioButton
+                audioId="naturalburial:description"
+                pageId="naturalburial"
+                sectionId="description"
+                sectionTitle={t("naturalBurial.descriptionHeading")}
+              />
             </div>
             <p> 
               {t("naturalBurial.descriptionText")}
@@ -180,16 +103,12 @@ const NaturalBurial = () => {
                 />
               </button>
       
-              <button 
-                onClick={() => handleSpeakText(speech.types)}
-                className="sound-button small"
-              >
-                {speakingText === speech.types ? (
-                  <FaPause className="icon" />
-                ) : (
-                  <FaVolumeUp className="icon" />
-                )}
-              </button>
+              <SectionAudioButton
+                audioId="naturalburial:types"
+                pageId="naturalburial"
+                sectionId="types"
+                sectionTitle={t("naturalBurial.types.title")}
+              />
               <h3>{t("naturalBurial.types.title")}</h3>
               <p>{t("naturalBurial.types.summary")}</p>
               <button onClick={() => openModal(burialTypesInfo)}>{t("naturalBurial.learnMore")}</button>
@@ -209,16 +128,12 @@ const NaturalBurial = () => {
                   className="card-image"
                 />
               </button>
-              <button 
-                onClick={() => handleSpeakText(speech.markers)}
-                className="sound-button small"
-              >
-                {speakingText === speech.markers ? (
-                  <FaPause className="icon" />
-                ) : (
-                  <FaVolumeUp className="icon" />
-                )}
-              </button>
+              <SectionAudioButton
+                audioId="naturalburial:markers"
+                pageId="naturalburial"
+                sectionId="markers"
+                sectionTitle={t("naturalBurial.markers.title")}
+              />
               <h3>🌿 {t("naturalBurial.markers.title")}</h3>
               <p>{t("naturalBurial.markers.summary")}</p>
               
@@ -239,16 +154,12 @@ const NaturalBurial = () => {
                   className="card-image"
                 />
               </button>
-              <button 
-                onClick={() => handleSpeakText(speech.locations)}
-                className="sound-button small"
-              >
-                {speakingText === speech.locations ? (
-                  <FaPause className="icon" />
-                ) : (
-                  <FaVolumeUp className="icon" />
-                )}
-              </button>
+              <SectionAudioButton
+                audioId="naturalburial:locations"
+                pageId="naturalburial"
+                sectionId="locations"
+                sectionTitle={t("naturalBurial.locations.title")}
+              />
               <h3>📍 {t("naturalBurial.locations.title")}</h3>
               <p>{t("naturalBurial.locations.summary")}</p>
               <button onClick={() => openModal(burialLocationsInfo)}>{t("naturalBurial.learnMore")}</button>
@@ -272,7 +183,15 @@ const NaturalBurial = () => {
         onClick={(e) => e.stopPropagation()}
       >
         <img src={modalContent.img} alt={t(modalContent.titleKey)} className="modal-image" />
-        <h2 id="natural-burial-dialog-title">{t(modalContent.titleKey)}</h2>
+        <div className="modal-audio-heading">
+          <h2 id="natural-burial-dialog-title">{t(modalContent.titleKey)}</h2>
+          <SectionAudioButton
+            audioId={`naturalburial:${modalContent.audioSectionId}`}
+            pageId="naturalburial"
+            sectionId={modalContent.audioSectionId}
+            sectionTitle={t(modalContent.titleKey)}
+          />
+        </div>
         <p style={{ whiteSpace: "pre-wrap" }}>
           {t(modalContent.descriptionKey)}
         </p>

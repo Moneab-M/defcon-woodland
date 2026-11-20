@@ -16,6 +16,7 @@ import { mount } from "cypress/react";
 import { MemoryRouter } from "react-router-dom";
 import App from "../../src/App.jsx";
 import { LanguageProvider } from "../../src/context/LanguageContext.jsx";
+import { PrerecordedAudioProvider } from "../../src/context/PrerecordedAudioContext.jsx";
 
 // ---------- Global constants ----------
 const MIN_SIZE = 44;
@@ -36,7 +37,9 @@ function mountApp() {
   mount(
     <MemoryRouter>
       <LanguageProvider>
-        <App />
+        <PrerecordedAudioProvider>
+          <App />
+        </PrerecordedAudioProvider>
       </LanguageProvider>
     </MemoryRouter>
   );

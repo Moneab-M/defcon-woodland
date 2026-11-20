@@ -1,7 +1,7 @@
 describe("Map Page (E2E)", () => {
   it("loads successfully", () => {
     cy.visit("http://localhost:5173/map");
-    cy.contains("YOU ARE HERE").should("exist");
+    cy.contains("button", "Show where I am").should("be.visible");
   });
 
   it("renders at least one marker or map element", () => {
